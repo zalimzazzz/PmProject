@@ -1,20 +1,18 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using PmProject.API.Models;
 
-namespace PmProject.API.Models
+namespace PmProject.API.Dtos
 {
-    public class User
+    public class UserForDetailDto
     {
         public Guid Id { get; set; }
 
         public string Username { get; set; }
 
-        public byte[] PasswordHash { get; set; }
-
-        public byte[] PasswordSalt { get; set; }
-
         public string Gender { get; set; }
+
+        public int Age { get; set; }
 
         public DateTime DateofBirth { get; set; }
 
@@ -34,6 +32,8 @@ namespace PmProject.API.Models
 
         public string Country { get; set; }
 
+        public string PhotoUrl { get; set; }
+        
         public ICollection<Photo> Photos { get; set; }
     }
 }
