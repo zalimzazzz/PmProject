@@ -37,7 +37,7 @@ namespace PmProject.API.Controllers
         public async Task<IActionResult> GetUser(Guid id)
         {
             var user = await _repo.GetUser(id);
-
+            
             var userToReturn = _mapper.Map<UserForDetailDto>(user);
 
             return Ok(userToReturn);

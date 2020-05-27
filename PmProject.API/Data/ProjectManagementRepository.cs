@@ -25,7 +25,7 @@ namespace PmProject.API.Data
 
         public async Task<User> GetUser(Guid id)
         {
-            var user = await _context.Users.Include(p => p.Photos).FirstOrDefaultAsync();
+            var user = await _context.Users.Include(p => p.Photos).FirstOrDefaultAsync(x => x.Id == id);
 
             return user;
         }

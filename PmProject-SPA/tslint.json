@@ -1,18 +1,14 @@
 {
   "extends": "tslint:recommended",
   "rules": {
-    "align": {
-      "options": [
-        "parameters",
-        "statements"
-      ]
-    },
+    "align": false,
     "array-type": false,
     "arrow-return-shorthand": true,
     "curly": true,
     "deprecation": {
       "severity": "warning"
     },
+    "comment-format": false,
     "component-class-suffix": true,
     "contextual-lifecycle": true,
     "directive-class-suffix": true,
@@ -72,8 +68,11 @@
     "no-redundant-jsdoc": true,
     "no-switch-case-fall-through": true,
     "no-var-requires": false,
+    "no-trailing-whitespace": false,
+    "no-shadowed-variable": false,
+    "object-literal-shorthand": false,
     "object-literal-key-quotes": [
-      true,
+      false,
       "as-needed"
     ],
     "quotemark": [

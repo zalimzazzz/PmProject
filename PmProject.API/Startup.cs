@@ -36,8 +36,8 @@ namespace PmProject.API
             );
             services.AddCors();
             services.AddAutoMapper(typeof(ProjectManagementRepository).Assembly);
-            services.AddScoped<IProjectManagementRepository, ProjectManagementRepository>();
             services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<IProjectManagementRepository, ProjectManagementRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => {
                     options.TokenValidationParameters = new TokenValidationParameters
@@ -77,12 +77,10 @@ namespace PmProject.API
             //app.UseHttpsRedirection();
 
             app.UseRouting();
-
-            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-
             app.UseAuthentication();
-
             app.UseAuthorization();
+            
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseEndpoints(endpoints =>
             {
