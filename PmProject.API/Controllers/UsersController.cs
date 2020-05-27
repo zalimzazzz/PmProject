@@ -6,6 +6,7 @@ using System;
 using AutoMapper;
 using PmProject.API.Dtos;
 using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace PmProject.API.Controllers
 {
@@ -41,6 +42,23 @@ namespace PmProject.API.Controllers
             var userToReturn = _mapper.Map<UserForDetailDto>(user);
 
             return Ok(userToReturn);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateUser(Guid id, UserForUpdateDto userForUpdateDto)
+        {
+            if (id != Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            var userFromRepo = await _repo.GetUser(id);
+
+            _mapper.Map(userForUpdateDto, userFromRepo);
+
+            if (await _repo.SaveAll())
+                return NoContent();
+
+            throw new Exception($"Updating user {id} failed on save");
+
         }
     }
 }
