@@ -1,8 +1,8 @@
 using System;
 
-namespace PmProject.API.Models
+namespace PmProject.API.Dtos
 {
-    public class Photo
+    public class PhotoForReturnDto
     {
         public Guid Id { get; set; }
         public string Url { get; set; }
@@ -10,6 +10,5 @@ namespace PmProject.API.Models
         public DateTime DateAdded { get; set; }
         public bool IsMain { get; set; }
         public string PublicId { get; set; }
-        public Guid UserId { get; set; }
     }
 }
