@@ -15,5 +15,6 @@ namespace PmProject.API.Data
         Task<User> GetUser(Guid id);
         Task<Photo> GetPhoto(Guid id);
         Task<Photo> GetMainPhotoForUser(Guid userId);
+        Task<Like> GetLike(Guid userId, Guid recipientId);
     }
 }
