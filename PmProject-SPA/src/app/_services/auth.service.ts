@@ -23,8 +23,8 @@ export class AuthService {
     this.photoUrl.next(photoUrl);
   }
 
-  login(model: any) {
-    return this.http.post(this.baseUrl + 'login', model)
+  login(user: User) {
+    return this.http.post(this.baseUrl + 'login', user)
       .pipe(
         map((response: any) => {
           const user = response;
@@ -41,8 +41,8 @@ export class AuthService {
       );
   }
 
-  register(model: any) {
-    return this.http.post(this.baseUrl + 'register', model);
+  register(user: User) {
+    return this.http.post(this.baseUrl + 'register', user);
   }
 
   loggedIn() {

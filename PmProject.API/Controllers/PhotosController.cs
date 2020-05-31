@@ -52,7 +52,7 @@ namespace PmProject.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddPhotoForUser(Guid userId, [FromForm] PhotoForCreationDto photoForCreationDto)
+        public async Task<IActionResult> AddPhotoForUser(Guid userId, [FromForm]PhotoForCreationDto photoForCreationDto)
         {
             if (userId != Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
