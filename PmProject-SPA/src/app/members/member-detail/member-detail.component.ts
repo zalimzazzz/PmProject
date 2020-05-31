@@ -14,9 +14,10 @@ export class MemberDetailComponent implements OnInit {
   user: User;
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
- 
+  
   constructor(private userService: UserService, private alertify: AlertifyService, 
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute) {
+  }
 
   ngOnInit() {
     this.route.data.subscribe(data => {
