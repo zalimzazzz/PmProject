@@ -1,10 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using PmProject.API.Helpers;
 using PmProject.API.Models;
 
-namespace PmProject.API.Data
+namespace PmProject.API.Interfaces
 {
     public interface IProjectManagementRepository
     {
@@ -16,5 +15,6 @@ namespace PmProject.API.Data
         Task<Photo> GetPhoto(Guid id);
         Task<Photo> GetMainPhotoForUser(Guid userId);
         Task<Like> GetLike(Guid userId, Guid recipientId);
+        
     }
 }

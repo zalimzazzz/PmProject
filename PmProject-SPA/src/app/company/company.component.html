@@ -1,0 +1,34 @@
+<div class="container mt-5">
+    <table datatable class="table table-striped hover" [dtOptions]="dtOptions">
+      <thead>
+        <tr>
+          <th>
+            Company Name
+          </th>
+          <th width="15%">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let company of companies">
+          <td>
+            {{company.name}}
+          </td>
+          <td>
+            <button class="ิbtn btn-info" [routerLink]="['/members']">Edit</button>
+          </td>
+        </tr>
+      </tbody> 
+    </table>
+  
+</div>
+<!-- <div class="d-flex justify-content-center">
+  <pagination
+      [boundaryLinks]="true"
+      [totalItems]="pagination.totalItems"
+      [(ngModel)]="pagination.currentPage"
+      [itemsPerPage]="pagination.itemsPerPage"
+      (pageChanged)="pageChanged($event)"
+    previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+  
+  </pagination>
+</div> -->

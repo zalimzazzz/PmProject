@@ -13,6 +13,7 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { TimeagoModule } from 'ngx-timeago';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { DataTablesModule } from 'angular-datatables';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -36,6 +37,8 @@ import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 import { MemberListResolver } from './_resolvers/member-list.resolver';
 import { ListsResolver } from './_resolvers/lists.resolver';
+import { CompanyComponent } from './company/company.component';
+import { CompanyResolver } from './_resolvers/company.resolver';
 
 export function tokenGetter() {
    return localStorage.getItem('token');
@@ -60,7 +63,8 @@ export class CustomHammerConfig extends HammerGestureConfig {
       MemberCardComponent,
       MemberDetailComponent,
       MemberEditComponent,
-      PhotoEditorComponent
+      PhotoEditorComponent,
+      CompanyComponent
    ],
    imports: [
       BrowserModule,
@@ -69,12 +73,13 @@ export class CustomHammerConfig extends HammerGestureConfig {
       FormsModule,
       ReactiveFormsModule,
       BrowserAnimationsModule,
+      DataTablesModule,
       BsDropdownModule.forRoot(),
       PaginationModule.forRoot(),
       TabsModule.forRoot(),
       BsDatepickerModule.forRoot(),
       ButtonsModule.forRoot(),
-      TimeagoModule.forRoot(),
+      TimeagoModule.forRoot(),      
       RouterModule.forRoot(appRoutes),
       NgxGalleryModule,
       FileUploadModule,
@@ -97,7 +102,8 @@ export class CustomHammerConfig extends HammerGestureConfig {
       { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig },
       MemberEditResolver,
       PreventUnsavedChanges,
-      ListsResolver
+      ListsResolver,
+      CompanyResolver
    ],
    bootstrap: [
       AppComponent

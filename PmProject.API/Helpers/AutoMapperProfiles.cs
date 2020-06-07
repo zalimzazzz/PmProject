@@ -22,6 +22,8 @@ namespace PmProject.API.Helpers
             CreateMap<Photo, PhotoForReturnDto>();
             CreateMap<PhotoForCreationDto, Photo>();
             CreateMap<UserForRegisterDto, User>();
+            CreateMap<Company, CompanyForReturnDto>();
+            CreateMap<CompanyForCreationDto, Company>();
         }
     }
 }

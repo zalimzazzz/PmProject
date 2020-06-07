@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using PmProject.API.Data;
 using PmProject.API.Helpers;
+using PmProject.API.Interfaces;
 
 namespace PmProject.API
 {
@@ -37,9 +38,11 @@ namespace PmProject.API
             services.AddCors();
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
             services.AddAutoMapper(typeof(ProjectManagementRepository).Assembly);
+            services.AddAutoMapper(typeof(CompanyRepository).Assembly);
             services.AddTransient<Seed>();
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IProjectManagementRepository, ProjectManagementRepository>();
+            services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => {
                     options.TokenValidationParameters = new TokenValidationParameters

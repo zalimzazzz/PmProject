@@ -28,7 +28,9 @@ namespace PmProject.API.Data
                .WithMany(u => u.Likees)
                .HasForeignKey(u => u.LikerId)
                .OnDelete(DeleteBehavior.Restrict);
-            
         }
+        public DbSet<Company> Company { get; set; }
+        public DbSet<SurveyHeaders> SurveyHeaders { get; set; }
+        
     }
 }

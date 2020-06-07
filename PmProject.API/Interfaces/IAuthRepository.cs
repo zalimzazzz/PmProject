@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using PmProject.API.Models;
 
-namespace PmProject.API.Data
+namespace PmProject.API.Interfaces
 {
     public interface IAuthRepository
     {

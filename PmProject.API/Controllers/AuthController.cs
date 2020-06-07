@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using AutoMapper;
+using PmProject.API.Interfaces;
 
 namespace PmProject.API.Controllers
 {
