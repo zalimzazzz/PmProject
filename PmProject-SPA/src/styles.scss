@@ -1,0 +1,150 @@
+/* You can add global styles to this file, and also import other style files */
+@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+@import "../node_modules/bootswatch/dist/united/bootstrap.min.css";
+@import "../node_modules/font-awesome/css/font-awesome.css";
+@import "../node_modules/alertifyjs/build/css/alertify.min.css";
+@import "../node_modules/alertifyjs/build/css/themes/bootstrap.min.css";
+@import "../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css";
+@import "../node_modules/datatables.net-dt/css/jquery.dataTables.css";
+
+.tab-panel {
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.nav-tabs > li.open,
+.member-tabset > .nav-tabs > li:hover {
+  border-bottom: 4px solid #fbcdcf;
+}
+
+.member-tabset > .nav-tabs > li.open > a,
+.member-tabset > .nav-tabs > li:hover > a {
+  border: 0;
+  background: none !important;
+  color: #333333;
+}
+
+.member-tabset > .nav-tabs > li.open > a > i,
+.member-tabset > .nav-tabs > li:hover > a > i {
+  color: #a6a6a6;
+}
+
+.member-tabset > .nav-tabs > li.open .dropdown-menu,
+.member-tabset > .nav-tabs > li:hover .dropdown-menu {
+  margin-top: 0px;
+}
+
+.member-tabset > .nav-tabs > li.active {
+  border-bottom: 4px solid #e95420;
+  position: relative;
+}
+
+.member-tabset > .nav-tabs > li.active > a {
+  border: 0 !important;
+  color: #333333;
+}
+
+.member-tabset > .nav-tabs > li.active > a > i {
+  color: #404040;
+}
+
+.member-tabset > .tab-content {
+  margin-top: -3px;
+  background-color: #fff;
+  border: 0;
+  border-top: 1px solid #eee;
+  padding: 15px 0;
+}
+
+.aa{
+  color: red;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+body {
+  background: #f8f8f8;
+}
+
+/* ============================================================
+	Responsive Table via Data Label
+============================================================ */
+table {
+  border: 0;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+  thead {
+    background: #f0f0f0;
+    height: 60px !important;
+    tr {
+      th:first-child {
+        padding-left: 45px;
+      }
+      th {
+        text-transform: uppercase;
+        line-height: 60px !important;
+        text-align: left;
+        font-size: 11px;
+        padding-top: 0px !important;
+        padding-bottom: 0px !important;
+      }
+    }
+  }
+  tbody {
+    background: #fff;
+    tr {
+      border-top: 1px solid #e5e5e5;
+      height: 60px;
+      td:first-child {
+        padding-left: 45px;
+      }
+      td {
+        height: 60px;
+        line-height: 60px !important;
+        text-align: left;
+        padding: 0 10px;
+        font-size: 14px;
+
+        i {
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 800px) {
+  table {
+    border: 1px solid transparent;
+    box-shadow: none;
+    thead {
+      display: none;
+    }
+    tbody {
+      tr {
+        border-bottom: 45px solid #f8f8f8;
+        td:first-child {
+          padding-left: 10px;
+        }
+        td:before {
+          content: attr(data-label);
+          float: left;
+          font-size: 10px;
+          text-transform: uppercase;
+          font-weight: bold;
+        }
+        td {
+          display: block;
+          text-align: right;
+          font-size: 14px;
+          padding: 0px 10px !important;
+          box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+        }
+      }
+    }
+  }
+}

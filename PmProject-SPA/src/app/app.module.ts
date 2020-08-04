@@ -39,6 +39,14 @@ import { MemberListResolver } from './_resolvers/member-list.resolver';
 import { ListsResolver } from './_resolvers/lists.resolver';
 import { CompanyComponent } from './company/company.component';
 import { CompanyResolver } from './_resolvers/company.resolver';
+import { TemplateServiceOrderComponent } from './template-service-order/template-service-order.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 export function tokenGetter() {
    return localStorage.getItem('token');
@@ -46,8 +54,8 @@ export function tokenGetter() {
 
 export class CustomHammerConfig extends HammerGestureConfig {
    overrides = {
-     pinch: { enable: false },
-     rotate: { enable: false }
+      pinch: { enable: false },
+      rotate: { enable: false }
    };
 }
 
@@ -64,7 +72,9 @@ export class CustomHammerConfig extends HammerGestureConfig {
       MemberDetailComponent,
       MemberEditComponent,
       PhotoEditorComponent,
-      CompanyComponent
+      CompanyComponent,
+      TemplateServiceOrderComponent,
+
    ],
    imports: [
       BrowserModule,
@@ -79,10 +89,17 @@ export class CustomHammerConfig extends HammerGestureConfig {
       TabsModule.forRoot(),
       BsDatepickerModule.forRoot(),
       ButtonsModule.forRoot(),
-      TimeagoModule.forRoot(),      
+      TimeagoModule.forRoot(),
       RouterModule.forRoot(appRoutes),
       NgxGalleryModule,
       FileUploadModule,
+      MatTableModule,
+      MatSelectModule,
+      MatCheckboxModule,
+      MatFormFieldModule,
+      MatInputModule,
+      MatPaginatorModule,
+      MatSortModule,
       JwtModule.forRoot({
          config: {
             tokenGetter: tokenGetter,
