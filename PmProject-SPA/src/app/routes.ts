@@ -15,6 +15,7 @@ import { CompanyComponent } from './company/company.component';
 import { resolve } from 'dns';
 import { CompanyResolver } from './_resolvers/company.resolver';
 import { TemplateServiceOrderComponent } from './template-service-order/template-service-order.component';
+import { TemplateServiceOrderAddEditComponent } from './template-service-order/template-service-order-add-edit/template-service-order-add-edit.component';
 
 export const appRoutes: Routes = [
     { path: '', component: HomeComponent },
@@ -45,6 +46,8 @@ export const appRoutes: Routes = [
                 resolve: { company: CompanyResolver }
             },
             { path: 'template', component: TemplateServiceOrderComponent },
+            { path: 'template/add', component: TemplateServiceOrderAddEditComponent },
+            { path: 'template/edit:id', component: TemplateServiceOrderAddEditComponent },
         ]
     },
     { path: '**', redirectTo: '', pathMatch: 'full' }

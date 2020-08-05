@@ -1,12 +1,12 @@
 <div class="container mt-5">
   <div class="row mb-4">
     <div class="col">
-      <h3>Template Service Order : Company A</h3>
+      <h3>Company A</h3>
     </div>
   </div>
   <div class="row">
     <div class="col-6">
-      <button type="button " class="btn btn-success mr-2">Add</button>
+      <button type="button " [routerLink]="['/template/add']" class="btn btn-success mr-2">Add</button>
       <button type="button" class="btn btn-danger">Delete</button>
     </div>
     <div class="col-6 text-right">
@@ -46,7 +46,7 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
     </tr>
   </table>
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>

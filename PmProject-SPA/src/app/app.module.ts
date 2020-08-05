@@ -47,6 +47,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { TemplateServiceOrderAddEditComponent } from './template-service-order/template-service-order-add-edit/template-service-order-add-edit.component';
+import { QuestionAddComponent } from './template-service-order/template-service-order-add-edit/question-add/question-add.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 export function tokenGetter() {
    return localStorage.getItem('token');
@@ -74,7 +77,8 @@ export class CustomHammerConfig extends HammerGestureConfig {
       PhotoEditorComponent,
       CompanyComponent,
       TemplateServiceOrderComponent,
-
+      TemplateServiceOrderAddEditComponent,
+      QuestionAddComponent,
    ],
    imports: [
       BrowserModule,
@@ -100,6 +104,7 @@ export class CustomHammerConfig extends HammerGestureConfig {
       MatInputModule,
       MatPaginatorModule,
       MatSortModule,
+      MatDialogModule,
       JwtModule.forRoot({
          config: {
             tokenGetter: tokenGetter,
