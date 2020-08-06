@@ -1,53 +1,64 @@
 <div class="container mt-5">
-  <div class="row mb-4">
-    <div class="col">
-      <h3>Company A</h3>
+  <div class="card">
+    <div class="card-header">
+      Template Service Oder / Company A
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-6">
+          <button type="button " [routerLink]="['/template/add']" class="btn btn-success mr-2">New Template</button>
+          <button type="button" class="btn btn-danger">Delete</button>
+        </div>
+        <div class="col-6 text-right">
+          <mat-form-field>
+            <mat-label>search</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="search" #input>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row mb-4">
+        <div class="col">
+          <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+              <!-- Checkbox Column -->
+              <ng-container matColumnDef="select">
+                <th style="width: 10%;" *matHeaderCellDef mat-header-cell>
+                  <mat-checkbox (change)="$event ? masterToggle() : null"
+                    [checked]="selection?.hasValue() && isAllSelected()"
+                    [indeterminate]="selection?.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+                  </mat-checkbox>
+                </th>
+                <td mat-cell *matCellDef="let row">
+                  <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection?.toggle(row) : null"
+                    [checked]="selection?.isSelected(row)" [aria-label]="checkboxLabel(row)">
+                  </mat-checkbox>
+                </td>
+              </ng-container>
+
+              <!-- Name Column -->
+              <ng-container matColumnDef="name">
+                <th style="width: 70%;" mat-header-cell *matHeaderCellDef mat-sort-header>Template Name </th>
+                <td mat-cell *matCellDef="let element" data-label="Template Name"> {{element.name}} </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef> </th>
+                <td class="text-right" mat-cell *matCellDef="let element ">
+                  <button type="button " (click)="edit(element.id)" class="btn btn-sm btn-success mr-2">Edit</button>
+                  <button type="button" class="btn btn-sm btn-danger">Delete</button> </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+              </tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
-  <div class="row">
-    <div class="col-6">
-      <button type="button " [routerLink]="['/template/add']" class="btn btn-success mr-2">New Template</button>
-      <button type="button" class="btn btn-danger">Delete</button>
-    </div>
-    <div class="col-6 text-right">
-      <mat-form-field>
-        <mat-label>search</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="search" #input>
-      </mat-form-field>
-    </div>
-  </div>
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
-    <!-- Checkbox Column -->
-    <ng-container matColumnDef="select">
-      <th style="width: 10%;" *matHeaderCellDef mat-header-cell>
-        <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection?.hasValue() && isAllSelected()"
-          [indeterminate]="selection?.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
-        </mat-checkbox>
-      </th>
-      <td mat-cell *matCellDef="let row">
-        <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection?.toggle(row) : null"
-          [checked]="selection?.isSelected(row)" [aria-label]="checkboxLabel(row)">
-        </mat-checkbox>
-      </td>
-    </ng-container>
 
-    <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <th style="width: 70%;" mat-header-cell *matHeaderCellDef mat-sort-header>Template Name </th>
-      <td mat-cell *matCellDef="let element" data-label="Template Name"> {{element.name}} </td>
-    </ng-container>
-
-    <!-- Symbol Column -->
-    <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef> </th>
-      <td class="text-right" mat-cell *matCellDef="let element ">
-        <button type="button " (click)="edit(element.id)" class="btn btn-sm btn-success mr-2">Edit</button>
-        <button type="button" class="btn btn-sm btn-danger">Delete</button> </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
-    </tr>
-  </table>
-  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 </div>
