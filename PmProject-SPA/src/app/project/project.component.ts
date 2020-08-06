@@ -5,32 +5,32 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 
-const templateServiceOrderItem: TemplateServiceOrder[] = [
-  { id: '1', name: 'TemplateServiceOrder 1' },
-  { id: '2', name: 'TemplateServiceOrder 2' },
-  { id: '3', name: 'TemplateServiceOrder 3' },
-  { id: '4', name: 'TemplateServiceOrder 4' },
-  { id: '5', name: 'TemplateServiceOrder 5' },
-  { id: '6', name: 'TemplateServiceOrder 6' },
-  { id: '7', name: 'TemplateServiceOrder 7' },
-  { id: '8', name: 'TemplateServiceOrder 8' },
-  { id: '9', name: 'TemplateServiceOrder 9' },
+const templateServiceOrderItem: Procject[] = [
+  { id: '1', name: 'Project 1' },
+  { id: '2', name: 'Project 2' },
+  { id: '3', name: 'Project 3' },
+  { id: '4', name: 'Project 4' },
+  { id: '5', name: 'Project 5' },
+  { id: '6', name: 'Project 6' },
+  { id: '7', name: 'Project 7' },
+  { id: '8', name: 'Project 8' },
+  { id: '9', name: 'Project 9' },
 ];
 
 @Component({
-  selector: 'app-template-service-order',
-  templateUrl: './template-service-order.component.html',
-  styleUrls: ['./template-service-order.component.scss'],
+  selector: 'app-project',
+  templateUrl: './project.component.html',
+  styleUrls: ['./project.component.css']
 })
-export class TemplateServiceOrderComponent implements OnInit {
+export class ProjectComponent implements OnInit {
 
   //displayedColumns: any;
   // dataSource: any;
   // selection: any;
   templateServiceOrderItem = templateServiceOrderItem;
   displayedColumns: string[] = ['select', 'name', 'action'];
-  dataSource = new MatTableDataSource<TemplateServiceOrder>(templateServiceOrderItem);
-  selection = new SelectionModel<TemplateServiceOrder>(true, []);
+  dataSource = new MatTableDataSource<Procject>(templateServiceOrderItem);
+  selection = new SelectionModel<Procject>(true, []);
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -65,7 +65,7 @@ export class TemplateServiceOrderComponent implements OnInit {
   }
 
   /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: TemplateServiceOrder): string {
+  checkboxLabel(row?: Procject): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
@@ -75,12 +75,12 @@ export class TemplateServiceOrderComponent implements OnInit {
 
   edit(id: string) {
     console.log(id);
-    this.router.navigate(['/template/edit/' + id]);
+    this.router.navigate(['/project/edit/' + id]);
   }
 }
 
 
-export interface TemplateServiceOrder {
+export interface Procject {
   id: string;
   name: string;
 }

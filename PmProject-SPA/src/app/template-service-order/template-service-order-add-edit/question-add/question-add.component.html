@@ -24,7 +24,7 @@
     <div class="form-group row" *ngFor="let item of question?.templateServiceOrderAnswer; let i = index">
       <label for="choice" class="col-sm-3 col-form-label">Choice {{i + 1}}</label>
       <div class="col-sm-9">
-        <input type="text" [(ngModel)]="item.choice" class="form-control" id="choice">
+        <input type="text" [(ngModel)]="item.choice" class="form-control">
       </div>
     </div>
     <div class="row">

@@ -16,6 +16,8 @@ import { resolve } from 'dns';
 import { CompanyResolver } from './_resolvers/company.resolver';
 import { TemplateServiceOrderComponent } from './template-service-order/template-service-order.component';
 import { TemplateServiceOrderAddEditComponent } from './template-service-order/template-service-order-add-edit/template-service-order-add-edit.component';
+import { ProjectComponent } from './project/project.component';
+import { ProjectAddEditComponent } from './project/project-add-edit/project-add-edit.component';
 
 export const appRoutes: Routes = [
     { path: '', component: HomeComponent },
@@ -47,7 +49,10 @@ export const appRoutes: Routes = [
             },
             { path: 'template', component: TemplateServiceOrderComponent },
             { path: 'template/add', component: TemplateServiceOrderAddEditComponent },
-            { path: 'template/edit:id', component: TemplateServiceOrderAddEditComponent },
+            { path: 'template/edit/:id', component: TemplateServiceOrderAddEditComponent },
+            { path: 'project', component: ProjectComponent },
+            { path: 'project/add', component: ProjectAddEditComponent },
+            { path: 'project/edit/:id', component: ProjectAddEditComponent },
         ]
     },
     { path: '**', redirectTo: '', pathMatch: 'full' }
