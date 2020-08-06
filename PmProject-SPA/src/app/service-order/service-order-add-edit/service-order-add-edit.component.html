@@ -29,7 +29,49 @@
                 <div class="form-row">
                   <div class="form-group col-md-12">
                     <label for="inputEmail4">Qustion A</label>
-                    <input type="email" class="form-control" id="inputEmail4">
+                    <input type="text" class="form-control" id="inputEmail4">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-12">
+                    <label>Qustion B</label>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-12">
+                    <div>
+                      <mat-checkbox class="example-margin mr-2">Check me!</mat-checkbox>
+                    </div>
+                    <div>
+                      <mat-checkbox class="example-margin mr-2">Check me!</mat-checkbox>
+                    </div>
+                    <div>
+                      <mat-checkbox class="example-margin mr-2">Check me!</mat-checkbox>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-12">
+                    <label>Qustion B</label>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-12">
+                    <div>
+                      <mat-radio-button value="1">Option 1</mat-radio-button>
+                    </div>
+                    <div>
+                      <mat-radio-button value="2">Option 2</mat-radio-button>
+                    </div>
+                    <div>
+                      <mat-radio-button value="3">Option 3</mat-radio-button>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-12">
+                    <label for="inputEmail4">Qustion C</label>
+                    <input type="text" class="form-control">
                   </div>
                 </div>
               </div>
@@ -47,9 +89,17 @@
           </div>
         </div>
         <div class="form-group row">
-          <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
-          <div class="col-sm-10">
-            <input type="email" class="form-control">
+          <label for="inputEmail3" class="col-sm-2 col-form-label">Customer Signature</label>
+          <div class="col-sm-8 text-center">
+            <div class="signature-pad">
+              <div class="signature-pad--body">
+                <canvas #sPad width="auto" height="200"
+                  style="touch-action: none; background-color: honeydew;"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-2 text-right">
+            <button class="btn btn-danger" (click)="clear()">Clear</button>
           </div>
         </div>
         <div class="form-group row">
@@ -63,3 +113,27 @@
   </div>
 
 </div>
+
+
+<!-- <h1 class="text-center">Angular 9 Signature Pad</h1>
+<div class="signature-pad">
+  <div class="signature-pad--body">
+    <canvas #sPad width="900" height="600" style="touch-action: none;"></canvas>
+  </div>
+</div>
+<br>
+<br>
+<section class="container-fluid">
+  <div class="row">
+    <div class="col-6">
+      <button class="btn btn-block btn-danger" (click)="clear()">Clear</button>
+      <button class="btn btn-block btn-warning" (click)="undo()">Undo</button>
+      <button class="btn btn-block btn-info" (click)="changeColor()">Change Color</button>
+    </div>
+    <div class="col-6">
+      <button class="btn btn-block btn-success" (click)="savePNG()">PNG</button>
+      <button class="btn btn-block btn-primary" (click)="saveJPG()">JPG</button>
+      <button class="btn btn-block btn-secondary" (click)="saveSVG()">SVG</button>
+    </div>
+  </div>
+</section> -->
