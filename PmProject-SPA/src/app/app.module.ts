@@ -52,6 +52,8 @@ import { QuestionAddComponent } from './template-service-order/template-service-
 import { MatDialogModule } from '@angular/material/dialog';
 import { ProjectComponent } from './project/project.component';
 import { ProjectAddEditComponent } from './project/project-add-edit/project-add-edit.component';
+import { ServiceOrderComponent } from './service-order/service-order.component';
+import { ServiceOrderAddEditComponent } from './service-order/service-order-add-edit/service-order-add-edit.component';
 
 export function tokenGetter() {
    return localStorage.getItem('token');
@@ -82,7 +84,9 @@ export class CustomHammerConfig extends HammerGestureConfig {
       TemplateServiceOrderAddEditComponent,
       QuestionAddComponent,
       ProjectComponent,
-      ProjectAddEditComponent
+      ProjectAddEditComponent,
+      ServiceOrderComponent,
+      ServiceOrderAddEditComponent,
    ],
    imports: [
       BrowserModule,
