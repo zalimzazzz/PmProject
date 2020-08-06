@@ -8,19 +8,28 @@
     <div class="form-group row mt-2">
       <label for="question" class="col-sm-3 col-form-label">Question</label>
       <div class="col-sm-9">
-        <input type="text" class="form-control" id="question">
+        <input [(ngModel)]="question.question" type="text" class="form-control" id="question">
       </div>
     </div>
     <div class="form-group row">
       <label for="answerType" class="col-sm-3 col-form-label">Answer Type</label>
       <div class="col-sm-9">
-        <input type="text" class="form-control" id="answerType">
+        <select [(ngModel)]="question.answerType" class="form-control" id="answerType">
+          <option selected>Choose...</option>
+          <option value="1">One Chaoice</option>
+          <option value="2">Many</option>
+        </select>
       </div>
     </div>
-    <div class="form-group row">
-      <label for="choice" class="col-sm-3 col-form-label">Choice</label>
+    <div class="form-group row" *ngFor="let item of question?.templateServiceOrderAnswer; let i = index">
+      <label for="choice" class="col-sm-3 col-form-label">Choice {{i + 1}}</label>
       <div class="col-sm-9">
-        <input type="text" class="form-control" id="choice">
+        <input type="text" [(ngModel)]="item.choice" class="form-control" id="choice">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col text-right">
+        <a (click)="addChoice()" class="add-choice-btn">+</a>
       </div>
     </div>
     <div class="row mt-4">
