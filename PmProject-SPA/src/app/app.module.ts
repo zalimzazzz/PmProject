@@ -55,6 +55,7 @@ import { ProjectAddEditComponent } from './project/project-add-edit/project-add-
 import { ServiceOrderComponent } from './service-order/service-order.component';
 import { ServiceOrderAddEditComponent } from './service-order/service-order-add-edit/service-order-add-edit.component';
 import { MatRadioModule } from '@angular/material/radio';
+import { ExportComponent } from './project/export/export.component';
 
 export function tokenGetter() {
    return localStorage.getItem('token');
@@ -88,6 +89,7 @@ export class CustomHammerConfig extends HammerGestureConfig {
       ProjectAddEditComponent,
       ServiceOrderComponent,
       ServiceOrderAddEditComponent,
+      ExportComponent,
    ],
    imports: [
       BrowserModule,

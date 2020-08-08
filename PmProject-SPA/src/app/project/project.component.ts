@@ -80,6 +80,9 @@ export class ProjectComponent implements OnInit {
       }
     });
   }
+  export(id: string) {
+    this.router.navigate(['project/export/' + id]);
+  }
   openDialog() {
     this.dialog.open(ProjectAddEditComponent, {
       data: {
