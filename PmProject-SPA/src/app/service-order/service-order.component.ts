@@ -4,37 +4,35 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { ServiceOrderAddEditComponent } from './service-order-add-edit/service-order-add-edit.component';
 
-const templateServiceOrderItem: TemplateServiceOrder[] = [
-  { id: '1', name: 'TemplateServiceOrder 1' },
-  { id: '2', name: 'TemplateServiceOrder 2' },
-  { id: '3', name: 'TemplateServiceOrder 3' },
-  { id: '4', name: 'TemplateServiceOrder 4' },
-  { id: '5', name: 'TemplateServiceOrder 5' },
-  { id: '6', name: 'TemplateServiceOrder 6' },
-  { id: '7', name: 'TemplateServiceOrder 7' },
-  { id: '8', name: 'TemplateServiceOrder 8' },
-  { id: '9', name: 'TemplateServiceOrder 9' },
+const templateServiceOrderItem: Procject[] = [
+  { id: '1', serviceOrderNo: 'S01', description: 'description Abc', status: '1' },
+  { id: '2', serviceOrderNo: 'S02', description: 'description Abc', status: '1' },
+  { id: '3', serviceOrderNo: 'S03', description: 'description Abc', status: '1' },
+  { id: '4', serviceOrderNo: 'S04', description: 'description Abc', status: '1' },
 ];
 
 @Component({
-  selector: 'app-template-service-order',
-  templateUrl: './template-service-order.component.html',
-  styleUrls: ['./template-service-order.component.scss'],
+  selector: 'app-service-order',
+  templateUrl: './service-order.component.html',
+  styleUrls: ['./service-order.component.css']
 })
-export class TemplateServiceOrderComponent implements OnInit {
+export class ServiceOrderComponent implements OnInit {
 
   //displayedColumns: any;
   // dataSource: any;
   // selection: any;
   templateServiceOrderItem = templateServiceOrderItem;
-  displayedColumns: string[] = ['select', 'name', 'action'];
-  dataSource = new MatTableDataSource<TemplateServiceOrder>(templateServiceOrderItem);
-  selection = new SelectionModel<TemplateServiceOrder>(true, []);
+  displayedColumns: string[] = ['select', 'serviceOrderNo', 'description', 'status', 'action'];
+  dataSource = new MatTableDataSource<Procject>(templateServiceOrderItem);
+  selection = new SelectionModel<Procject>(true, []);
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  constructor(private router: Router) {
+  constructor(private router: Router,
+    public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -65,7 +63,7 @@ export class TemplateServiceOrderComponent implements OnInit {
   }
 
   /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: TemplateServiceOrder): string {
+  checkboxLabel(row?: Procject): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
@@ -74,15 +72,24 @@ export class TemplateServiceOrderComponent implements OnInit {
   }
 
   edit(id: string) {
-    console.log(id);
-    this.router.navigate(['/template/edit/' + id]);
+    this.router.navigate(['/serviceOrder/edit/' + id]);
   }
+  openDialog() {
+    this.dialog.open(ServiceOrderAddEditComponent, {
+      data: {
+        animal: 'panda'
+      }
+    });
+  }
+
 }
 
 
-export interface TemplateServiceOrder {
+export interface Procject {
   id: string;
-  name: string;
+  serviceOrderNo: string;
+  description: string;
+  status: string;
 }
 
 

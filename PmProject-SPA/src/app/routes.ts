@@ -16,6 +16,11 @@ import { resolve } from 'dns';
 import { CompanyResolver } from './_resolvers/company.resolver';
 import { TemplateServiceOrderComponent } from './template-service-order/template-service-order.component';
 import { TemplateServiceOrderAddEditComponent } from './template-service-order/template-service-order-add-edit/template-service-order-add-edit.component';
+import { ProjectComponent } from './project/project.component';
+import { ProjectAddEditComponent } from './project/project-add-edit/project-add-edit.component';
+import { ServiceOrderComponent } from './service-order/service-order.component';
+import { ServiceOrderAddEditComponent } from './service-order/service-order-add-edit/service-order-add-edit.component';
+import { ExportComponent } from './project/export/export.component';
 
 export const appRoutes: Routes = [
     { path: '', component: HomeComponent },
@@ -47,7 +52,15 @@ export const appRoutes: Routes = [
             },
             { path: 'template', component: TemplateServiceOrderComponent },
             { path: 'template/add', component: TemplateServiceOrderAddEditComponent },
-            { path: 'template/edit:id', component: TemplateServiceOrderAddEditComponent },
+            { path: 'template/edit/:id', component: TemplateServiceOrderAddEditComponent },
+            { path: 'project', component: ProjectComponent },
+            { path: 'project/add', component: ProjectAddEditComponent },
+            { path: 'project/edit/:id', component: ProjectAddEditComponent },
+            { path: 'project/export/:id', component: ExportComponent },
+            { path: 'serviceOrder', component: ServiceOrderComponent },
+            { path: 'serviceOrder/add', component: ServiceOrderAddEditComponent },
+            { path: 'serviceOrder/edit/:id', component: ServiceOrderAddEditComponent },
+            { path: 'serviceOrder/edit/:id', component: ServiceOrderAddEditComponent },
         ]
     },
     { path: '**', redirectTo: '', pathMatch: 'full' }

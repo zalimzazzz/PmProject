@@ -11,9 +11,9 @@ import { Router } from '@angular/router';
 export class NavComponent implements OnInit {
   model: any = {};
   photoUrl: string;
-
-constructor(public authService: AuthService, private alertify: AlertifyService,
-  private router: Router) { }
+  navbarOpen = false;
+  constructor(public authService: AuthService, private alertify: AlertifyService,
+    private router: Router) { }
 
   ngOnInit() {
     this.authService.currentPhotoUrl.subscribe(photoUrl => this.photoUrl = photoUrl);
@@ -32,6 +32,11 @@ constructor(public authService: AuthService, private alertify: AlertifyService,
   loggedIn() {
     return this.authService.loggedIn();
   }
+
+  toggleNavbar() {
+    this.navbarOpen = !this.navbarOpen;
+  }
+
 
   logout() {
     localStorage.removeItem('token');
