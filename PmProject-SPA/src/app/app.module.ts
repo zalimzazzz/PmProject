@@ -50,6 +50,12 @@ import { MatSortModule } from '@angular/material/sort';
 import { TemplateServiceOrderAddEditComponent } from './template-service-order/template-service-order-add-edit/template-service-order-add-edit.component';
 import { QuestionAddComponent } from './template-service-order/template-service-order-add-edit/question-add/question-add.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ProjectComponent } from './project/project.component';
+import { ProjectAddEditComponent } from './project/project-add-edit/project-add-edit.component';
+import { ServiceOrderComponent } from './service-order/service-order.component';
+import { ServiceOrderAddEditComponent } from './service-order/service-order-add-edit/service-order-add-edit.component';
+import { MatRadioModule } from '@angular/material/radio';
+import { ExportComponent } from './project/export/export.component';
 
 export function tokenGetter() {
    return localStorage.getItem('token');
@@ -79,6 +85,11 @@ export class CustomHammerConfig extends HammerGestureConfig {
       TemplateServiceOrderComponent,
       TemplateServiceOrderAddEditComponent,
       QuestionAddComponent,
+      ProjectComponent,
+      ProjectAddEditComponent,
+      ServiceOrderComponent,
+      ServiceOrderAddEditComponent,
+      ExportComponent,
    ],
    imports: [
       BrowserModule,
@@ -105,6 +116,7 @@ export class CustomHammerConfig extends HammerGestureConfig {
       MatPaginatorModule,
       MatSortModule,
       MatDialogModule,
+      MatRadioModule,
       JwtModule.forRoot({
          config: {
             tokenGetter: tokenGetter,

@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-question-add',
-  templateUrl: './question-add.component.html',
-  styleUrls: ['./question-add.component.scss']
+  selector: 'app-project-add-edit',
+  templateUrl: './project-add-edit.component.html',
+  styleUrls: ['./project-add-edit.component.css']
 })
-export class QuestionAddComponent implements OnInit {
+export class ProjectAddEditComponent implements OnInit {
+
   question: TemplateServiceOrderQuestion = new TemplateServiceOrderQuestion();
   constructor() { }
 
@@ -14,10 +15,6 @@ export class QuestionAddComponent implements OnInit {
     this.question.question = 'Question 1';
     this.question.answerType = 1;
     this.question.templateServiceOrderAnswer = [{ id: 1, choice: 'choice1' }, { id: 2, choice: 'choice2' }, { id: 3, choice: 'choice3' }];
-  }
-
-  addChoice() {
-    this.question.templateServiceOrderAnswer.push({ id: null, choice: '' })
   }
 }
 
