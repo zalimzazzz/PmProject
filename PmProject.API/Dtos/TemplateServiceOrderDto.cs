@@ -8,7 +8,7 @@ namespace PmProject.API.Dtos
         public Guid Id { get; set; }
         public string Name { get; set; }
         public Guid CompanyId { get; set; }
-        public CompanyForCreationDto Company { get; set; }
+        // public CompanyForCreationDto Company { get; set; }
         public List<TemplateServiceOrderQuestionDto> TemplateServiceOrderQuestion { get; set; }
     }
 }

@@ -12,22 +12,22 @@ namespace PmProject.API.Data
     {
         private readonly DataContext _context;
 
-        void ITemplateServiceOrderRepository.Add(TemplateServiceOrder templateServiceOrder)
+        public void Add(TemplateServiceOrder templateServiceOrder)
         {
             throw new NotImplementedException();
         }
 
-        void ITemplateServiceOrderRepository.Delete(Guid id)
+        public void Delete(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        Task<List<TemplateServiceOrder>> ITemplateServiceOrderRepository.GetTemplateServiceOrder()
+        public Task<List<TemplateServiceOrder>> GetTemplateServiceOrder()
         {
             throw new NotImplementedException();
         }
 
-        Task<TemplateServiceOrder> ITemplateServiceOrderRepository.GetTemplateServiceOrder(Guid id)
+        public Task<TemplateServiceOrder> GetTemplateServiceOrder(Guid id)
         {
             throw new NotImplementedException();
         }

@@ -4,8 +4,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { TemplateServiceOrder } from './models/templateServiceOrder';
 
-const templateServiceOrderItem: TemplateServiceOrder[] = [
+const templateServiceOrderItem: any[] = [
   { id: '1', name: 'TemplateServiceOrder 1' },
   { id: '2', name: 'TemplateServiceOrder 2' },
   { id: '3', name: 'TemplateServiceOrder 3' },
@@ -80,10 +81,10 @@ export class TemplateServiceOrderComponent implements OnInit {
 }
 
 
-export interface TemplateServiceOrder {
-  id: string;
-  name: string;
-}
+// export interface TemplateServiceOrder {
+//   id: string;
+//   name: string;
+// }
 
 
 
