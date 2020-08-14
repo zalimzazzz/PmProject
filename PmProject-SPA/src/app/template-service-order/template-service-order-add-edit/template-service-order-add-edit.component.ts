@@ -8,8 +8,9 @@ import { AlertifyService } from '../../_services/alertify.service';
 import { TemplateServiceOrder } from '../../_models/template-service-order';
 import { TemplateServiceOrderQuestion } from '../../_models/template-service-order-question';
 import { TemplateServiceOrderAnswer } from '../../_models/template-service-order-answer';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Guid } from 'guid-typescript';
 
 @Component({
   selector: 'app-template-service-order-add-edit',
@@ -21,17 +22,30 @@ export class TemplateServiceOrderAddEditComponent implements OnInit {
   displayedColumns: string[] = ['question', 'action'];
   // dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   dataSource: any;
+  mode = 'New'
   templateServiceOrder = new TemplateServiceOrder();
+  id: string
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   constructor(public dialog: MatDialog,
     private templateServiceOrderServiceService: TemplateServiceOrderServiceService,
     private alertify: AlertifyService,
     private router: Router,
-    private spinner: NgxSpinnerService) {
+    private spinner: NgxSpinnerService,
+    private route: ActivatedRoute,) {
     this.templateServiceOrder.templateServiceOrderQuestion = new Array<TemplateServiceOrderQuestion>();
   }
   ngOnInit() {
-    this.setTable();
+    this.route.params.subscribe(params => {
+      this.id = params['id'];
+      if (this.id !== undefined) {
+        this.mode = 'Edit'
+        this.templateServiceOrderServiceService.getById(this.id).then((res: TemplateServiceOrder) => {
+          console.log(res);
+          this.templateServiceOrder = res;
+          this.setTable();
+        });
+      }
+    });
   }
   setTable() {
     this.dataSource = new MatTableDataSource<TemplateServiceOrderQuestion>(this.templateServiceOrder.templateServiceOrderQuestion);
@@ -42,7 +56,7 @@ export class TemplateServiceOrderAddEditComponent implements OnInit {
     const dialogRef = this.dialog.open(QuestionAddComponent, {
       data: {
         name: '',
-        templateServiceOrderAnswerId: 0,
+        answerTypeId: '',
         templateServiceOrderAnswer: [templateServiceOrderAnswer]
       }
     });
@@ -52,8 +66,33 @@ export class TemplateServiceOrderAddEditComponent implements OnInit {
         return;
       }
       console.log(result);
-      result.templateServiceOrderAnswerId = +result.templateServiceOrderAnswerId;
+      result.id = Guid.create().toString();
+      result.answerTypeId = result.answerTypeId;
       this.templateServiceOrder.templateServiceOrderQuestion.push(result);
+      console.log(this.templateServiceOrder.templateServiceOrderQuestion);
+
+      this.setTable();
+    });
+  }
+
+  openDialogEdite(id: string) {
+    console.log('openDialogEdite');
+
+    let question = this.templateServiceOrder.templateServiceOrderQuestion.filter(f => f.id === id)[0];
+    const dialogRef = this.dialog.open(QuestionAddComponent, {
+      data: question,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === undefined) {
+        return;
+      }
+      console.log(result.id);
+      let question = this.templateServiceOrder.templateServiceOrderQuestion.filter(f => f.id === result.id)[0];
+
+      // question.templateServiceOrderAnswer = +result.templateServiceOrderAnswerId;
+      question.answerTypeId = result.answerTypeId
+      //   this.templateServiceOrder.templateServiceOrderQuestion.push(result);
       console.log(this.templateServiceOrder.templateServiceOrderQuestion);
 
       this.setTable();
@@ -62,13 +101,25 @@ export class TemplateServiceOrderAddEditComponent implements OnInit {
 
   save() {
     this.spinner.show();
-    this.templateServiceOrderServiceService.add(this.templateServiceOrder).then(res => {
-      console.log('save', res);
-      this.spinner.hide();
-      this.router.navigate(['/template']);
-    }).catch(ex => {
-      this.alertify.error('Save Failed');
-    });
+    if (this.mode === 'New') {
+      this.templateServiceOrderServiceService.add(this.templateServiceOrder).then(res => {
+        console.log('save', res);
+        this.router.navigate(['/template']);
+      }).catch(ex => {
+        this.alertify.error('Save Failed');
+      }).finally(() => {
+        this.spinner.hide();
+      });
+    }
+    else {
+      this.templateServiceOrderServiceService.update(this.templateServiceOrder).then(res => {
+        console.log('update', res);
+        this.router.navigate(['/template']);
+      }).catch(ex => {
+        this.alertify.error(ex);
+      }).finally(() => {
+        this.spinner.hide();
+      });
+    }
   }
-
 }

@@ -190,10 +190,7 @@ namespace PmProject.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("TemplateServiceOrderAnswerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("TemplateServiceOrderId")
+                    b.Property<Guid>("TemplateServiceOrderId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -328,7 +325,9 @@ namespace PmProject.API.Migrations
                 {
                     b.HasOne("PmProject.API.Models.TemplateServiceOrder", "TemplateServiceOrder")
                         .WithMany("TemplateServiceOrderQuestion")
-                        .HasForeignKey("TemplateServiceOrderId");
+                        .HasForeignKey("TemplateServiceOrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PmProject.API.Models.User", b =>

@@ -14,7 +14,13 @@ export class TemplateServiceOrderServiceService {
   async add(templateServiceOrder: TemplateServiceOrder) {
     return await this.http.post(this.baseUrl + 'TemplateServiceOrder', templateServiceOrder).toPromise();
   }
+  async update(templateServiceOrder: TemplateServiceOrder) {
+    return await this.http.put(this.baseUrl + 'TemplateServiceOrder/' + templateServiceOrder.id, templateServiceOrder).toPromise();
+  }
   async get() {
     return await this.http.get(this.baseUrl + 'TemplateServiceOrder').toPromise();
+  }
+  async getById(id: string) {
+    return await this.http.get(this.baseUrl + 'TemplateServiceOrder/' + id).toPromise();
   }
 }

@@ -1,7 +1,7 @@
 <div class="container mt-5">
   <div class="card">
     <div class="card-header">
-      New Template Service Oder
+      {{mode}} Template Service Oder
     </div>
     <div class="card-body">
       <div class="row mb-4">
@@ -36,7 +36,8 @@
                   <ng-container matColumnDef="action">
                     <th mat-header-cell *matHeaderCellDef> </th>
                     <td class="text-right" mat-cell *matCellDef="let element ">
-                      <button type="button " class="btn btn-sm btn-success mr-2">Edit</button>
+                      <button type="button " (click)="openDialogEdite(element.id)"
+                        class="btn btn-sm btn-success mr-2">Edit</button>
                       <button type="button" class="btn btn-sm btn-danger">Delete</button> </td>
                   </ng-container>
 

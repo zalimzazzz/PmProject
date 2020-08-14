@@ -14,7 +14,7 @@
     <div class="form-group row">
       <label for="answerType" class="col-sm-3 col-form-label">Answer Type</label>
       <div class="col-sm-9">
-        <select [(ngModel)]="question.templateServiceOrderAnswerId" class="form-control" id="answerType">
+        <select [(ngModel)]="question.answerTypeId" class="form-control" id="answerType">
           <option selected>Choose...</option>
           <option value="1">One Chaoice</option>
           <option value="2">Many</option>
@@ -34,7 +34,7 @@
     </div>
     <div class="row mt-4">
       <div class="col text-center">
-        <button type="button " class="btn  btn-success mr-2" [mat-dialog-close]="question" cdkFocusInitial>Add</button>
+        <button type="button " class="btn  btn-success mr-2" [mat-dialog-close]="question" cdkFocusInitial>Save</button>
         <button type="button" class="btn  btn-danger" (click)="onNoClick()">Cancel</button>
       </div>
     </div>

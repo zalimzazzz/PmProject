@@ -56,9 +56,15 @@ namespace PmProject.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public void UpdateTemplateServiceOrder(Guid id, [FromBody] string name)
+        public async Task<IActionResult> UpdateTemplateServiceOrder(Guid id, [FromBody] TemplateServiceOrderDto templateServiceOrder)
         {
-            //return Unauthorized();
+            var _templateServiceOrder = _mapper.Map<TemplateServiceOrder>(templateServiceOrder);
+
+            if (await _repo.UpdateTemplateServiceOrder(_templateServiceOrder))
+            {
+                return Ok(templateServiceOrder);
+            };
+            return BadRequest("Could not update the Template Service Order");
         }
 
         [HttpDelete("{id}")]

@@ -13,9 +13,9 @@ namespace PmProject.API.Models
         public string Name { get; set; }
         [Required]
         public int AnswerTypeId { get; set; }
-        // public Guid TemplateServiceOrderId { get; set; }
+        public Guid TemplateServiceOrderId { get; set; }
         public TemplateServiceOrder TemplateServiceOrder { get; set; }
-        public Guid TemplateServiceOrderAnswerId { get; set; }
+        // public Guid TemplateServiceOrderAnswerId { get; set; }
         public List<TemplateServiceOrderAnswer> TemplateServiceOrderAnswer { get; set; }
     }
 }
