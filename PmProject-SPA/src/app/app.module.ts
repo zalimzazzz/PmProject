@@ -1,5 +1,5 @@
 import { BrowserModule, HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -56,6 +56,7 @@ import { ServiceOrderComponent } from './service-order/service-order.component';
 import { ServiceOrderAddEditComponent } from './service-order/service-order-add-edit/service-order-add-edit.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { ExportComponent } from './project/export/export.component';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 export function tokenGetter() {
    return localStorage.getItem('token');
@@ -117,6 +118,7 @@ export class CustomHammerConfig extends HammerGestureConfig {
       MatSortModule,
       MatDialogModule,
       MatRadioModule,
+      NgxSpinnerModule,
       JwtModule.forRoot({
          config: {
             tokenGetter: tokenGetter,
@@ -141,6 +143,7 @@ export class CustomHammerConfig extends HammerGestureConfig {
    ],
    bootstrap: [
       AppComponent
-   ]
+   ],
+   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule { }

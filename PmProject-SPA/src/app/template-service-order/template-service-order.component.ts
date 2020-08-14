@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { TemplateServiceOrder } from '../_models/template-service-order';
 import { TemplateServiceOrderServiceService } from '../_services/template-service-order-service.service';
 import { AlertifyService } from '../_services/alertify.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 @Component({
@@ -24,10 +25,14 @@ export class TemplateServiceOrderComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  constructor(private router: Router, private templateServiceOrderServiceService: TemplateServiceOrderServiceService, private alertify: AlertifyService) {
+  constructor(private router: Router,
+    private templateServiceOrderServiceService: TemplateServiceOrderServiceService,
+    private alertify: AlertifyService,
+    private spinner: NgxSpinnerService) {
   }
 
   ngOnInit() {
+    this.spinner.show();
     this.templateServiceOrderServiceService.get().then((res: Array<TemplateServiceOrder>) => {
       console.log(res);
       this.templateServiceOrder = res;
@@ -36,6 +41,8 @@ export class TemplateServiceOrderComponent implements OnInit {
       this.dataSource.sort = this.sort;
     }).catch(ex => {
       this.alertify.error(ex);
+    }).finally(() => {
+      this.spinner.hide();
     });
   }
   applyFilter(event: Event) {

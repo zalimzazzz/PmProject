@@ -9,6 +9,7 @@ import { TemplateServiceOrder } from '../../_models/template-service-order';
 import { TemplateServiceOrderQuestion } from '../../_models/template-service-order-question';
 import { TemplateServiceOrderAnswer } from '../../_models/template-service-order-answer';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-template-service-order-add-edit',
@@ -25,7 +26,8 @@ export class TemplateServiceOrderAddEditComponent implements OnInit {
   constructor(public dialog: MatDialog,
     private templateServiceOrderServiceService: TemplateServiceOrderServiceService,
     private alertify: AlertifyService,
-    private router: Router) {
+    private router: Router,
+    private spinner: NgxSpinnerService) {
     this.templateServiceOrder.templateServiceOrderQuestion = new Array<TemplateServiceOrderQuestion>();
   }
   ngOnInit() {
@@ -59,9 +61,10 @@ export class TemplateServiceOrderAddEditComponent implements OnInit {
   }
 
   save() {
-    console.log(this.templateServiceOrder);
+    this.spinner.show();
     this.templateServiceOrderServiceService.add(this.templateServiceOrder).then(res => {
       console.log('save', res);
+      this.spinner.hide();
       this.router.navigate(['/template']);
     }).catch(ex => {
       this.alertify.error('Save Failed');
