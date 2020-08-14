@@ -3,8 +3,12 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { QuestionAddComponent } from './question-add/question-add.component';
-import { TemplateServiceOrder } from '../models/templateServiceOrder';
-import { TemplateServiceOrderQuestion } from '../models/templateServiceOrderQuestion';
+import { TemplateServiceOrderServiceService } from '../../_services/template-service-order-service.service';
+import { AlertifyService } from '../../_services/alertify.service';
+import { TemplateServiceOrder } from '../../_models/template-service-order';
+import { TemplateServiceOrderQuestion } from '../../_models/template-service-order-question';
+import { TemplateServiceOrderAnswer } from '../../_models/template-service-order-answer';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-template-service-order-add-edit',
@@ -18,7 +22,10 @@ export class TemplateServiceOrderAddEditComponent implements OnInit {
   dataSource: any;
   templateServiceOrder = new TemplateServiceOrder();
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  constructor(public dialog: MatDialog) {
+  constructor(public dialog: MatDialog,
+    private templateServiceOrderServiceService: TemplateServiceOrderServiceService,
+    private alertify: AlertifyService,
+    private router: Router) {
     this.templateServiceOrder.templateServiceOrderQuestion = new Array<TemplateServiceOrderQuestion>();
   }
   ngOnInit() {
@@ -29,11 +36,12 @@ export class TemplateServiceOrderAddEditComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
   openDialog() {
+    let templateServiceOrderAnswer = new TemplateServiceOrderAnswer();
     const dialogRef = this.dialog.open(QuestionAddComponent, {
       data: {
         name: '',
         templateServiceOrderAnswerId: 0,
-        templateServiceOrderAnswer: ['']
+        templateServiceOrderAnswer: [templateServiceOrderAnswer]
       }
     });
 
@@ -42,6 +50,7 @@ export class TemplateServiceOrderAddEditComponent implements OnInit {
         return;
       }
       console.log(result);
+      result.templateServiceOrderAnswerId = +result.templateServiceOrderAnswerId;
       this.templateServiceOrder.templateServiceOrderQuestion.push(result);
       console.log(this.templateServiceOrder.templateServiceOrderQuestion);
 
@@ -49,5 +58,14 @@ export class TemplateServiceOrderAddEditComponent implements OnInit {
     });
   }
 
+  save() {
+    console.log(this.templateServiceOrder);
+    this.templateServiceOrderServiceService.add(this.templateServiceOrder).then(res => {
+      console.log('save', res);
+      this.router.navigate(['/template']);
+    }).catch(ex => {
+      this.alertify.error('Save Failed');
+    });
+  }
 
 }

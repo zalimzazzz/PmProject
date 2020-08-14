@@ -8,13 +8,13 @@ namespace PmProject.API.Data
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
         }
-        public DbSet<Value> Values {get; set;}
-        public DbSet<User> Users {get; set;}
+        public DbSet<Value> Values { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Photo> Photos { get; set; }
         public DbSet<Like> Likes { get; set; }
         public DbSet<TemplateServiceOrder> TemplateServiceOrder { get; set; }
-        public DbSet<TemplateServiceOrder> TemplateServiceOrderQuestion { get; set; }
-        public DbSet<TemplateServiceOrder> TemplateServiceOrderAnswer { get; set; }
+        public DbSet<TemplateServiceOrderQuestion> TemplateServiceOrderQuestion { get; set; }
+        public DbSet<TemplateServiceOrderAnswer> TemplateServiceOrderAnswer { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Like>()
@@ -34,6 +34,6 @@ namespace PmProject.API.Data
         }
         public DbSet<Company> Company { get; set; }
         public DbSet<SurveyHeaders> SurveyHeaders { get; set; }
-        
+
     }
 }

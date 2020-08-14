@@ -1,4 +1,4 @@
-import { TemplateServiceOrderQuestion } from './templateServiceOrderQuestion';
+import { TemplateServiceOrderQuestion } from './template-service-order-question';
 
 export class TemplateServiceOrderAnswer {
     id: string;

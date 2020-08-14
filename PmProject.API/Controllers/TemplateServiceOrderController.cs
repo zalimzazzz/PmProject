@@ -18,9 +18,9 @@ namespace PmProject.API.Controllers
     [ApiController]
     public class TemplateServiceOrderController : ControllerBase
     {
-        private readonly ICompanyRepository _repo;
+        private readonly ITemplateServiceOrderRepository _repo;
         private readonly IMapper _mapper;
-        public TemplateServiceOrderController(ICompanyRepository repo, IMapper mapper)
+        public TemplateServiceOrderController(ITemplateServiceOrderRepository repo, IMapper mapper)
         {
             _repo = repo;
             _mapper = mapper;
@@ -29,25 +29,15 @@ namespace PmProject.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetTemplateServiceOrder()
         {
-            var company = await _repo.GetCompanies();
-
-            var companyToReturn = _mapper.Map<IEnumerable<CompanyForReturnDto>>(company);
-
-            Response.AddPagination(company.CurrentPage, company.PageSize,
-                company.TotalCount, company.TotalPages);
-
-            return Ok(companyToReturn);
+            var resulte = await _repo.GetTemplateServiceOrder();
+            return Ok(resulte);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTemplateServiceOrder(Guid id)
         {
-            var company = await _repo.GetCompany(id);
-
-            var companyToReturn = _mapper.Map<CompanyForReturnDto>(company);
-
-            return Ok(companyToReturn);
-
+            var resulte = await _repo.GetTemplateServiceOrder(id);
+            return Ok(resulte);
         }
 
         [HttpPost]
@@ -56,22 +46,13 @@ namespace PmProject.API.Controllers
             // if (await _repo.CompanyExists(companyForCreationDto.Name))
             //     return BadRequest("Company already exists");
 
-            // var company = _mapper.Map<Company>(companyForCreationDto);
+            var _templateServiceOrder = _mapper.Map<TemplateServiceOrder>(templateServiceOrder);
 
-            // _repo.Add<Company>(company);
-
-            // if (await _repo.SaveAll())
-            // {
-            //     var companyToReturn = _mapper.Map<CompanyForReturnDto>(company);
-            //     return CreatedAtRoute("GetCompanies", new
-            //     {
-            //         controller = "Company",
-            //         id = company.Id
-            //     }, companyToReturn);
-            // };
-
-            // return BadRequest("Could not add the Company");
-            return Ok(templateServiceOrder);
+            if (await _repo.Add(_templateServiceOrder))
+            {
+                return Ok(templateServiceOrder);
+            };
+            return BadRequest("Could not add the Template Service Order");
         }
 
         [HttpPut("{id}")]

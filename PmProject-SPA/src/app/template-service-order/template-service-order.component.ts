@@ -4,19 +4,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { TemplateServiceOrder } from './models/templateServiceOrder';
+import { TemplateServiceOrder } from '../_models/template-service-order';
+import { TemplateServiceOrderServiceService } from '../_services/template-service-order-service.service';
+import { AlertifyService } from '../_services/alertify.service';
 
-const templateServiceOrderItem: any[] = [
-  { id: '1', name: 'TemplateServiceOrder 1' },
-  { id: '2', name: 'TemplateServiceOrder 2' },
-  { id: '3', name: 'TemplateServiceOrder 3' },
-  { id: '4', name: 'TemplateServiceOrder 4' },
-  { id: '5', name: 'TemplateServiceOrder 5' },
-  { id: '6', name: 'TemplateServiceOrder 6' },
-  { id: '7', name: 'TemplateServiceOrder 7' },
-  { id: '8', name: 'TemplateServiceOrder 8' },
-  { id: '9', name: 'TemplateServiceOrder 9' },
-];
 
 @Component({
   selector: 'app-template-service-order',
@@ -25,26 +16,27 @@ const templateServiceOrderItem: any[] = [
 })
 export class TemplateServiceOrderComponent implements OnInit {
 
-  //displayedColumns: any;
-  // dataSource: any;
-  // selection: any;
-  templateServiceOrderItem = templateServiceOrderItem;
   displayedColumns: string[] = ['select', 'name', 'action'];
-  dataSource = new MatTableDataSource<TemplateServiceOrder>(templateServiceOrderItem);
+  templateServiceOrder = new Array<TemplateServiceOrder>()
+  // dataSource = new MatTableDataSource<TemplateServiceOrder>(templateServiceOrderItem);
+  dataSource: any;
   selection = new SelectionModel<TemplateServiceOrder>(true, []);
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  constructor(private router: Router) {
+  constructor(private router: Router, private templateServiceOrderServiceService: TemplateServiceOrderServiceService, private alertify: AlertifyService) {
   }
 
   ngOnInit() {
-
-
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    console.log(this.paginator);
-    console.log(this.sort);
+    this.templateServiceOrderServiceService.get().then((res: Array<TemplateServiceOrder>) => {
+      console.log(res);
+      this.templateServiceOrder = res;
+      this.dataSource = new MatTableDataSource<TemplateServiceOrder>(this.templateServiceOrder)
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }).catch(ex => {
+      this.alertify.error(ex);
+    });
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -54,7 +46,7 @@ export class TemplateServiceOrderComponent implements OnInit {
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
+    const numRows = this.dataSource?.data.length;
     return numSelected === numRows;
   }
 
@@ -71,7 +63,7 @@ export class TemplateServiceOrderComponent implements OnInit {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
     const rowIndex = (element) => element == row.id;
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${this.templateServiceOrderItem.findIndex(rowIndex)}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${this.templateServiceOrder.findIndex(rowIndex)}`;
   }
 
   edit(id: string) {

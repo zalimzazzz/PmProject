@@ -13,6 +13,7 @@ namespace PmProject.API.Models
         [Required]
         public Guid CompanyId { get; set; }
         public Company Company { get; set; }
+        public bool IsDelete { get; set; }
         public List<TemplateServiceOrderQuestion> TemplateServiceOrderQuestion { get; set; }
     }
 }

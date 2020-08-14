@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PmProject.API.Helpers;
@@ -11,10 +12,25 @@ namespace PmProject.API.Data
     public class TemplateServiceOrderRepository : ITemplateServiceOrderRepository
     {
         private readonly DataContext _context;
-
-        public void Add(TemplateServiceOrder templateServiceOrder)
+        public TemplateServiceOrderRepository(DataContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+        public async Task<bool> Add(TemplateServiceOrder templateServiceOrder)
+        {
+            templateServiceOrder.Id = Guid.NewGuid();
+            templateServiceOrder.CompanyId = Guid.Parse("1b7b50b8-6886-4463-9391-64c68a215ea9");
+            _context.Add(templateServiceOrder);
+            foreach (var templateServiceOrderQuestion in templateServiceOrder.TemplateServiceOrderQuestion)
+            {
+                foreach (var templateServiceOrderAnswer in templateServiceOrderQuestion.TemplateServiceOrderAnswer)
+                {
+                    _context.Add(templateServiceOrderAnswer);
+
+                }
+                _context.Add(templateServiceOrderQuestion);
+            }
+            return await _context.SaveChangesAsync() > 0;
         }
 
         public void Delete(Guid id)
@@ -22,14 +38,14 @@ namespace PmProject.API.Data
             throw new NotImplementedException();
         }
 
-        public Task<List<TemplateServiceOrder>> GetTemplateServiceOrder()
+        public async Task<List<TemplateServiceOrder>> GetTemplateServiceOrder()
         {
-            throw new NotImplementedException();
+            return await _context.TemplateServiceOrder.Where(w => !w.IsDelete).ToListAsync();
         }
 
-        public Task<TemplateServiceOrder> GetTemplateServiceOrder(Guid id)
+        public async Task<TemplateServiceOrder> GetTemplateServiceOrder(Guid id)
         {
-            throw new NotImplementedException();
+            return await _context.TemplateServiceOrder.FirstOrDefaultAsync(f => f.Id == id);
         }
     }
 }
