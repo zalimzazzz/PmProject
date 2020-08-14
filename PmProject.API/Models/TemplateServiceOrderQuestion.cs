@@ -13,7 +13,7 @@ namespace PmProject.API.Models
         [Required]
         public Guid TemplateServiceOrderId { get; set; }
         public TemplateServiceOrder TemplateServiceOrder { get; set; }
-        // public Guid TemplateServiceOrderAnswerId { get; set; }
+        public Guid TemplateServiceOrderAnswerId { get; set; }
         public List<TemplateServiceOrderAnswer> TemplateServiceOrderAnswer { get; set; }
     }
 }

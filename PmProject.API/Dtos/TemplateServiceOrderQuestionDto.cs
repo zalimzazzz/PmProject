@@ -9,7 +9,7 @@ namespace PmProject.API.Dtos
         public string Name { get; set; }
         public Guid TemplateServiceOrderId { get; set; }
         public TemplateServiceOrderDto TemplateServiceOrder { get; set; }
-        // public Guid TemplateServiceOrderAnswerId { get; set; }
+        public Guid TemplateServiceOrderAnswerId { get; set; }
         public List<TemplateServiceOrderAnswerDto> TemplateServiceOrderAnswer { get; set; }
     }
 }
