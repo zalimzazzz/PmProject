@@ -79,6 +79,40 @@ namespace PmProject.API.Migrations
                     b.ToTable("Photos");
                 });
 
+            modelBuilder.Entity("PmProject.API.Models.Project", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CreateBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("TemplateServiceOrderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TemplateServiceOrderId");
+
+                    b.ToTable("Project");
+                });
+
             modelBuilder.Entity("PmProject.API.Models.SurveyHeaders", b =>
                 {
                     b.Property<Guid>("Id")
@@ -290,6 +324,15 @@ namespace PmProject.API.Migrations
                     b.HasOne("PmProject.API.Models.User", null)
                         .WithMany("Photos")
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PmProject.API.Models.Project", b =>
+                {
+                    b.HasOne("PmProject.API.Models.TemplateServiceOrder", "TemplateServiceOrder")
+                        .WithMany()
+                        .HasForeignKey("TemplateServiceOrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

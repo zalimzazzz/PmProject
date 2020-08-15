@@ -1,4 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { ProjectService } from 'src/app/_services/project.service';
+import { AlertifyService } from 'src/app/_services/alertify.service';
+import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { Project } from 'src/app/_models/project';
+import { TemplateServiceOrderServiceService } from 'src/app/_services/template-service-order-service.service';
+import { TemplateServiceOrder } from 'src/app/_models/template-service-order';
+import { MatDialogRef } from '@angular/material/dialog';
+import { ProjectComponent } from '../project.component';
 
 @Component({
   selector: 'app-project-add-edit',
@@ -7,26 +16,38 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProjectAddEditComponent implements OnInit {
 
-  question: TemplateServiceOrderQuestion = new TemplateServiceOrderQuestion();
-  constructor() { }
+  project = new Project();
+  template = new Array<TemplateServiceOrder>();
+  constructor(private projectService: ProjectService,
+    private alertify: AlertifyService,
+    private router: Router,
+    private spinner: NgxSpinnerService,
+    private templateServiceOrderServiceService: TemplateServiceOrderServiceService,
+    public dialogRef: MatDialogRef<ProjectComponent>,) { }
 
   ngOnInit() {
-    console.log(this.question);
-    this.question.question = 'Question 1';
-    this.question.answerType = 1;
-    this.question.templateServiceOrderAnswer = [{ id: 1, choice: 'choice1' }, { id: 2, choice: 'choice2' }, { id: 3, choice: 'choice3' }];
+    this.spinner.show();
+    this.templateServiceOrderServiceService.get().then((res: Array<TemplateServiceOrder>) => {
+      console.log(res);
+      this.template = res;
+    }).catch(ex => {
+      this.alertify.error(ex);
+    }).finally(() => {
+      this.spinner.hide();
+    });
   }
-}
-
-export class TemplateServiceOrderQuestion {
-  constructor() { }
-  public question: string;
-  public answerType: number;
-  public templateServiceOrderAnswer: Array<TemplateServiceOrderAnswer>;
-}
-
-export class TemplateServiceOrderAnswer {
-  constructor() { }
-  public id: number;
-  public choice: string;
+  save() {
+    this.spinner.show();
+    if (true) {
+      this.projectService.add(this.project).then(res => {
+        console.log('save', res);
+        this.router.navigate(['/project']);
+      }).catch(ex => {
+        this.alertify.error('Save Failed');
+      }).finally(() => {
+        this.spinner.hide();
+        this.dialogRef.close();
+      });
+    }
+  }
 }

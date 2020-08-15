@@ -26,6 +26,7 @@ namespace PmProject.API.Helpers
             CreateMap<TemplateServiceOrderDto, TemplateServiceOrder>().ReverseMap();
             CreateMap<TemplateServiceOrderQuestionDto, TemplateServiceOrderQuestion>().ReverseMap();
             CreateMap<TemplateServiceOrderAnswerDto, TemplateServiceOrderAnswer>().ReverseMap();
+            CreateMap<ProjectDto, Project>().ReverseMap();
         }
     }
 }

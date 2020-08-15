@@ -1,15 +1,13 @@
 using System;
-using System.Collections.Generic;
 
-namespace PmProject.API.Models
+namespace PmProject.API.Dtos
 {
-    public class Project : BaesClass
+    public class ProjectDto
     {
         public Guid Id { get; set; }
-
         public string Name { get; set; }
         public int Status { get; set; }
+
         public Guid TemplateServiceOrderId { get; set; }
-        public TemplateServiceOrder TemplateServiceOrder { get; set; }
     }
 }

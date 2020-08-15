@@ -39,12 +39,15 @@ export class ProjectComponent implements OnInit {
 
   ngOnInit() {
 
+  }
 
+
+  setTable() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    console.log(this.paginator);
-    console.log(this.sort);
   }
+
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -84,10 +87,11 @@ export class ProjectComponent implements OnInit {
     this.router.navigate(['project/export/' + id]);
   }
   openDialog() {
-    this.dialog.open(ProjectAddEditComponent, {
-      data: {
-        animal: 'panda'
-      }
+    const dialogRef = this.dialog.open(ProjectAddEditComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+
+      this.setTable();
     });
   }
 

@@ -15,6 +15,7 @@ namespace PmProject.API.Data
         public DbSet<TemplateServiceOrder> TemplateServiceOrder { get; set; }
         public DbSet<TemplateServiceOrderQuestion> TemplateServiceOrderQuestion { get; set; }
         public DbSet<TemplateServiceOrderAnswer> TemplateServiceOrderAnswer { get; set; }
+        public DbSet<Project> Project { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Like>()
