@@ -9,6 +9,8 @@ namespace PmProject.API.Models
 
         public string Name { get; set; }
         public int Status { get; set; }
+        public bool IsDelete { get; set; }
+
         public Guid TemplateServiceOrderId { get; set; }
         public TemplateServiceOrder TemplateServiceOrder { get; set; }
     }

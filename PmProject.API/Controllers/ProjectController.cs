@@ -27,17 +27,15 @@ namespace PmProject.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetCompanies()
+        public async Task<IActionResult> Get()
         {
-
-            return Ok();
+            return Ok(await _repo.Get());
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetCompany(Guid id)
+        public async Task<IActionResult> Get(Guid id)
         {
-            return Ok();
-
+            return Ok(await _repo.Get(id));
         }
 
         // POST api/values
@@ -51,22 +49,31 @@ namespace PmProject.API.Controllers
             {
                 return Ok(project);
             }
-            return BadRequest("Could not add the Company");
+            return BadRequest("Could not add the Project");
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(Guid id, [FromBody] string name)
+        public async Task<IActionResult> Put(Guid id, [FromBody] ProjectDto projectDto)
         {
-            //return Unauthorized();
+            var project = _mapper.Map<Project>(projectDto);
+
+            if (await _repo.Update(project))
+            {
+                return Ok(project);
+            }
+            return BadRequest("Could not update the Project");
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            //if (userId != Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-            //return Unauthorized();
+            if (await _repo.Delete(id))
+            {
+                return Ok(true);
+            };
+            return BadRequest("Could not delete the Project");
         }
     }
 }

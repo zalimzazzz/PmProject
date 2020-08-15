@@ -16,27 +16,33 @@ namespace PmProject.API.Data
         {
             _context = context;
         }
-        public async Task<bool> Add(TemplateServiceOrder templateServiceOrder)
-        {
-            templateServiceOrder.Id = Guid.NewGuid();
-            templateServiceOrder.CompanyId = Guid.Parse("1b7b50b8-6886-4463-9391-64c68a215ea9");
-            _context.Add(templateServiceOrder);
-            foreach (var templateServiceOrderQuestion in templateServiceOrder.TemplateServiceOrderQuestion)
-            {
-                foreach (var templateServiceOrderAnswer in templateServiceOrderQuestion.TemplateServiceOrderAnswer)
-                {
-                    templateServiceOrderAnswer.TemplateServiceOrderQuestionId = templateServiceOrderQuestion.Id;
-                    _context.Add(templateServiceOrderAnswer);
-
-                }
-                _context.Add(templateServiceOrderQuestion);
-            }
-            return await _context.SaveChangesAsync() > 0;
-        }
-
         public async Task<bool> Add(Project project)
         {
             _context.Add(project);
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<List<Project>> Get()
+        {
+            return await _context.Project.Include(i => i.TemplateServiceOrder).Where(w => !w.IsDelete).ToListAsync();
+        }
+        public async Task<Project> Get(Guid id)
+        {
+            return await _context.Project.FirstAsync(w => !w.IsDelete);
+        }
+        public async Task<bool> Update(Project project)
+        {
+            var _project = await _context.Project.FirstAsync(f => f.Id == project.Id);
+            _project.Name = project.Name;
+            _project.TemplateServiceOrderId = project.TemplateServiceOrderId;
+            _project.Status = project.Status;
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> Delete(Guid id)
+        {
+            var _project = await _context.Project.FirstAsync(f => f.Id == id);
+            _project.IsDelete = true;
             return await _context.SaveChangesAsync() > 0;
         }
     }

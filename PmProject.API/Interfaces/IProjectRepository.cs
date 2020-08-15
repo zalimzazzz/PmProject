@@ -9,9 +9,9 @@ namespace PmProject.API.Interfaces
     public interface IProjectRepository
     {
         Task<bool> Add(Project project);
-        // Task<bool> UpdateTemplateServiceOrder(TemplateServiceOrder templateServiceOrder);
-        // Task<bool> Delete(Guid id);
-        // Task<List<TemplateServiceOrder>> GetTemplateServiceOrder();
-        // Task<TemplateServiceOrder> GetTemplateServiceOrder(Guid id);
+        Task<List<Project>> Get();
+        Task<Project> Get(Guid id);
+        Task<bool> Update(Project project);
+        Task<bool> Delete(Guid id);
     }
 }

@@ -32,9 +32,9 @@ export class TemplateServiceOrderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.setTabel();
+    this.setTable();
   }
-  setTabel() {
+  setTable() {
     this.spinner.show();
     this.templateServiceOrderServiceService.get().then((res: Array<TemplateServiceOrder>) => {
       this.templateServiceOrder = res;
@@ -81,8 +81,11 @@ export class TemplateServiceOrderComponent implements OnInit {
   }
 
   async deleteSelected() {
-    this.spinner.show();
     let selected = this.selection.selected;
+    if (selected.length === 0) {
+      return;
+    }
+    this.spinner.show();
     for (let index = 0; index < selected.length; index++) {
       const id = selected[index].id;
       console.log(id);
@@ -91,15 +94,14 @@ export class TemplateServiceOrderComponent implements OnInit {
       })
     }
     this.selection.clear();
-    this.setTabel();
+    this.setTable();
     this.spinner.hide();
   }
-  timeout(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
+
   delete(id: string) {
     this.spinner.show();
     this.templateServiceOrderServiceService.delete(id).then(t => {
+      this.setTable();
       this.alertify.success('Deleted');
     }).catch(ex => {
       this.alertify.error('Delete Failed');

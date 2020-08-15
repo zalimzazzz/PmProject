@@ -14,16 +14,16 @@ export class ProjectService {
   async add(project: Project) {
     return await this.http.post(this.baseUrl + 'Project', project).toPromise();
   }
-  // async update(templateServiceOrder: any) {
-  //   return await this.http.put(this.baseUrl + 'TemplateServiceOrder/' + templateServiceOrder.id, templateServiceOrder).toPromise();
-  // }
-  // async delete(id: string) {
-  //   return await this.http.delete(this.baseUrl + 'TemplateServiceOrder/' + id).toPromise();
-  // }
-  // async get() {
-  //   return await this.http.get(this.baseUrl + 'TemplateServiceOrder').toPromise();
-  // }
-  // async getById(id: string) {
-  //   return await this.http.get(this.baseUrl + 'TemplateServiceOrder/' + id).toPromise();
-  // }
+  async update(project: Project) {
+    return await this.http.put(this.baseUrl + 'Project/' + project.id, project).toPromise();
+  }
+  async delete(id: string) {
+    return await this.http.delete(this.baseUrl + 'Project/' + id).toPromise();
+  }
+  async get() {
+    return await this.http.get(this.baseUrl + 'Project').toPromise();
+  }
+  async getById(id: string) {
+    return await this.http.get(this.baseUrl + 'Project/' + id).toPromise();
+  }
 }
