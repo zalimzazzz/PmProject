@@ -1,13 +1,13 @@
 <div class="container mt-5">
   <div class="card">
     <div class="card-header">
-      Template Service Oder / Company A
+      Template Service Order / Company A
     </div>
     <div class="card-body">
       <div class="row">
         <div class="col-6">
           <button type="button " [routerLink]="['/template/add']" class="btn btn-success mr-2">New Template</button>
-          <button type="button" class="btn btn-danger">Delete</button>
+          <button type="button" (click)="deleteSelected()" class="btn btn-danger">Delete</button>
         </div>
         <div class="col-6 text-right">
           <mat-form-field>
@@ -46,7 +46,7 @@
                 <th mat-header-cell *matHeaderCellDef> </th>
                 <td class="text-right" mat-cell *matCellDef="let element ">
                   <button type="button " (click)="edit(element.id)" class="btn btn-sm btn-success mr-2">Edit</button>
-                  <button type="button" class="btn btn-sm btn-danger">Delete</button> </td>
+                  <button type="button" (click)="delete(element.id)" class="btn btn-sm btn-danger">Delete</button> </td>
               </ng-container>
 
               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

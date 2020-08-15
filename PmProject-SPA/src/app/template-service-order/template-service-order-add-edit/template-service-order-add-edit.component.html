@@ -38,7 +38,8 @@
                     <td class="text-right" mat-cell *matCellDef="let element ">
                       <button type="button " (click)="openDialogEdite(element.id)"
                         class="btn btn-sm btn-success mr-2">Edit</button>
-                      <button type="button" class="btn btn-sm btn-danger">Delete</button> </td>
+                      <button type="button" (click)="delete(element.id)" class="btn btn-sm btn-danger">Delete</button>
+                    </td>
                   </ng-container>
 
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

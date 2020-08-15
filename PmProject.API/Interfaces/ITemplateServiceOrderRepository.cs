@@ -10,7 +10,7 @@ namespace PmProject.API.Interfaces
     {
         Task<bool> Add(TemplateServiceOrder templateServiceOrder);
         Task<bool> UpdateTemplateServiceOrder(TemplateServiceOrder templateServiceOrder);
-        void Delete(Guid id);
+        Task<bool> Delete(Guid id);
         Task<List<TemplateServiceOrder>> GetTemplateServiceOrder();
         Task<TemplateServiceOrder> GetTemplateServiceOrder(Guid id);
     }

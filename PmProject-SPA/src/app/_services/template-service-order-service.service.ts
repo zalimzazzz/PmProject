@@ -17,6 +17,9 @@ export class TemplateServiceOrderServiceService {
   async update(templateServiceOrder: TemplateServiceOrder) {
     return await this.http.put(this.baseUrl + 'TemplateServiceOrder/' + templateServiceOrder.id, templateServiceOrder).toPromise();
   }
+  async delete(id: string) {
+    return await this.http.delete(this.baseUrl + 'TemplateServiceOrder/' + id).toPromise();
+  }
   async get() {
     return await this.http.get(this.baseUrl + 'TemplateServiceOrder').toPromise();
   }

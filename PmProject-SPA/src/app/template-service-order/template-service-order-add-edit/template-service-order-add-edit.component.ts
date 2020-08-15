@@ -122,4 +122,14 @@ export class TemplateServiceOrderAddEditComponent implements OnInit {
       });
     }
   }
+
+  delete(id: string) {
+    console.log(id);
+
+    let question = this.templateServiceOrder.templateServiceOrderQuestion;
+    let item = question.filter(f => f.id === id)[0];
+    var index = question.indexOf(item);
+    question.splice(index, 1);
+    this.setTable();
+  }
 }

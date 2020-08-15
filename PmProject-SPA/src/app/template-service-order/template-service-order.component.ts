@@ -32,9 +32,11 @@ export class TemplateServiceOrderComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.setTabel();
+  }
+  setTabel() {
     this.spinner.show();
     this.templateServiceOrderServiceService.get().then((res: Array<TemplateServiceOrder>) => {
-      console.log(res);
       this.templateServiceOrder = res;
       this.dataSource = new MatTableDataSource<TemplateServiceOrder>(this.templateServiceOrder)
       this.dataSource.paginator = this.paginator;
@@ -76,6 +78,34 @@ export class TemplateServiceOrderComponent implements OnInit {
   edit(id: string) {
     console.log(id);
     this.router.navigate(['/template/edit/' + id]);
+  }
+
+  async deleteSelected() {
+    this.spinner.show();
+    let selected = this.selection.selected;
+    for (let index = 0; index < selected.length; index++) {
+      const id = selected[index].id;
+      console.log(id);
+      let res = await this.templateServiceOrderServiceService.delete(id).catch(ex => {
+        this.alertify.error('Delete Failed');
+      })
+    }
+    this.selection.clear();
+    this.setTabel();
+    this.spinner.hide();
+  }
+  timeout(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+  delete(id: string) {
+    this.spinner.show();
+    this.templateServiceOrderServiceService.delete(id).then(t => {
+      this.alertify.success('Deleted');
+    }).catch(ex => {
+      this.alertify.error('Delete Failed');
+    }).finally(() => {
+      this.spinner.hide();
+    });
   }
 }
 

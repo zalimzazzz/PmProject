@@ -68,10 +68,14 @@ namespace PmProject.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public void DeleteTemplateServiceOrder(Guid id)
+        public async Task<IActionResult> DeleteTemplateServiceOrder(Guid id)
         {
+            if (await _repo.Delete(id))
+            {
+                return Ok(true);
+            };
             //if (userId != Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-            //return Unauthorized();
+            return BadRequest("Could not delete the Template Service Order");
         }
     }
 }

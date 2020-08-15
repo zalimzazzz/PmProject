@@ -61,9 +61,11 @@ namespace PmProject.API.Data
             }
             return await _context.SaveChangesAsync() > 0;
         }
-        public void Delete(Guid id)
+        public async Task<bool> Delete(Guid id)
         {
-            throw new NotImplementedException();
+            var template = await _context.TemplateServiceOrder.FirstOrDefaultAsync(f => f.Id == id);
+            template.IsDelete = true;
+            return await _context.SaveChangesAsync() > 0;
         }
 
         public async Task<List<TemplateServiceOrder>> GetTemplateServiceOrder()
