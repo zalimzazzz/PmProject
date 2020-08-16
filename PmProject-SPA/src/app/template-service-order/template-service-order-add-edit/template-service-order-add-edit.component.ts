@@ -100,6 +100,10 @@ export class TemplateServiceOrderAddEditComponent implements OnInit {
   }
 
   save() {
+    if (this.templateServiceOrder.templateServiceOrderQuestion.length === 0) {
+      this.alertify.warning('Pless Add Question')
+      return;
+    }
     this.spinner.show();
     if (this.mode === 'New') {
       this.templateServiceOrderServiceService.add(this.templateServiceOrder).then(res => {
@@ -116,7 +120,7 @@ export class TemplateServiceOrderAddEditComponent implements OnInit {
         console.log('update', res);
         this.router.navigate(['/template']);
       }).catch(ex => {
-        this.alertify.error(ex);
+        this.alertify.error('Save Failed');
       }).finally(() => {
         this.spinner.hide();
       });

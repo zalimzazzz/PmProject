@@ -21,7 +21,7 @@ import { data } from 'jquery';
 })
 export class ProjectComponent implements OnInit {
 
-  displayedColumns: string[] = ['select', 'name', 'templateServiceOrder', 'export', 'action'];
+  displayedColumns: string[] = ['select', 'name', 'templateServiceOrder', 'export', 'serviceOrder', 'action'];
   // dataSource = new MatTableDataSource<Procject>(templateServiceOrderItem);
   dataSource: any;
   procjects = new Array<Procject>();
@@ -87,6 +87,9 @@ export class ProjectComponent implements OnInit {
 
   export(id: string) {
     this.router.navigate(['project/export/' + id]);
+  }
+  serviceOrder(id: string) {
+    this.router.navigate(['serviceOrder/edit/' + id]);
   }
   openDialog() {
     const dialogRef = this.dialog.open(ProjectAddEditComponent,

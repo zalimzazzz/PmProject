@@ -23,11 +23,18 @@ namespace PmProject.API.Data
             _context.Add(templateServiceOrder);
             foreach (var templateServiceOrderQuestion in templateServiceOrder.TemplateServiceOrderQuestion)
             {
-                foreach (var templateServiceOrderAnswer in templateServiceOrderQuestion.TemplateServiceOrderAnswer)
+                if (templateServiceOrderQuestion.AnswerTypeId != 1) // Type Text
                 {
-                    templateServiceOrderAnswer.TemplateServiceOrderQuestionId = templateServiceOrderQuestion.Id;
-                    _context.Add(templateServiceOrderAnswer);
+                    foreach (var templateServiceOrderAnswer in templateServiceOrderQuestion.TemplateServiceOrderAnswer)
+                    {
+                        templateServiceOrderAnswer.TemplateServiceOrderQuestionId = templateServiceOrderQuestion.Id;
+                        _context.Add(templateServiceOrderAnswer);
 
+                    }
+                }
+                else
+                {
+                    templateServiceOrderQuestion.TemplateServiceOrderAnswer.Clear();
                 }
                 _context.Add(templateServiceOrderQuestion);
             }
@@ -51,11 +58,18 @@ namespace PmProject.API.Data
             foreach (var templateServiceOrderQuestion in templateServiceOrder.TemplateServiceOrderQuestion)
             {
                 templateServiceOrderQuestion.TemplateServiceOrderId = template.Id;
-                foreach (var templateServiceOrderAnswer in templateServiceOrderQuestion.TemplateServiceOrderAnswer)
+                if (templateServiceOrderQuestion.AnswerTypeId != 1) // Type Text
                 {
-                    templateServiceOrderAnswer.TemplateServiceOrderQuestionId = templateServiceOrderQuestion.Id;
-                    _context.Add(templateServiceOrderAnswer);
+                    foreach (var templateServiceOrderAnswer in templateServiceOrderQuestion.TemplateServiceOrderAnswer)
+                    {
+                        templateServiceOrderAnswer.TemplateServiceOrderQuestionId = templateServiceOrderQuestion.Id;
+                        _context.Add(templateServiceOrderAnswer);
 
+                    }
+                }
+                else
+                {
+                    templateServiceOrderQuestion.TemplateServiceOrderAnswer.Clear();
                 }
                 _context.Add(templateServiceOrderQuestion);
             }

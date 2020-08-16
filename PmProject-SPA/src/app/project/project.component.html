@@ -58,6 +58,11 @@
                   <td mat-cell *matCellDef="let element" data-label="Template Name">
                     <a (click)="export(element.id)">Export</a> </td>
                 </ng-container>
+                <ng-container matColumnDef="serviceOrder">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Service Order </th>
+                  <td mat-cell *matCellDef="let element" data-label="Template Name">
+                    <a (click)="serviceOrder(element.id)">Service Order</a> </td>
+                </ng-container>
 
                 <ng-container matColumnDef="action">
                   <th mat-header-cell *matHeaderCellDef> </th>

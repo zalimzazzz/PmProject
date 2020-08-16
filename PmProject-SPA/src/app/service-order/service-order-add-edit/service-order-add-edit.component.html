@@ -2,11 +2,11 @@
   <div class="container mt-5">
     <div class="card">
       <div class="card-header">
-        New Service Order / Company A
+        {{mode}} Service Order / Company A
       </div>
       <div class="card-body">
         <div class="form-group row">
-          <label for="inputEmail3" class="col-sm-2 col-form-label">service Order</label>
+          <label for="inputEmail3" class="col-sm-2 col-form-label">Service Order</label>
           <div class="col-sm-10">
             <input type="email" class="form-control">
           </div>
@@ -26,13 +26,46 @@
                 Qustion
               </div>
               <div class="card-body">
-                <div class="form-row">
-                  <div class="form-group col-md-12">
-                    <label for="inputEmail4">Qustion A</label>
-                    <input type="text" class="form-control" id="inputEmail4">
-                  </div>
-                </div>
-                <div class="form-row">
+
+                <ng-container *ngFor="let question of questionList">
+                  <ng-container *ngIf="question.answerTypeId === 1">
+                    <div class="form-row">
+                      <div class="form-group col-md-12">
+                        <label for="inputEmail4">{{question.name}}</label>
+                        <input type="text" class="form-control" id="inputEmail4">
+                      </div>
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="question.answerTypeId === 2">
+                    <div class="form-row">
+                      <div class="form-group col-md-12">
+                        <label>{{question.name}}</label>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-12">
+                        <div *ngFor="let answer of question.templateServiceOrderAnswer">
+                          <mat-radio-button [value]="answer.id">{{answer.answer}}</mat-radio-button>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="question.answerTypeId === 3">
+                    <div class="form-row">
+                      <div class="form-group col-md-12">
+                        <label>{{question.name}}</label>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-12">
+                        <div *ngFor="let answer of question.templateServiceOrderAnswer">
+                          <mat-checkbox [value]="answer.id" class="example-margin mr-2">{{answer.answer}}</mat-checkbox>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+                </ng-container>
+                <!-- <div class="form-row">
                   <div class="form-group col-md-12">
                     <label>Qustion B</label>
                   </div>
@@ -67,13 +100,7 @@
                       <mat-radio-button value="3">Option 3</mat-radio-button>
                     </div>
                   </div>
-                </div>
-                <div class="form-row">
-                  <div class="form-group col-md-12">
-                    <label for="inputEmail4">Qustion C</label>
-                    <input type="text" class="form-control">
-                  </div>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>

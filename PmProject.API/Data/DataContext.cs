@@ -16,6 +16,8 @@ namespace PmProject.API.Data
         public DbSet<TemplateServiceOrderQuestion> TemplateServiceOrderQuestion { get; set; }
         public DbSet<TemplateServiceOrderAnswer> TemplateServiceOrderAnswer { get; set; }
         public DbSet<Project> Project { get; set; }
+        public DbSet<ServiceOrder> ServiceOrder { get; set; }
+        public DbSet<ServiceOrderQAndA> ServiceOrderQAndA { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Like>()
@@ -32,6 +34,7 @@ namespace PmProject.API.Data
                .WithMany(u => u.Likees)
                .HasForeignKey(u => u.LikerId)
                .OnDelete(DeleteBehavior.Restrict);
+
         }
         public DbSet<Company> Company { get; set; }
         public DbSet<SurveyHeaders> SurveyHeaders { get; set; }

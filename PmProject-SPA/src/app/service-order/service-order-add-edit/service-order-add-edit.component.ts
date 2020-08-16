@@ -1,5 +1,11 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import SignaturePad from 'signature_pad';
+import { ServiceOrderService } from 'src/app/_services/service-order.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { AlertifyService } from 'src/app/_services/alertify.service';
+import { ActivatedRoute } from '@angular/router';
+import { TemplateServiceOrderQuestion } from 'src/app/_models/template-service-order-question';
+import { ServiceOrder } from 'src/app/_models/service-order';
 
 @Component({
   selector: 'app-service-order-add-edit',
@@ -10,9 +16,41 @@ export class ServiceOrderAddEditComponent implements OnInit {
 
   @ViewChild('sPad', { static: true }) signaturePadElement;
   signaturePad: any;
-  constructor() { }
+
+  id: string
+  mode = 'New';
+  questionList = new Array<TemplateServiceOrderQuestion>();
+  serviceOrder = new ServiceOrder();
+  constructor(private serviceOrderService: ServiceOrderService,
+    private spinner: NgxSpinnerService,
+    private alertify: AlertifyService,
+    private route: ActivatedRoute,) { }
 
   ngOnInit(): void {
+
+    this.route.params.subscribe(params => {
+      this.id = params['id'];
+      this.spinner.show();
+      this.serviceOrderService.getQuestion(this.id).then((res: Array<TemplateServiceOrderQuestion>) => {
+        console.log(res);
+        this.questionList = res;
+        return this.serviceOrderService.getById(this.id)
+      }).then((res: ServiceOrder) => {
+        console.log(res);
+        this.serviceOrder = res;
+        if (this.serviceOrder !== null) {
+          this.mode = 'Edit';
+        }
+      }).catch(ex => {
+        console.log(ex);
+        this.alertify.error('Internal Server Error');
+      }).finally(() => {
+        this.spinner.hide();
+      });
+    });
+
+
+
   }
 
   ngAfterViewInit(): void {
