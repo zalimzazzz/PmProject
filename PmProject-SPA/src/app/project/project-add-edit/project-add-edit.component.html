@@ -2,30 +2,31 @@
   <div mat-dialog-content>
     <div class="row">
       <div class="col">
-        <h4>Add Project</h4>
+        <h4>{{mode}} Project</h4>
       </div>
     </div>
     <div class="form-group row mt-2">
-      <label for="question" class="col-sm-3 col-form-label">Project Name</label>
+      <label for="projectName" class="col-sm-3 col-form-label">Project Name</label>
       <div class="col-sm-9">
-        <input [(ngModel)]="question.question" type="text" class="form-control" id="question">
+        <input type="text" (ngModelChange)="change()" [(ngModel)]="project.name" class="form-control" id="projectName">
       </div>
     </div>
     <div class="form-group row mt-2">
-      <label for="question" class="col-sm-3 col-form-label">Use Template Name</label>
+      <label for="templateName" class="col-sm-3 col-form-label">Use Template Name</label>
       <div class="col-sm-9">
-        <select class="form-control" id="answerType">
-          <option selected>Choose...</option>
-          <option value="1">Template 1</option>
-          <option value="2">Template 1</option>
+        <select (ngModelChange)="change()" [(ngModel)]="project.templateServiceOrderId" class="form-control"
+          id="templateName">
+          <option value="0" selected>Choose...</option>
+
+          <option *ngFor="let item of template" [value]="item.id">{{item.name}}</option>
         </select>
       </div>
     </div>
     <div class="form-group row">
-      <label for="answerType" class="col-sm-3 col-form-label">Status</label>
+      <label for="status" class="col-sm-3 col-form-label">Status</label>
       <div class="col-sm-9">
-        <select [(ngModel)]="question.answerType" class="form-control" id="answerType">
-          <option selected>Choose...</option>
+        <select (ngModelChange)="change()" [(ngModel)]="project.status" class="form-control" id="status">
+          <option value="0" selected>Choose...</option>
           <option value="1">In Process</option>
           <option value="2">Hold</option>
           <option value="3">Close</option>
@@ -34,7 +35,8 @@
     </div>
     <div class="row mt-4">
       <div class="col text-center">
-        <button type="button " class="btn  btn-success mr-2">Save</button>
+        <button type="button " [attr.disabled]="btnSave == true ? true : null" (click)="save()"
+          class="btn  btn-success mr-2">Save</button>
         <button type="button" class="btn  btn-danger" mat-dialog-close>Cancel</button>
       </div>
     </div>

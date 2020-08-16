@@ -10,11 +10,11 @@ namespace PmProject.API.Helpers
         public AutoMapperProfiles()
         {
             CreateMap<User, UserForListDto>()
-                .ForMember(dest => dest.PhotoUrl, opt => 
+                .ForMember(dest => dest.PhotoUrl, opt =>
                     opt.MapFrom(src => src.Photos.FirstOrDefault(p => p.IsMain).Url))
                 .ForMember(dest => dest.Age, opt => opt.MapFrom(src => src.DateOfBirth.CalculateAge()));
             CreateMap<User, UserForDetailDto>()
-                .ForMember(dest => dest.PhotoUrl, opt => 
+                .ForMember(dest => dest.PhotoUrl, opt =>
                     opt.MapFrom(src => src.Photos.FirstOrDefault(p => p.IsMain).Url))
                 .ForMember(dest => dest.Age, opt => opt.MapFrom(src => src.DateOfBirth.CalculateAge()));
             CreateMap<Photo, PhotosForDetailDto>();
@@ -23,7 +23,10 @@ namespace PmProject.API.Helpers
             CreateMap<PhotoForCreationDto, Photo>();
             CreateMap<UserForRegisterDto, User>();
             CreateMap<Company, CompanyForReturnDto>();
-            CreateMap<CompanyForCreationDto, Company>();
+            CreateMap<TemplateServiceOrderDto, TemplateServiceOrder>().ReverseMap();
+            CreateMap<TemplateServiceOrderQuestionDto, TemplateServiceOrderQuestion>().ReverseMap();
+            CreateMap<TemplateServiceOrderAnswerDto, TemplateServiceOrderAnswer>().ReverseMap();
+            CreateMap<ProjectDto, Project>().ReverseMap();
         }
     }
 }

@@ -8,23 +8,24 @@
     <div class="form-group row mt-2">
       <label for="question" class="col-sm-3 col-form-label">Question</label>
       <div class="col-sm-9">
-        <input [(ngModel)]="question.question" type="text" class="form-control" id="question">
+        <input [(ngModel)]="question.name" type="text" class="form-control" id="question">
       </div>
     </div>
     <div class="form-group row">
       <label for="answerType" class="col-sm-3 col-form-label">Answer Type</label>
       <div class="col-sm-9">
-        <select [(ngModel)]="question.answerType" class="form-control" id="answerType">
+        <select [(ngModel)]="question.answerTypeId" class="form-control" id="answerType">
           <option selected>Choose...</option>
-          <option value="1">One Chaoice</option>
-          <option value="2">Many</option>
+          <option value="1">Text</option>
+          <option value="2">One Chaoice</option>
+          <option value="3">Many</option>
         </select>
       </div>
     </div>
     <div class="form-group row" *ngFor="let item of question?.templateServiceOrderAnswer; let i = index">
       <label for="choice" class="col-sm-3 col-form-label">Choice {{i + 1}}</label>
       <div class="col-sm-9">
-        <input type="text" [(ngModel)]="item.choice" class="form-control">
+        <input type="text" [(ngModel)]="item.answer" class="form-control">
       </div>
     </div>
     <div class="row">
@@ -34,8 +35,8 @@
     </div>
     <div class="row mt-4">
       <div class="col text-center">
-        <button type="button " class="btn  btn-success mr-2">Save</button>
-        <button type="button" class="btn  btn-danger" mat-dialog-close>Cancel</button>
+        <button type="button " class="btn  btn-success mr-2" [mat-dialog-close]="question" cdkFocusInitial>Save</button>
+        <button type="button" class="btn  btn-danger" (click)="onNoClick()">Cancel</button>
       </div>
     </div>
   </div>

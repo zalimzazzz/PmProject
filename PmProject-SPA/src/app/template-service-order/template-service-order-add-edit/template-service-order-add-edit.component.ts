@@ -3,29 +3,15 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { QuestionAddComponent } from './question-add/question-add.component';
+import { TemplateServiceOrderServiceService } from '../../_services/template-service-order-service.service';
+import { AlertifyService } from '../../_services/alertify.service';
+import { TemplateServiceOrder } from '../../_models/template-service-order';
+import { TemplateServiceOrderQuestion } from '../../_models/template-service-order-question';
+import { TemplateServiceOrderAnswer } from '../../_models/template-service-order-answer';
+import { Router, ActivatedRoute } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { Guid } from 'guid-typescript';
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  { id: 1, question: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { id: 2, question: 'Helium', weight: 4.0026, symbol: 'He' },
-  { id: 3, question: 'Lithium', weight: 6.941, symbol: 'Li' },
-  { id: 4, question: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-  { id: 5, question: 'Boron', weight: 10.811, symbol: 'B' },
-  { id: 6, question: 'Carbon', weight: 12.0107, symbol: 'C' },
-  { id: 7, question: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-  { id: 8, question: 'Oxygen', weight: 15.9994, symbol: 'O' },
-  { id: 9, question: 'Fluorine', weight: 18.9984, symbol: 'F' },
-  { id: 10, question: 'Neon', weight: 20.1797, symbol: 'Ne' },
-  { id: 11, question: 'Sodium', weight: 22.9897, symbol: 'Na' },
-  { id: 12, question: 'Magnesium', weight: 24.305, symbol: 'Mg' },
-  { id: 13, question: 'Aluminum', weight: 26.9815, symbol: 'Al' },
-  { id: 14, question: 'Silicon', weight: 28.0855, symbol: 'Si' },
-  { id: 15, question: 'Phosphorus', weight: 30.9738, symbol: 'P' },
-  { id: 16, question: 'Sulfur', weight: 32.065, symbol: 'S' },
-  { id: 17, question: 'Chlorine', weight: 35.453, symbol: 'Cl' },
-  { id: 18, question: 'Argon', weight: 39.948, symbol: 'Ar' },
-  { id: 19, question: 'Potassium', weight: 39.0983, symbol: 'K' },
-  { id: 20, question: 'Calcium', weight: 40.078, symbol: 'Ca' },
-];
 @Component({
   selector: 'app-template-service-order-add-edit',
   templateUrl: './template-service-order-add-edit.component.html',
@@ -34,31 +20,120 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class TemplateServiceOrderAddEditComponent implements OnInit {
 
   displayedColumns: string[] = ['question', 'action'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
-
+  // dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  dataSource: any;
+  mode = 'New'
+  templateServiceOrder = new TemplateServiceOrder();
+  id: string
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  constructor(public dialog: MatDialog) {
-
+  constructor(public dialog: MatDialog,
+    private templateServiceOrderServiceService: TemplateServiceOrderServiceService,
+    private alertify: AlertifyService,
+    private router: Router,
+    private spinner: NgxSpinnerService,
+    private route: ActivatedRoute,) {
+    this.templateServiceOrder.templateServiceOrderQuestion = new Array<TemplateServiceOrderQuestion>();
   }
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
-  }
-
-  openDialog() {
-    this.dialog.open(QuestionAddComponent, {
-      data: {
-        animal: 'panda'
+    this.route.params.subscribe(params => {
+      this.id = params['id'];
+      if (this.id !== undefined) {
+        this.mode = 'Edit'
+        this.templateServiceOrderServiceService.getById(this.id).then((res: TemplateServiceOrder) => {
+          console.log(res);
+          this.templateServiceOrder = res;
+          this.setTable();
+        });
       }
     });
   }
+  setTable() {
+    this.dataSource = new MatTableDataSource<TemplateServiceOrderQuestion>(this.templateServiceOrder.templateServiceOrderQuestion);
+    this.dataSource.paginator = this.paginator;
+  }
+  openDialog() {
+    let templateServiceOrderAnswer = new TemplateServiceOrderAnswer();
+    const dialogRef = this.dialog.open(QuestionAddComponent, {
+      data: {
+        name: '',
+        answerTypeId: '',
+        templateServiceOrderAnswer: [templateServiceOrderAnswer]
+      }
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === undefined) {
+        return;
+      }
+      console.log(result);
+      result.id = Guid.create().toString();
+      result.answerTypeId = result.answerTypeId;
+      this.templateServiceOrder.templateServiceOrderQuestion.push(result);
+      console.log(this.templateServiceOrder.templateServiceOrderQuestion);
 
+      this.setTable();
+    });
+  }
+
+  openDialogEdite(id: string) {
+    console.log('openDialogEdite');
+
+    let question = this.templateServiceOrder.templateServiceOrderQuestion.filter(f => f.id === id)[0];
+    const dialogRef = this.dialog.open(QuestionAddComponent, {
+      data: question,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === undefined) {
+        return;
+      }
+      console.log(result.id);
+      let question = this.templateServiceOrder.templateServiceOrderQuestion.filter(f => f.id === result.id)[0];
+
+      // question.templateServiceOrderAnswer = +result.templateServiceOrderAnswerId;
+      question.answerTypeId = result.answerTypeId
+      //   this.templateServiceOrder.templateServiceOrderQuestion.push(result);
+      console.log(this.templateServiceOrder.templateServiceOrderQuestion);
+
+      this.setTable();
+    });
+  }
+
+  save() {
+    if (this.templateServiceOrder.templateServiceOrderQuestion.length === 0) {
+      this.alertify.warning('Pless Add Question')
+      return;
+    }
+    this.spinner.show();
+    if (this.mode === 'New') {
+      this.templateServiceOrderServiceService.add(this.templateServiceOrder).then(res => {
+        console.log('save', res);
+        this.router.navigate(['/template']);
+      }).catch(ex => {
+        this.alertify.error('Save Failed');
+      }).finally(() => {
+        this.spinner.hide();
+      });
+    }
+    else {
+      this.templateServiceOrderServiceService.update(this.templateServiceOrder).then(res => {
+        console.log('update', res);
+        this.router.navigate(['/template']);
+      }).catch(ex => {
+        this.alertify.error('Save Failed');
+      }).finally(() => {
+        this.spinner.hide();
+      });
+    }
+  }
+
+  delete(id: string) {
+    console.log(id);
+
+    let question = this.templateServiceOrder.templateServiceOrderQuestion;
+    let item = question.filter(f => f.id === id)[0];
+    var index = question.indexOf(item);
+    question.splice(index, 1);
+    this.setTable();
+  }
 }
-
-export interface PeriodicElement {
-  question: string;
-  id: number;
-  weight: number;
-  symbol: string;
-}
-

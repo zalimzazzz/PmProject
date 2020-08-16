@@ -6,15 +6,13 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ProjectAddEditComponent } from './project-add-edit/project-add-edit.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ProjectService } from '../_services/project.service';
+import { Procject } from '../service-order/service-order.component';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { AlertifyService } from '../_services/alertify.service';
+import { data } from 'jquery';
 
-const templateServiceOrderItem: Procject[] = [
-  { id: '1', name: 'Project 1', templateName: 'Template 1' },
-  { id: '2', name: 'Project 2', templateName: 'Template 2' },
-  { id: '3', name: 'Project 3', templateName: 'Template 3' },
-  { id: '4', name: 'Project 4', templateName: 'Template 4' },
-  { id: '5', name: 'Project 5', templateName: 'Template 1' },
-  { id: '6', name: 'Project 6', templateName: 'Template 1' },
-];
+
 
 @Component({
   selector: 'app-project',
@@ -23,28 +21,42 @@ const templateServiceOrderItem: Procject[] = [
 })
 export class ProjectComponent implements OnInit {
 
-  //displayedColumns: any;
-  // dataSource: any;
-  // selection: any;
-  templateServiceOrderItem = templateServiceOrderItem;
-  displayedColumns: string[] = ['select', 'name', 'templateServiceOrder', 'export', 'action'];
-  dataSource = new MatTableDataSource<Procject>(templateServiceOrderItem);
+  displayedColumns: string[] = ['select', 'name', 'templateServiceOrder', 'export', 'serviceOrder', 'action'];
+  // dataSource = new MatTableDataSource<Procject>(templateServiceOrderItem);
+  dataSource: any;
+  procjects = new Array<Procject>();
   selection = new SelectionModel<Procject>(true, []);
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   constructor(private router: Router,
-    public dialog: MatDialog) {
+    public dialog: MatDialog,
+    private projectService: ProjectService,
+    private spinner: NgxSpinnerService,
+    private alertify: AlertifyService,) {
   }
 
   ngOnInit() {
-
-
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    console.log(this.paginator);
-    console.log(this.sort);
+    this.setTable();
   }
+
+  setTable() {
+    this.spinner.show();
+    this.projectService.get().then((res: Array<Procject>) => {
+      console.log(res);
+      this.procjects = res;
+      this.dataSource = new MatTableDataSource<Procject>(this.procjects);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }).catch(ex => {
+      console.log(ex);
+      this.alertify.error('Internal Server Error');
+    }).finally(() => {
+      this.spinner.hide();
+    });
+  }
+
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -53,7 +65,7 @@ export class ProjectComponent implements OnInit {
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
+    const numRows = this.dataSource?.data.length;
     return numSelected === numRows;
   }
 
@@ -61,7 +73,7 @@ export class ProjectComponent implements OnInit {
   masterToggle() {
     this.isAllSelected() ?
       this.selection.clear() :
-      this.dataSource.data.forEach(row => this.selection.select(row));
+      this.dataSource?.data.forEach(row => this.selection.select(row));
   }
 
   /** The label for the checkbox on the passed row */
@@ -70,36 +82,66 @@ export class ProjectComponent implements OnInit {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
     const rowIndex = (element) => element == row.id;
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${this.templateServiceOrderItem.findIndex(rowIndex)}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${this.procjects.findIndex(rowIndex)}`;
   }
 
-  edit(id: string) {
-    this.dialog.open(ProjectAddEditComponent, {
-      data: {
-        animal: 'panda'
-      }
-    });
-  }
   export(id: string) {
     this.router.navigate(['project/export/' + id]);
   }
+  serviceOrder(id: string) {
+    this.router.navigate(['serviceOrder/edit/' + id]);
+  }
   openDialog() {
-    this.dialog.open(ProjectAddEditComponent, {
-      data: {
-        animal: 'panda'
-      }
+    const dialogRef = this.dialog.open(ProjectAddEditComponent,
+      {
+        data: { id: null },
+      });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+      this.setTable();
+    });
+  }
+  edit(id: string) {
+    const dialogRef = this.dialog.open(ProjectAddEditComponent, {
+      data: { id: id },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.setTable();
+    });
+  }
+
+
+  async deleteSelected() {
+    let selected = this.selection.selected;
+    if (selected.length === 0) {
+      return;
+    }
+    this.spinner.show();
+    for (let index = 0; index < selected.length; index++) {
+      const id = selected[index].id;
+      console.log(id);
+      let res = await this.projectService.delete(id).catch(ex => {
+        this.alertify.error('Delete Failed');
+      })
+    }
+    this.selection.clear();
+    this.setTable();
+    this.spinner.hide();
+  }
+
+  delete(id: string) {
+    this.spinner.show();
+    this.projectService.delete(id).then(t => {
+      this.alertify.success('Deleted');
+      this.setTable();
+    }).catch(ex => {
+      this.alertify.error('Delete Failed');
+    }).finally(() => {
+      this.spinner.hide();
     });
   }
 
 }
-
-
-export interface Procject {
-  id: string;
-  name: string;
-  templateName: string;
-}
-
-
-
 

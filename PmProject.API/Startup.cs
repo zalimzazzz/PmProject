@@ -31,8 +31,8 @@ namespace PmProject.API
         {
             services.AddDbContext<DataContext>(x => x.UseSqlServer(
                 Configuration.GetConnectionString("DefaultConnection")));
-            services.AddControllers().AddNewtonsoftJson(opt => 
-                opt.SerializerSettings.ReferenceLoopHandling = 
+            services.AddControllers().AddNewtonsoftJson(opt =>
+                opt.SerializerSettings.ReferenceLoopHandling =
                     Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
             services.AddCors();
@@ -43,8 +43,12 @@ namespace PmProject.API
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IProjectManagementRepository, ProjectManagementRepository>();
             services.AddScoped<ICompanyRepository, CompanyRepository>();
+            services.AddScoped<ITemplateServiceOrderRepository, TemplateServiceOrderRepository>();
+            services.AddScoped<IProjectRepository, ProjectRepository>();
+            services.AddScoped<IServiceOrderRepository, ServiceOrderRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options => {
+                .AddJwtBearer(options =>
+                {
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
@@ -56,6 +60,9 @@ namespace PmProject.API
                 });
 
             services.AddScoped<LogUserActivity>();
+
+            // Register the Swagger generator, defining 1 or more Swagger documents
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,14 +70,25 @@ namespace PmProject.API
         {
             if (env.IsDevelopment())
             {
+                // Enable middleware to serve generated Swagger as a JSON endpoint.
+                app.UseSwagger();
+
+                // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+                // specifying the Swagger JSON endpoint.
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                    c.RoutePrefix = string.Empty;
+                });
                 app.UseDeveloperExceptionPage();
             }
             else
             {
-                app.UseExceptionHandler(builder => 
-                    builder.Run(async context => {
+                app.UseExceptionHandler(builder =>
+                    builder.Run(async context =>
+                    {
                         context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                        
+
                         var error = context.Features.Get<IExceptionHandlerFeature>();
                         if (error != null)
                         {
@@ -86,7 +104,7 @@ namespace PmProject.API
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            
+
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
             app.UseEndpoints(endpoints =>

@@ -1,7 +1,7 @@
 <div class="container mt-5">
   <div class="card">
     <div class="card-header">
-      New Template Service Oder
+      {{mode}} Template Service Oder
     </div>
     <div class="card-body">
       <div class="row mb-4">
@@ -9,10 +9,11 @@
           <div class="form-group row">
             <label for="templateName" class="col-sm-3 col-form-label text-right">Template Name</label>
             <div class="col-sm-5">
-              <input type="text" class="form-control" placeholder="Template Name" id="templateName">
+              <input type="text" [(ngModel)]="templateServiceOrder.name" class="form-control"
+                placeholder="Template Name" id="templateName">
             </div>
             <div class="col-sm-4">
-              <button type="button " class="btn  btn-success mr-2">Save</button>
+              <button type="button " class="btn  btn-success mr-2" (click)="save()">Save</button>
               <button type="button" class="btn  btn-danger" [routerLink]="['/template']">Cancel</button>
             </div>
           </div>
@@ -29,14 +30,16 @@
                   <!-- Position Column -->
                   <ng-container matColumnDef="question">
                     <th mat-header-cell *matHeaderCellDef> Question </th>
-                    <td mat-cell *matCellDef="let element"> {{element.question}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
                   </ng-container>
 
                   <ng-container matColumnDef="action">
                     <th mat-header-cell *matHeaderCellDef> </th>
                     <td class="text-right" mat-cell *matCellDef="let element ">
-                      <button type="button " class="btn btn-sm btn-success mr-2">Edit</button>
-                      <button type="button" class="btn btn-sm btn-danger">Delete</button> </td>
+                      <button type="button " (click)="openDialogEdite(element.id)"
+                        class="btn btn-sm btn-success mr-2">Edit</button>
+                      <button type="button" (click)="delete(element.id)" class="btn btn-sm btn-danger">Delete</button>
+                    </td>
                   </ng-container>
 
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

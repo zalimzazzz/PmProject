@@ -1,4 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { ProjectService } from 'src/app/_services/project.service';
+import { AlertifyService } from 'src/app/_services/alertify.service';
+import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { Project } from 'src/app/_models/project';
+import { TemplateServiceOrderServiceService } from 'src/app/_services/template-service-order-service.service';
+import { TemplateServiceOrder } from 'src/app/_models/template-service-order';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ProjectComponent } from '../project.component';
+import { resolve } from 'dns';
 
 @Component({
   selector: 'app-project-add-edit',
@@ -6,27 +16,80 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./project-add-edit.component.css']
 })
 export class ProjectAddEditComponent implements OnInit {
-
-  question: TemplateServiceOrderQuestion = new TemplateServiceOrderQuestion();
-  constructor() { }
+  mode = 'New'
+  project = new Project();
+  template = new Array<TemplateServiceOrder>();
+  btnSave = true;
+  constructor(private projectService: ProjectService,
+    private alertify: AlertifyService,
+    private router: Router,
+    private spinner: NgxSpinnerService,
+    private templateServiceOrderServiceService: TemplateServiceOrderServiceService,
+    public dialogRef: MatDialogRef<ProjectComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
-    console.log(this.question);
-    this.question.question = 'Question 1';
-    this.question.answerType = 1;
-    this.question.templateServiceOrderAnswer = [{ id: 1, choice: 'choice1' }, { id: 2, choice: 'choice2' }, { id: 3, choice: 'choice3' }];
+    this.spinner.show();
+
+    // if (this.data.id !== null) {
+    //   this.mode = 'Edit';
+    //   this.spinner.show();
+    //   this.templateServiceOrderServiceService.getById(this.data.id).then((res: Project) => {
+    //     console.log(res);
+    //     this.project = res;
+    //   }).catch(ex => {
+    //     this.alertify.error(ex);
+    //   });
+    // }
+
+    this.templateServiceOrderServiceService.get().then((res: Array<TemplateServiceOrder>) => {
+      console.log(res);
+      this.template = res;
+
+      if (this.data.id !== null) {
+        console.log(this.data.id);
+        this.mode = 'Edit';
+        return this.projectService.getById(this.data.id);
+      }
+      return Promise.resolve(null);
+    }).then((res: Project) => {
+      console.log(res);
+      if (res !== null) {
+        this.project = res;
+      }
+    }).catch(ex => {
+      this.alertify.error(ex);
+    }).finally(() => {
+      this.spinner.hide();
+    });
+    console.log(this.data);
   }
-}
-
-export class TemplateServiceOrderQuestion {
-  constructor() { }
-  public question: string;
-  public answerType: number;
-  public templateServiceOrderAnswer: Array<TemplateServiceOrderAnswer>;
-}
-
-export class TemplateServiceOrderAnswer {
-  constructor() { }
-  public id: number;
-  public choice: string;
+  change() {
+    this.btnSave = false;
+  }
+  save() {
+    this.spinner.show();
+    if (this.mode === 'New') {
+      this.projectService.add(this.project).then(res => {
+        console.log('save', res);
+        this.router.navigate(['/project']);
+      }).catch(ex => {
+        this.alertify.error('Save Failed');
+      }).finally(() => {
+        this.spinner.hide();
+        this.dialogRef.close();
+      });
+    }
+    else {
+      this.projectService.update(this.project).then(res => {
+        console.log('save', res);
+        this.router.navigate(['/project']);
+      }).catch(ex => {
+        this.alertify.error('Update Failed');
+      }).finally(() => {
+        this.spinner.hide();
+        this.dialogRef.close();
+      });
+    }
+  }
 }

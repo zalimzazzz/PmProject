@@ -13,8 +13,8 @@
       <div class="card-body">
         <div class="row">
           <div class="col-6">
-            <button type="button " [routerLink]="['/serviceOrder/add']" class="btn btn-success mr-2">New Service Order
-            </button>
+            <!-- <button type="button " [routerLink]="['/serviceOrder/add']" class="btn btn-success mr-2">New Service Order
+            </button> -->
             <button type="button" class="btn btn-danger">Delete</button>
           </div>
           <div class="col-6 text-right">
@@ -44,12 +44,12 @@
                 </ng-container>
 
                 <ng-container matColumnDef="serviceOrderNo">
-                  <th style="width: 35%;" mat-header-cell *matHeaderCellDef mat-sort-header>Service Order No. </th>
+                  <th style="width: 30%;" mat-header-cell *matHeaderCellDef mat-sort-header>Service Order No. </th>
                   <td mat-cell *matCellDef="let element" data-label="Template Name"> {{element.serviceOrderNo}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="description">
-                  <th style="width: 35%;" mat-header-cell *matHeaderCellDef mat-sort-header>Description </th>
+                  <th style="width: 30%;" mat-header-cell *matHeaderCellDef mat-sort-header>Description </th>
                   <td mat-cell *matCellDef="let element" data-label="Template Name"> {{element.description}} </td>
                 </ng-container>
 
