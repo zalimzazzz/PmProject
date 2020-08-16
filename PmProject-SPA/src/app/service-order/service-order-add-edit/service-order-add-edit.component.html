@@ -8,13 +8,13 @@
         <div class="form-group row">
           <label for="inputEmail3" class="col-sm-2 col-form-label">Service Order</label>
           <div class="col-sm-10">
-            <input type="email" class="form-control">
+            <input type="text" [(ngModel)]="serviceOrder.serviceOrderNo" class="form-control">
           </div>
         </div>
         <div class="form-group row">
           <label for="inputEmail3" class="col-sm-2 col-form-label">Description</label>
           <div class="col-sm-10">
-            <input type="email" class="form-control">
+            <input type="text" [(ngModel)]="serviceOrder.description" class="form-control">
           </div>
         </div>
         <div class="row mb-3">
@@ -65,42 +65,6 @@
                     </div>
                   </ng-container>
                 </ng-container>
-                <!-- <div class="form-row">
-                  <div class="form-group col-md-12">
-                    <label>Qustion B</label>
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="form-group col-md-12">
-                    <div>
-                      <mat-checkbox class="example-margin mr-2">Check me!</mat-checkbox>
-                    </div>
-                    <div>
-                      <mat-checkbox class="example-margin mr-2">Check me!</mat-checkbox>
-                    </div>
-                    <div>
-                      <mat-checkbox class="example-margin mr-2">Check me!</mat-checkbox>
-                    </div>
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="form-group col-md-12">
-                    <label>Qustion B</label>
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="form-group col-md-12">
-                    <div>
-                      <mat-radio-button value="1">Option 1</mat-radio-button>
-                    </div>
-                    <div>
-                      <mat-radio-button value="2">Option 2</mat-radio-button>
-                    </div>
-                    <div>
-                      <mat-radio-button value="3">Option 3</mat-radio-button>
-                    </div>
-                  </div>
-                </div> -->
               </div>
             </div>
           </div>
@@ -131,7 +95,7 @@
         </div>
         <div class="form-group row">
           <div class="col-sm-12 text-center">
-            <button type="button " class="btn  btn-success mr-2">Save</button>
+            <button type="button " (click)="seve()" class="btn  btn-success mr-2">Save</button>
             <button type="button" class="btn  btn-danger" [routerLink]="['/serviceOrder']">Cancel</button>
           </div>
         </div>

@@ -47,7 +47,7 @@ namespace PmProject.API.Controllers
 
             if (await _repo.Add(project))
             {
-                return Ok(project);
+                return Ok();
             }
             return BadRequest("Could not add the Project");
         }
@@ -60,7 +60,7 @@ namespace PmProject.API.Controllers
 
             if (await _repo.Update(project))
             {
-                return Ok(project);
+                return Ok();
             }
             return BadRequest("Could not update the Project");
         }

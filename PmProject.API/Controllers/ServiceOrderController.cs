@@ -26,9 +26,9 @@ namespace PmProject.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetTemplateServiceOrder()
+        public async Task<IActionResult> Get()
         {
-            return Ok();
+            return Ok(await _repo.Get());
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
@@ -48,41 +48,34 @@ namespace PmProject.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddTemplateServiceOrder([FromBody] TemplateServiceOrderDto templateServiceOrder)
+        public async Task<IActionResult> Add([FromBody] ServiceOrder templateServiceOrder)
         {
-            // // if (await _repo.CompanyExists(companyForCreationDto.Name))
-            // //     return BadRequest("Company already exists");
-
-            // var _templateServiceOrder = _mapper.Map<TemplateServiceOrder>(templateServiceOrder);
-
-            // if (await _repo.Add(_templateServiceOrder))
-            // {
-            //     return Ok(templateServiceOrder);
-            // };
-            return BadRequest("Could not add the Template Service Order");
+            if (await _repo.Add(templateServiceOrder))
+            {
+                return Ok();
+            };
+            return BadRequest("Could not add the Service Order");
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateTemplateServiceOrder(Guid id, [FromBody] TemplateServiceOrderDto templateServiceOrder)
+        public async Task<IActionResult> Update(Guid id, [FromBody] ServiceOrder serviceOrder)
         {
-            //     var _templateServiceOrder = _mapper.Map<TemplateServiceOrder>(templateServiceOrder);
 
-            //     if (await _repo.UpdateTemplateServiceOrder(_templateServiceOrder))
-            //     {
-            //         return Ok(templateServiceOrder);
-            //     };
-            return BadRequest("Could not update the Template Service Order");
+            if (await _repo.Update(serviceOrder))
+            {
+                return Ok();
+            };
+            return BadRequest("Could not update the Service Order");
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTemplateServiceOrder(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            // if (await _repo.Delete(id))
-            // {
-            //     return Ok(true);
-            // };
-            //if (userId != Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-            return BadRequest("Could not delete the Template Service Order");
+            if (await _repo.Delete(id))
+            {
+                return Ok(true);
+            };
+            return BadRequest("Could not delete the  Service Order");
         }
     }
 }
