@@ -3,7 +3,7 @@ import SignaturePad from 'signature_pad';
 import { ServiceOrderService } from 'src/app/_services/service-order.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertifyService } from 'src/app/_services/alertify.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TemplateServiceOrderQuestion } from 'src/app/_models/template-service-order-question';
 import { ServiceOrder } from 'src/app/_models/service-order';
 
@@ -24,10 +24,10 @@ export class ServiceOrderAddEditComponent implements OnInit {
   constructor(private serviceOrderService: ServiceOrderService,
     private spinner: NgxSpinnerService,
     private alertify: AlertifyService,
-    private route: ActivatedRoute,) { }
+    private route: ActivatedRoute,
+    private router: Router,) { }
 
   ngOnInit(): void {
-
     this.route.params.subscribe(params => {
       this.id = params['id'];
       this.spinner.show();
@@ -36,9 +36,12 @@ export class ServiceOrderAddEditComponent implements OnInit {
         this.questionList = res;
         return this.serviceOrderService.getById(this.id)
       }).then((res: ServiceOrder) => {
-        console.log(res);
-        this.serviceOrder = res;
-        if (this.serviceOrder !== null) {
+        console.log(this.serviceOrder);
+        if (res !== null) {
+          this.serviceOrder = res;
+          this.signaturePad.fromDataURL(this.serviceOrder.customerSignature)
+        }
+        if (Object.keys(this.serviceOrder).length !== 0) {
           this.mode = 'Edit';
         }
       }).catch(ex => {
@@ -52,7 +55,32 @@ export class ServiceOrderAddEditComponent implements OnInit {
 
 
   }
-
+  seve() {
+    this.spinner.show();
+    this.serviceOrder.customerSignature = this.signaturePad.toDataURL();
+    this.serviceOrder.projectId = this.id;
+    this.serviceOrder.technicianId = '8dd7fda4-a143-4111-ae9a-bf6f50082dc6';
+    if (this.mode === 'New') {
+      this.serviceOrderService.add(this.serviceOrder).then(res => {
+        console.log('save', res);
+        this.router.navigate(['/serviceOrder']);
+      }).catch(ex => {
+        this.alertify.error('Save Failed');
+      }).finally(() => {
+        this.spinner.hide();
+      });
+    }
+    else {
+      this.serviceOrderService.update(this.serviceOrder).then(res => {
+        console.log('update', res);
+        this.router.navigate(['/serviceOrder']);
+      }).catch(ex => {
+        this.alertify.error('Save Failed');
+      }).finally(() => {
+        this.spinner.hide();
+      });
+    }
+  }
   ngAfterViewInit(): void {
     this.signaturePad = new SignaturePad(this.signaturePadElement.nativeElement);
   }

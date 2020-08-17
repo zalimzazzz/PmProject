@@ -15,7 +15,7 @@
           <div class="col-6">
             <!-- <button type="button " [routerLink]="['/serviceOrder/add']" class="btn btn-success mr-2">New Service Order
             </button> -->
-            <button type="button" class="btn btn-danger">Delete</button>
+            <button type="button" (click)="deleteSelected()" class="btn btn-danger">Delete</button>
           </div>
           <div class="col-6 text-right">
             <mat-form-field>
@@ -55,14 +55,21 @@
 
                 <ng-container matColumnDef="status">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
-                  <td mat-cell *matCellDef="let element" data-label="Template Name"> Open </td>
+                  <td mat-cell *matCellDef="let element" data-label="Template Name">
+                    <p *ngIf="element.status === 0">Open</p>
+                    <p *ngIf="element.status === 1">In Process</p>
+                    <p *ngIf="element.status === 2">Hold</p>
+                    <p *ngIf="element.status === 3">Close</p>
+                  </td>
                 </ng-container>
 
                 <ng-container matColumnDef="action">
                   <th mat-header-cell *matHeaderCellDef> </th>
                   <td class="text-right" mat-cell *matCellDef="let element ">
-                    <button type="button " (click)="edit(element.id)" class="btn btn-sm btn-success mr-2">Edit</button>
-                    <button type="button" class="btn btn-sm btn-danger">Delete</button> </td>
+                    <button type="button " (click)="edit(element.projectId)"
+                      class="btn btn-sm btn-success mr-2">Edit</button>
+                    <button type="button" (click)="delete(element.id)" class="btn btn-sm btn-danger">Delete</button>
+                  </td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

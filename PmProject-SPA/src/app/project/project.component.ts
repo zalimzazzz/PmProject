@@ -7,10 +7,9 @@ import { Router } from '@angular/router';
 import { ProjectAddEditComponent } from './project-add-edit/project-add-edit.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ProjectService } from '../_services/project.service';
-import { Procject } from '../service-order/service-order.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertifyService } from '../_services/alertify.service';
-import { data } from 'jquery';
+import { Project } from '../_models/project';
 
 
 
@@ -24,8 +23,8 @@ export class ProjectComponent implements OnInit {
   displayedColumns: string[] = ['select', 'name', 'templateServiceOrder', 'export', 'serviceOrder', 'action'];
   // dataSource = new MatTableDataSource<Procject>(templateServiceOrderItem);
   dataSource: any;
-  procjects = new Array<Procject>();
-  selection = new SelectionModel<Procject>(true, []);
+  procjects = new Array<Project>();
+  selection = new SelectionModel<Project>(true, []);
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -42,10 +41,10 @@ export class ProjectComponent implements OnInit {
 
   setTable() {
     this.spinner.show();
-    this.projectService.get().then((res: Array<Procject>) => {
+    this.projectService.get().then((res: Array<Project>) => {
       console.log(res);
       this.procjects = res;
-      this.dataSource = new MatTableDataSource<Procject>(this.procjects);
+      this.dataSource = new MatTableDataSource<Project>(this.procjects);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     }).catch(ex => {
@@ -77,7 +76,7 @@ export class ProjectComponent implements OnInit {
   }
 
   /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: Procject): string {
+  checkboxLabel(row?: Project): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }

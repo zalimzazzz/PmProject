@@ -42,7 +42,7 @@ namespace PmProject.API.Data
         }
         public async Task<bool> UpdateTemplateServiceOrder(TemplateServiceOrder templateServiceOrder)
         {
-            var template = await _context.TemplateServiceOrder.FirstOrDefaultAsync(f => f.Id == templateServiceOrder.Id);
+            var template = await _context.TemplateServiceOrder.FirstOrDefaultAsync(f => f.Id == templateServiceOrder.Id && !f.IsDelete);
             template.Name = templateServiceOrder.Name;
 
             // remove all
@@ -91,7 +91,7 @@ namespace PmProject.API.Data
         {
             return await _context.TemplateServiceOrder.Include(i => i.TemplateServiceOrderQuestion)
                                                             .ThenInclude(t => t.TemplateServiceOrderAnswer)
-                                                            .FirstOrDefaultAsync(f => f.Id == id);
+                                                            .FirstOrDefaultAsync(f => f.Id == id && !f.IsDelete);
         }
 
 
