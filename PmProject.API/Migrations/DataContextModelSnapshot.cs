@@ -128,11 +128,15 @@ namespace PmProject.API.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<byte>("CustomerSignature")
-                        .HasColumnType("tinyint");
+                    b.Property<string>("CustomerSignature")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
 
                     b.Property<Guid>("ModifiedBy")
                         .HasColumnType("uniqueidentifier");
@@ -147,9 +151,8 @@ namespace PmProject.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("TechnicianId")
                         .HasColumnType("uniqueidentifier");

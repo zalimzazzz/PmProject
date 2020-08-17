@@ -16,30 +16,39 @@ namespace PmProject.API.Data
         {
             _context = context;
         }
+        public async Task<List<ServiceOrder>> Get()
+        {
+            return await _context.ServiceOrder.Where(w => !w.IsDelete).ToListAsync();
+        }
 
         public async Task<ServiceOrder> Get(Guid projectId)
         {
-            var z = await _context.ServiceOrder.Include(i => i.ServiceOrderQAndA)
-                                                .FirstOrDefaultAsync(f => f.ProjectId == projectId);
-            return z;
+            return await _context.ServiceOrder.Include(i => i.ServiceOrderQAndA)
+                                                .FirstOrDefaultAsync(f => f.ProjectId == projectId && !f.IsDelete);
         }
-
-
         public async Task<List<TemplateServiceOrderQuestion>> GetQuestion(Guid projectId)
         {
             var project = await _context.Project.Include(i => i.TemplateServiceOrder)
                                             .ThenInclude(t => t.TemplateServiceOrderQuestion)
                                                 .ThenInclude(t => t.TemplateServiceOrderAnswer)
-                                                .FirstAsync(f => f.Id == projectId);
+                                                .FirstAsync(f => f.Id == projectId && !f.IsDelete);
             return project.TemplateServiceOrder.TemplateServiceOrderQuestion;
         }
-
-
-
-        public Task<bool> UpdateTemplateServiceOrder(ServiceOrder templateServiceOrder)
+        public async Task<bool> Add(ServiceOrder serviceOrder)
         {
-            throw new NotImplementedException();
+            _context.Add(serviceOrder);
+            return await _context.SaveChangesAsync() > 0;
         }
-
+        public async Task<bool> Update(ServiceOrder serviceOrder)
+        {
+            _context.Update(serviceOrder);
+            return await _context.SaveChangesAsync() > 0;
+        }
+        public async Task<bool> Delete(Guid id)
+        {
+            var serviceOrder = await _context.ServiceOrder.FirstOrDefaultAsync(f => f.Id == id);
+            serviceOrder.IsDelete = true;
+            return await _context.SaveChangesAsync() > 0;
+        }
     }
 }

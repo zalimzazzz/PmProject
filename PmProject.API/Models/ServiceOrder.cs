@@ -12,9 +12,10 @@ namespace PmProject.API.Models
         public string ServiceOrderNo { get; set; }
         public string Description { get; set; }
         [Required]
-        public string Status { get; set; }
+        public int Status { get; set; }
         [Required]
-        public byte CustomerSignature { get; set; }
+        public string CustomerSignature { get; set; }
+        public bool IsDelete { get; set; }
 
         [Required]
         public Guid ProjectId { get; set; }

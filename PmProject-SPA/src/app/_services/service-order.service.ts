@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Project } from '../_models/project';
+import { ServiceOrder } from '../_models/service-order';
 
 @Injectable({
   providedIn: 'root'
@@ -11,17 +12,17 @@ export class ServiceOrderService {
 
   constructor(private http: HttpClient) { }
 
-  async add(project: Project) {
-    return await this.http.post(this.baseUrl + 'Project', project).toPromise();
+  async add(serviceOrder: ServiceOrder) {
+    return await this.http.post(this.baseUrl + 'ServiceOrder', serviceOrder).toPromise();
   }
-  async update(project: Project) {
-    return await this.http.put(this.baseUrl + 'Project/' + project.id, project).toPromise();
+  async update(serviceOrder: ServiceOrder) {
+    return await this.http.put(this.baseUrl + 'ServiceOrder/' + serviceOrder.id, serviceOrder).toPromise();
   }
   async delete(id: string) {
-    return await this.http.delete(this.baseUrl + 'Project/' + id).toPromise();
+    return await this.http.delete(this.baseUrl + 'ServiceOrder/' + id).toPromise();
   }
   async get() {
-    return await this.http.get(this.baseUrl + 'Project').toPromise();
+    return await this.http.get(this.baseUrl + 'ServiceOrder').toPromise();
   }
   async getById(id: string) {
     return await this.http.get(this.baseUrl + 'ServiceOrder/' + id).toPromise();

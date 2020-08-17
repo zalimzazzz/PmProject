@@ -50,7 +50,7 @@ namespace PmProject.API.Controllers
 
             if (await _repo.Add(_templateServiceOrder))
             {
-                return Ok(templateServiceOrder);
+                return Ok();
             };
             return BadRequest("Could not add the Template Service Order");
         }
@@ -62,7 +62,7 @@ namespace PmProject.API.Controllers
 
             if (await _repo.UpdateTemplateServiceOrder(_templateServiceOrder))
             {
-                return Ok(templateServiceOrder);
+                return Ok();
             };
             return BadRequest("Could not update the Template Service Order");
         }
