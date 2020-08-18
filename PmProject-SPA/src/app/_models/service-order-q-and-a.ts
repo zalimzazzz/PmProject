@@ -1,6 +1,6 @@
 import { ServiceOrder } from './service-order';
 
-export interface ServiceOrderQAndA {
+export class ServiceOrderQAndA {
     id: string;
     serviceOrderId: string;
     serviceOrder: ServiceOrder;

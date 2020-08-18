@@ -32,7 +32,8 @@
                     <div class="form-row">
                       <div class="form-group col-md-12">
                         <label for="inputEmail4">{{question.name}}</label>
-                        <input type="text" class="form-control" id="inputEmail4">
+                        <input type="text" (change)="setAnswerText(question.id, $event.target.value)"
+                          [ngModel]="answerText(question.id)" class="form-control" id="inputEmail4">
                       </div>
                     </div>
                   </ng-container>
@@ -45,7 +46,10 @@
                     <div class="form-row">
                       <div class="form-group col-md-12">
                         <div *ngFor="let answer of question.templateServiceOrderAnswer">
-                          <mat-radio-button [value]="answer.id">{{answer.answer}}</mat-radio-button>
+                          <mat-radio-group (change)="setAnswerOne(question.id, $event)"
+                            [ngModel]="answerOne(question.id)">
+                            <mat-radio-button [value]="answer.id">{{answer.answer}}</mat-radio-button>
+                          </mat-radio-group>
                         </div>
                       </div>
                     </div>
@@ -59,7 +63,10 @@
                     <div class="form-row">
                       <div class="form-group col-md-12">
                         <div *ngFor="let answer of question.templateServiceOrderAnswer">
-                          <mat-checkbox [value]="answer.id" class="example-margin mr-2">{{answer.answer}}</mat-checkbox>
+                          <mat-checkbox (change)="setAnswerMany(question.id, answer.id, $event.checked)"
+                            [ngModel]="answerMany(question.id)" class="example-margin mr-2">
+                            {{answer.answer}}
+                          </mat-checkbox>
                         </div>
                       </div>
                     </div>

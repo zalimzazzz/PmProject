@@ -6,6 +6,7 @@ import { AlertifyService } from 'src/app/_services/alertify.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TemplateServiceOrderQuestion } from 'src/app/_models/template-service-order-question';
 import { ServiceOrder } from 'src/app/_models/service-order';
+import { ServiceOrderQAndA } from 'src/app/_models/service-order-q-and-a';
 
 @Component({
   selector: 'app-service-order-add-edit',
@@ -16,7 +17,6 @@ export class ServiceOrderAddEditComponent implements OnInit {
 
   @ViewChild('sPad', { static: true }) signaturePadElement;
   signaturePad: any;
-
   id: string
   mode = 'New';
   questionList = new Array<TemplateServiceOrderQuestion>();
@@ -25,7 +25,10 @@ export class ServiceOrderAddEditComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private alertify: AlertifyService,
     private route: ActivatedRoute,
-    private router: Router,) { }
+    private router: Router,) {
+    this.serviceOrder.serviceOrderQAndA = new Array<ServiceOrderQAndA>();
+
+  }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -34,16 +37,16 @@ export class ServiceOrderAddEditComponent implements OnInit {
       this.serviceOrderService.getQuestion(this.id).then((res: Array<TemplateServiceOrderQuestion>) => {
         console.log(res);
         this.questionList = res;
+        console.log(this.serviceOrder.serviceOrderQAndA);
         return this.serviceOrderService.getById(this.id)
       }).then((res: ServiceOrder) => {
-        console.log(this.serviceOrder);
+        console.log('ServiceOrder', res);
         if (res !== null) {
+          this.mode = 'Edit';
           this.serviceOrder = res;
           this.signaturePad.fromDataURL(this.serviceOrder.customerSignature)
         }
-        if (Object.keys(this.serviceOrder).length !== 0) {
-          this.mode = 'Edit';
-        }
+        this.createAnswer();
       }).catch(ex => {
         console.log(ex);
         this.alertify.error('Internal Server Error');
@@ -51,9 +54,65 @@ export class ServiceOrderAddEditComponent implements OnInit {
         this.spinner.hide();
       });
     });
+  }
+  answerText(id: string) {
+    let answer = this.serviceOrder.serviceOrderQAndA.filter(f => f.questionId === id)[0];
+    return answer?.answer;
+  }
+  answerMany(id: string) {
+    return false;
+  }
+  answerOne(id: string) {
+    return '';
+  }
+  setAnswerText(id: string, value: string) {
+    let answer = this.serviceOrder.serviceOrderQAndA.filter(f => f.questionId === id)[0];
+    answer.answer = value;
+    console.log(answer);
+  }
+  setAnswerMany(id: string, value: string, checked: boolean) {
+    console.log(checked);
+
+    let answer = this.serviceOrder.serviceOrderQAndA.filter(f => f.questionId === id)[0];
+    let answerMany = JSON.parse(answer.answer);
+    // let answerMany = [];
+    let isHeve = answerMany.filter(f => f === value)
+
+    if (isHeve.length !== 0 && !checked) {
+      var index = answerMany.indexOf(value);
+      answerMany.splice(index, 1);
+    }
+    else if (checked) {
+      answerMany.push(value);
+    }
+    answer.answer = JSON.stringify(answerMany);
+    // answer.answer = value;
+    console.log(answer);
+  }
 
 
+  setAnswerOne(id: string, event: any) {
+    let answer = this.serviceOrder.serviceOrderQAndA.filter(f => f.questionId === id)[0];
+    answer.answer = event.value;
+    console.log(answer);
+  }
 
+
+  createAnswer() {
+    for (let index = 0; index < this.questionList.length; index++) {
+      const element = this.questionList[index];
+
+      let answer = new ServiceOrderQAndA();
+      answer.questionId = element.id;
+      answer.answerTypeId = +element.answerTypeId;
+      answer.answer = '';
+
+      if (answer.answerTypeId === 3)
+        answer.answer = '[]';
+
+      this.serviceOrder.serviceOrderQAndA.push(answer);
+    }
+    console.log(this.serviceOrder, 'xx');
   }
   seve() {
     this.spinner.show();
