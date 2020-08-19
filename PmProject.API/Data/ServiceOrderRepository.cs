@@ -24,6 +24,7 @@ namespace PmProject.API.Data
         public async Task<ServiceOrder> Get(Guid projectId)
         {
             return await _context.ServiceOrder.Include(i => i.ServiceOrderQAndA)
+                                                .Include(i => i.ServiceOrderImage)
                                                 .FirstOrDefaultAsync(f => f.ProjectId == projectId && !f.IsDelete);
         }
         public async Task<List<TemplateServiceOrderQuestion>> GetQuestion(Guid projectId)
@@ -41,6 +42,8 @@ namespace PmProject.API.Data
         }
         public async Task<bool> Update(ServiceOrder serviceOrder)
         {
+            var remove = await _context.ServiceOrder.Include(i => i.ServiceOrderImage).FirstAsync(f => f.Id == serviceOrder.Id);
+            _context.ServiceOrder.RemoveRange(remove);
             _context.Update(serviceOrder);
             return await _context.SaveChangesAsync() > 0;
         }

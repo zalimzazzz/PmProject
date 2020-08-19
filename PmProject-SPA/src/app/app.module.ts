@@ -57,6 +57,7 @@ import { ServiceOrderAddEditComponent } from './service-order/service-order-add-
 import { MatRadioModule } from '@angular/material/radio';
 import { ExportComponent } from './project/export/export.component';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { MatListModule } from '@angular/material/list';
 
 export function tokenGetter() {
    return localStorage.getItem('token');
@@ -119,6 +120,7 @@ export class CustomHammerConfig extends HammerGestureConfig {
       MatDialogModule,
       MatRadioModule,
       NgxSpinnerModule,
+      MatListModule,
       JwtModule.forRoot({
          config: {
             tokenGetter: tokenGetter,

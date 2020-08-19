@@ -1,3 +1,4 @@
+using System.IO;
 using System.Net;
 using System.Text;
 using AutoMapper;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using PmProject.API.Data;
@@ -104,7 +106,7 @@ namespace PmProject.API
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseStaticFiles();
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
             app.UseEndpoints(endpoints =>

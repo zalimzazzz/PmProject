@@ -18,6 +18,9 @@ export class ServiceOrderService {
   async update(serviceOrder: ServiceOrder) {
     return await this.http.put(this.baseUrl + 'ServiceOrder/' + serviceOrder.id, serviceOrder).toPromise();
   }
+  async uploadFile(formData: FormData) {
+    return await this.http.post(this.baseUrl + 'ServiceOrder/Upload', formData).toPromise();
+  }
   async delete(id: string) {
     return await this.http.delete(this.baseUrl + 'ServiceOrder/' + id).toPromise();
   }

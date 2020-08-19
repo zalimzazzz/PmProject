@@ -1,0 +1,11 @@
+.vertical-center {
+  padding-top: 4px; 
+  
+}
+
+
+.overflow{
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis; ;
+}

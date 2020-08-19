@@ -26,6 +26,7 @@ namespace PmProject.API.Models
         public Technician Technician { get; set; }
 
         public List<ServiceOrderQAndA> ServiceOrderQAndA { get; set; }
+        public List<ServiceOrderImage> ServiceOrderImage { get; set; }
 
     }
 }
