@@ -21,6 +21,9 @@ export class ServiceOrderService {
   async uploadFile(formData: FormData) {
     return await this.http.post(this.baseUrl + 'ServiceOrder/Upload', formData).toPromise();
   }
+  async download(name: string) {
+    return await this.http.get(this.baseUrl + 'ServiceOrder/Download/' + name).toPromise();
+  }
   async delete(id: string) {
     return await this.http.delete(this.baseUrl + 'ServiceOrder/' + id).toPromise();
   }

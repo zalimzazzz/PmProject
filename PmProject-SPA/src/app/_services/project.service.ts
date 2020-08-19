@@ -26,4 +26,5 @@ export class ProjectService {
   async getById(id: string) {
     return await this.http.get(this.baseUrl + 'Project/' + id).toPromise();
   }
+
 }

@@ -7,16 +7,12 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.FileProviders;
-using PmProject.API.Data;
-using PmProject.API.Dtos;
 using PmProject.API.Interfaces;
 using PmProject.API.Models;
 
 namespace PmProject.API.Controllers
 {
-    // [Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ServiceOrderController : ControllerBase
@@ -90,7 +86,7 @@ namespace PmProject.API.Controllers
             try
             {
                 var file = Request.Form.Files[0];
-                var folderName = Path.Combine("Resources", "Images");
+                var folderName = Path.Combine("wwwroot", "Resources", "Images");
                 var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
 
                 if (file.Length > 0)
@@ -124,11 +120,18 @@ namespace PmProject.API.Controllers
             {
                 // Since this is just and example, I am using a local file located inside wwwroot
                 // Afterwards file is converted into a stream
-                var path = Path.Combine(_hostingEnvironment.WebRootPath + "\\Resources\\Images", "0011_0.jpg");
-                var fs = new FileStream(path, FileMode.Open);
+                // var path = Path.Combine(_hostingEnvironment.WebRootPath + "\\Resources\\Images", "0011_0.jpg");
+                // var fs = new FileStream(path, FileMode.Open);
 
-                // Return the file. A byte array can also be used instead of a stream
-                return File(fs, "application/octet-stream", "0011_0.jpg");
+                // // Return the file. A byte array can also be used instead of a stream
+                // return File(fs, "image/jpeg", "0011_0.jpg");
+                var url = Path.Combine(_hostingEnvironment.WebRootPath + "\\Resources\\Images", id);
+
+                // var url = "/content/image.png";
+                var path = GetPhysicalPathFromRelativeUrl(url);
+
+                var ext = Path.GetExtension(path).ToLowerInvariant();
+                return PhysicalFile(path, GetMimeTypes()[ext]);
             }
             catch (Exception ex)
             {
@@ -136,5 +139,25 @@ namespace PmProject.API.Controllers
             }
         }
 
+
+
+        private string GetPhysicalPathFromRelativeUrl(string url)
+        {
+            var path = Path.Combine(_hostingEnvironment.WebRootPath, url.TrimStart('/').Replace("/", "\\"));
+            return path;
+        }
+
+        private Dictionary<string, string> GetMimeTypes()
+        {
+            return new Dictionary<string, string>
+            {
+                {".txt", "text/plain"},
+                {".pdf", "application/pdf"},
+                {".doc", "application/vnd.ms-word"},
+                {".docx", "application/vnd.ms-word"},
+                {".png", "image/png"},
+                {".jpg", "image/jpeg"},
+            };
+        }
     }
 }

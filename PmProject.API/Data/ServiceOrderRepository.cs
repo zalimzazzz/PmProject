@@ -25,6 +25,7 @@ namespace PmProject.API.Data
         {
             return await _context.ServiceOrder.Include(i => i.ServiceOrderQAndA)
                                                 .Include(i => i.ServiceOrderImage)
+                                                .Include(i => i.Project)
                                                 .FirstOrDefaultAsync(f => f.ProjectId == projectId && !f.IsDelete);
         }
         public async Task<List<TemplateServiceOrderQuestion>> GetQuestion(Guid projectId)

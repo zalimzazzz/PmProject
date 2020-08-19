@@ -150,7 +150,8 @@ export class ServiceOrderAddEditComponent implements OnInit {
       let formData: FormData = new FormData();
 
       let type = '.' + file.name.split(".").pop();
-      let name = this.serviceOrder.serviceOrderNo + '_' + index + type;
+      let num = index + this.serviceOrder.serviceOrderImage.length;
+      let name = this.serviceOrder.serviceOrderNo + '_' + num + type;
       formData.append('uploadFile', file, name);
       this.images.push(formData);
 
