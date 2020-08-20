@@ -21,8 +21,7 @@ namespace PmProject.API.Models
         public Guid ProjectId { get; set; }
         public Project Project { get; set; }
 
-        [Required]
-        public Guid TechnicianId { get; set; }
+        public Guid? TechnicianId { get; set; }
         public Technician Technician { get; set; }
 
         public List<ServiceOrderQAndA> ServiceOrderQAndA { get; set; }

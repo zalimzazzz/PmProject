@@ -7,8 +7,10 @@ import { Project } from 'src/app/_models/project';
 import { ServiceOrderService } from 'src/app/_services/service-order.service';
 import { ServiceOrder } from 'src/app/_models/service-order';
 import { ServiceOrderImage } from 'src/app/_models/service-order-image';
-import { async } from '@angular/core/testing';
 import { environment } from 'src/environments/environment';
+
+import { saveAs } from 'file-saver';
+import { Document, Packer, Paragraph, Media } from "docx";
 
 @Component({
   selector: 'app-export',
@@ -46,6 +48,7 @@ export class ExportComponent implements OnInit {
         console.log(ex);
         this.alertify.error('Internal Server Error');
       }).finally(() => {
+        this.isDataAvailable = true;
         this.spinner.hide();
       });
     });
@@ -58,19 +61,57 @@ export class ExportComponent implements OnInit {
       const element = images[index];
       let res = await this.serviceOrderService.download(element.imagePath).catch(ex => { });
       console.log(index);
-
     }
-    this.isDataAvailable = true;
+
   }
 
-  export() {
 
-    let images = this.serviceOrder.serviceOrderImage;
-    for (let index = 0; index < images.length; index++) {
-      const element = images[index];
-      window.URL.revokeObjectURL(this.baseUrl + element.imagePath);
-      console.log(index);
+  public download(): void {
+    let x = 'http://localhost:5000/api/ServiceOrder/Download/s01_2.jpg';
+    this.base64(x).then(res => {
+      this.tes(res);
+    })
 
-    }
   }
+  async base64(url: string) {
+    var res = await fetch(url);
+    var blob = await res.blob();
+
+    return new Promise((resolve, reject) => {
+      var reader = new FileReader();
+      reader.addEventListener("load", function () {
+        resolve(reader.result);
+      }, false);
+
+      reader.onerror = () => {
+        return reject(this);
+      };
+      reader.readAsDataURL(blob);
+    })
+  }
+
+
+  tes(image) {
+    const document = new Document();
+    const image1 = Media.addImage(document, image, 400, 300);
+    document.addSection({
+      children: [
+        new Paragraph(image1),
+        new Paragraph(''),
+        new Paragraph(image1),
+        new Paragraph(image1),
+        new Paragraph(image1),
+
+      ]
+    });
+
+    Packer.toBlob(document).then(blob => {
+      console.log(blob);
+      saveAs(blob, "example.docx");
+      console.log("Document created successfully");
+    });
+  }
+
+
+
 }

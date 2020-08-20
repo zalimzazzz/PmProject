@@ -173,7 +173,6 @@ export class ServiceOrderAddEditComponent implements OnInit {
     this.spinner.show();
     this.serviceOrder.customerSignature = this.signaturePad.toDataURL();
     this.serviceOrder.projectId = this.id;
-    this.serviceOrder.technicianId = '8dd7fda4-a143-4111-ae9a-bf6f50082dc6';
     if (this.mode === 'New') {
       await this.uploadFile().then(async res => {
         console.log('save', res);
