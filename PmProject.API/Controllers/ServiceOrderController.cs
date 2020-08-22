@@ -18,9 +18,9 @@ namespace PmProject.API.Controllers
     public class ServiceOrderController : ControllerBase
     {
         private readonly IServiceOrderRepository _repo;
-        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IMapper _mapper;
-        public ServiceOrderController(IServiceOrderRepository repo, IMapper mapper, IHostingEnvironment hostingEnvironment)
+        public ServiceOrderController(IServiceOrderRepository repo, IMapper mapper, IWebHostEnvironment hostingEnvironment)
         {
             _repo = repo;
             _mapper = mapper;

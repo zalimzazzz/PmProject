@@ -150,18 +150,30 @@ export class ServiceOrderAddEditComponent implements OnInit {
       let formData: FormData = new FormData();
 
       let type = '.' + file.name.split(".").pop();
-      let num = index + this.serviceOrder.serviceOrderImage.length;
+      let num = this.serviceOrder.serviceOrderImage.length + 1;
       let name = this.serviceOrder.serviceOrderNo + '_' + num + type;
       formData.append('uploadFile', file, name);
       this.images.push(formData);
-
       let serviceOrderImage = new ServiceOrderImage();
       serviceOrderImage.imagePath = name;
+
+
+      if (this.serviceOrder.serviceOrderImage.length !== 0) {
+        let index = this.serviceOrder.serviceOrderImage.length;
+        console.log(this.serviceOrder.serviceOrderImage[index - 1].imagePath);
+        let path = this.serviceOrder.serviceOrderImage[index - 1].imagePath;
+        let name = this.serviceOrder.serviceOrderNo + '_' + this.getLast(path) + type;
+
+        serviceOrderImage.imagePath = name;
+      }
+
       this.serviceOrder.serviceOrderImage.push(serviceOrderImage);
     }
-    console.log(this.images);
-    console.log(this.serviceOrder.serviceOrderImage);
-
+  }
+  getLast(name: string) {
+    let a = name.split('_').pop();
+    let b = a.split('.');
+    return (+b[0]) + 1;
   }
   deleteImg(name: string) {
     let img = this.serviceOrder.serviceOrderImage.filter(f => f.imagePath === name)[0];

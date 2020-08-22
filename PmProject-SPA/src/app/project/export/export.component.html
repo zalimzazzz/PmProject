@@ -17,15 +17,9 @@
             <div class="form-group row">
               <label class="col-sm-12 col-md-2 col-form-label">Use Image Layout</label>
               <div class="col-md-10 col-sm-12">
-                <select class="form-control">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
+                <select [(ngModel)]="imageLength" class="form-control">
+                  <option *ngFor="let item of [].constructor(numberDisplay); let i = index" [value]="i + 1">{{i + 1}}
+                  </option>
                 </select>
               </div>
             </div>
@@ -35,29 +29,13 @@
                 <div class="jumbotron jumbotron-fluid">
                   <div class="container">
                     <div class="row mb-3" *ngIf="isDataAvailable">
-                      <div class="col-sm-12 col-md-6 text-center  mb-3"
-                        *ngFor="let item of serviceOrder.serviceOrderImage">
-                        <img id="{{item.id}}" src="{{baseUrl + item.imagePath}}" style="width:400px;  height:300px;"
-                          class="img-fluid" alt="Responsive image">
-                      </div>
-                      <!-- <div class="col">
-                        <img src="http://localhost:5000/api/ServiceOrder/Download/0011_1.png"
-                          style="width:400px;  height:300px;" class="img-fluid" alt="Responsive image">
-                      </div> -->
+                      <ng-container *ngFor="let item of serviceOrder.serviceOrderImage;let  i=index">
+                        <div class="col-sm-12 col-md-6 text-center  mb-3" *ngIf="numberDisplay >= (i + 1)">
+                          <img id="{{item.id}}" src="{{baseUrl + item.imagePath}}" style="width:400px;  height:300px;"
+                            class="img-fluid" alt="Responsive image">
+                        </div>
+                      </ng-container>
                     </div>
-                    <!-- <div class="row">
-                      <div class="col text-right">
-                        <img
-                          src="https://www.thairath.co.th/media/dFQROr7oWzulq5FZYAdHip381UqDceBipx7cIAmPnA3XfgsM6wmtAwubuGSnVDBCB8f.jpg"
-                          width="400" height="300" class="img-fluid" alt="Responsive image">
-                      </div>
-                      <div class="col">
-                        <img
-                          src="https://www.thairath.co.th/media/dFQROr7oWzulq5FZYAdHip381UqDceBipx7cIAmPnA3XfgsM6wmtAwubuGSnVDBCB8f.jpg"
-                          width="400" height="300" class="img-fluid" alt="Responsive image">
-                      </div>
-                    </div> -->
-
                   </div>
                 </div>
               </div>

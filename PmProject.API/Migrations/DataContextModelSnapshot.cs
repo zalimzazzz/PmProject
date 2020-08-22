@@ -154,7 +154,7 @@ namespace PmProject.API.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("TechnicianId")
+                    b.Property<Guid?>("TechnicianId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -495,9 +495,7 @@ namespace PmProject.API.Migrations
 
                     b.HasOne("PmProject.API.Models.Technician", "Technician")
                         .WithMany()
-                        .HasForeignKey("TechnicianId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TechnicianId");
                 });
 
             modelBuilder.Entity("PmProject.API.Models.ServiceOrderImage", b =>

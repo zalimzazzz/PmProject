@@ -11,6 +11,7 @@ import { environment } from 'src/environments/environment';
 
 import { saveAs } from 'file-saver';
 import { Document, Packer, Paragraph, Media } from "docx";
+import { async } from '@angular/core/testing';
 
 @Component({
   selector: 'app-export',
@@ -22,6 +23,9 @@ export class ExportComponent implements OnInit {
   serviceOrder = new ServiceOrder();
   baseUrl = environment.apiUrl + 'ServiceOrder/Download/';
   isDataAvailable: boolean;
+  document: any
+  numberDisplay: number;
+  imageLength: number;
   constructor(private projectService: ProjectService,
     private spinner: NgxSpinnerService,
     private alertify: AlertifyService,
@@ -30,13 +34,9 @@ export class ExportComponent implements OnInit {
 
     this.serviceOrder.project = new Project();
     this.serviceOrder.serviceOrderImage = new Array<ServiceOrderImage>();
-
   }
 
   ngOnInit() {
-
-    // this.serviceOrderService.download('0011_0.jpg');
-    // this.serviceOrderService.download('0011_1.png');
     this.route.params.subscribe(params => {
       this.id = params['id'];
       this.spinner.show();
@@ -44,11 +44,13 @@ export class ExportComponent implements OnInit {
         console.log(res);
         this.serviceOrder = res;
         await this.getImg();
+        this.isDataAvailable = true;
+        this.numberDisplay = this.serviceOrder.serviceOrderImage.length;
+        this.imageLength = this.serviceOrder.serviceOrderImage.length;
       }).catch(ex => {
         console.log(ex);
         this.alertify.error('Internal Server Error');
       }).finally(() => {
-        this.isDataAvailable = true;
         this.spinner.hide();
       });
     });
@@ -60,18 +62,35 @@ export class ExportComponent implements OnInit {
     for (let index = 0; index < images.length; index++) {
       const element = images[index];
       let res = await this.serviceOrderService.download(element.imagePath).catch(ex => { });
-      console.log(index);
+      // console.log(index);
     }
 
   }
 
 
-  public download(): void {
-    let x = 'http://localhost:5000/api/ServiceOrder/Download/s01_2.jpg';
-    this.base64(x).then(res => {
-      this.tes(res);
-    })
+  public async download() {
+    // let x = 'http://localhost:5000/api/ServiceOrder/Download/s01_2.jpg';
+    // this.base64(x).then(res => {
+    //   // this.export(res);
+    // })
+    this.document = new Document();
+    let images = this.serviceOrder.serviceOrderImage;
+    let paragraph = Array<Paragraph>();
+    for (let index = 0; index < images.length; index++) {
 
+      if (this.numberDisplay < (index + 1)) {
+        continue;
+      }
+      const element = images[index];
+      let url = 'http://localhost:5000/api/ServiceOrder/Download/' + element.imagePath;
+      let res_paragraph = await this.base64(url).then((res: any) => {
+        const image = Media.addImage(this.document, res, 400, 300);
+        console.log(index);
+        paragraph.push(new Paragraph(element.imagePath));
+        paragraph.push(new Paragraph(image));
+      })
+    }
+    this.export(paragraph);
   }
   async base64(url: string) {
     var res = await fetch(url);
@@ -91,23 +110,16 @@ export class ExportComponent implements OnInit {
   }
 
 
-  tes(image) {
-    const document = new Document();
-    const image1 = Media.addImage(document, image, 400, 300);
-    document.addSection({
-      children: [
-        new Paragraph(image1),
-        new Paragraph(''),
-        new Paragraph(image1),
-        new Paragraph(image1),
-        new Paragraph(image1),
+  export(paragraph: Array<Paragraph>) {
+    console.log('paragraph', paragraph);
 
-      ]
+    this.document.addSection({
+      children: paragraph
     });
 
-    Packer.toBlob(document).then(blob => {
+    Packer.toBlob(this.document).then(blob => {
       console.log(blob);
-      saveAs(blob, "example.docx");
+      saveAs(blob, this.serviceOrder.project.name + ".docx");
       console.log("Document created successfully");
     });
   }
