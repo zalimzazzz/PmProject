@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProjectService } from 'src/app/_services/project.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertifyService } from 'src/app/_services/alertify.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Project } from 'src/app/_models/project';
 import { ServiceOrderService } from 'src/app/_services/service-order.service';
 import { ServiceOrder } from 'src/app/_models/service-order';
@@ -30,6 +30,7 @@ export class ExportComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private alertify: AlertifyService,
     private route: ActivatedRoute,
+    private router: Router,
     private serviceOrderService: ServiceOrderService,) {
 
     this.serviceOrder.project = new Project();
@@ -42,6 +43,11 @@ export class ExportComponent implements OnInit {
       this.spinner.show();
       this.serviceOrderService.getById(this.id).then(async (res: ServiceOrder) => {
         console.log(res);
+        if (res === null) {
+          this.alertify.warning('Please enter service order before export');
+          this.router.navigate(['/serviceOrder/edit/', this.id]);
+          return;
+        }
         this.serviceOrder = res;
         await this.getImg();
         this.isDataAvailable = true;
