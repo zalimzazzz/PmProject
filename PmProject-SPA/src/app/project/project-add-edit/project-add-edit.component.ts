@@ -47,15 +47,14 @@ export class ProjectAddEditComponent implements OnInit {
       this.template = res;
 
       if (this.data.id !== null) {
-        console.log(this.data.id);
         this.mode = 'Edit';
         return this.projectService.getById(this.data.id);
       }
       return Promise.resolve(null);
     }).then((res: Project) => {
-      console.log(res);
       if (res !== null) {
         this.project = res;
+        console.log('this.project ', this.project);
       }
     }).catch(ex => {
       this.alertify.error(ex);

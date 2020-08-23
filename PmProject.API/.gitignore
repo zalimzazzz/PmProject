@@ -2,3 +2,8 @@
 bin
 obj
 appsettings.json
+
+Migrations
+
+
+wwwroot\Resources\Images

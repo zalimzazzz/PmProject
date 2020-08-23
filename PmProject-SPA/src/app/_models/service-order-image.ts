@@ -1,10 +1,8 @@
 import { ServiceOrder } from './service-order';
 
-export class ServiceOrderQAndA {
+export class ServiceOrderImage {
     id: string;
+    imagePath: string;
     serviceOrderId: string;
     serviceOrder: ServiceOrder;
-    answerTypeId: number;
-    answer: string;
-    questionId: string;
 }

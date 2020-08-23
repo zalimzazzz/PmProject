@@ -28,7 +28,7 @@ namespace PmProject.API.Data
         }
         public async Task<Project> Get(Guid id)
         {
-            return await _context.Project.FirstAsync(w => !w.IsDelete);
+            return await _context.Project.FirstAsync(w => w.Id == id && !w.IsDelete);
         }
         public async Task<bool> Update(Project project)
         {
