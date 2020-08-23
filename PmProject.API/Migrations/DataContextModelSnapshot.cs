@@ -154,7 +154,7 @@ namespace PmProject.API.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("TechnicianId")
+                    b.Property<Guid?>("TechnicianId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -164,6 +164,37 @@ namespace PmProject.API.Migrations
                     b.HasIndex("TechnicianId");
 
                     b.ToTable("ServiceOrder");
+                });
+
+            modelBuilder.Entity("PmProject.API.Models.ServiceOrderImage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CreateBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ImagePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("ServiceOrderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ServiceOrderId");
+
+                    b.ToTable("ServiceOrderImage");
                 });
 
             modelBuilder.Entity("PmProject.API.Models.ServiceOrderQAndA", b =>
@@ -464,7 +495,14 @@ namespace PmProject.API.Migrations
 
                     b.HasOne("PmProject.API.Models.Technician", "Technician")
                         .WithMany()
-                        .HasForeignKey("TechnicianId")
+                        .HasForeignKey("TechnicianId");
+                });
+
+            modelBuilder.Entity("PmProject.API.Models.ServiceOrderImage", b =>
+                {
+                    b.HasOne("PmProject.API.Models.ServiceOrder", "ServiceOrder")
+                        .WithMany("ServiceOrderImage")
+                        .HasForeignKey("ServiceOrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -1,5 +1,6 @@
 import { Project } from './project';
 import { ServiceOrderQAndA } from './service-order-q-and-a';
+import { ServiceOrderImage } from './service-order-image';
 
 export class ServiceOrder {
     id: string;
@@ -12,4 +13,5 @@ export class ServiceOrder {
     technicianId: string;
     // technician: Technician;
     serviceOrderQAndA: ServiceOrderQAndA[];
+    serviceOrderImage: ServiceOrderImage[];
 }

@@ -126,5 +126,8 @@
       }
     }
   },
-  "defaultProject": "PmProject-SPA"
+  "defaultProject": "PmProject-SPA",
+  "cli": {
+    "analytics": false
+  }
 }

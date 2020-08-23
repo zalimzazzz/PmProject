@@ -102,6 +102,8 @@ export class ProjectComponent implements OnInit {
     });
   }
   edit(id: string) {
+    console.log('id',id);
+    
     const dialogRef = this.dialog.open(ProjectAddEditComponent, {
       data: { id: id },
     });
