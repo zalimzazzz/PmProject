@@ -21,6 +21,8 @@ import { ProjectAddEditComponent } from './project/project-add-edit/project-add-
 import { ServiceOrderComponent } from './service-order/service-order.component';
 import { ServiceOrderAddEditComponent } from './service-order/service-order-add-edit/service-order-add-edit.component';
 import { ExportComponent } from './project/export/export.component';
+import { ServiceOrderTechnicianComponent } from './service-order-technician/service-order-technician.component';
+import { ServiceOrderTechnicianEditComponent } from './service-order-technician/service-order-technician-edit/service-order-technician-edit.component';
 
 export const appRoutes: Routes = [
     { path: '', component: HomeComponent },
@@ -58,9 +60,10 @@ export const appRoutes: Routes = [
             { path: 'project/edit/:id', component: ProjectAddEditComponent },
             { path: 'project/export/:id', component: ExportComponent },
             { path: 'serviceOrder', component: ServiceOrderComponent },
-            { path: 'serviceOrder/add', component: ServiceOrderAddEditComponent },
-            { path: 'serviceOrder/edit/:id', component: ServiceOrderAddEditComponent },
-            { path: 'serviceOrder/edit/:id', component: ServiceOrderAddEditComponent },
+            { path: 'serviceOrder/:mode/:id', component: ServiceOrderAddEditComponent },
+            { path: 'serviceOrder/edit/:id/:projecid', component: ServiceOrderAddEditComponent },
+            { path: 'service-order/technician', component: ServiceOrderTechnicianComponent },
+            { path: 'service-order/technician/:id', component: ServiceOrderTechnicianEditComponent },
         ]
     },
     { path: '**', redirectTo: '', pathMatch: 'full' }

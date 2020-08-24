@@ -129,7 +129,6 @@ namespace PmProject.API.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CustomerSignature")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")

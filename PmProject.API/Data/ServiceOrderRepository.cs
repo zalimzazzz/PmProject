@@ -21,12 +21,12 @@ namespace PmProject.API.Data
             return await _context.ServiceOrder.Where(w => !w.IsDelete).ToListAsync();
         }
 
-        public async Task<ServiceOrder> Get(Guid projectId)
+        public async Task<ServiceOrder> Get(Guid id)
         {
             return await _context.ServiceOrder.Include(i => i.ServiceOrderQAndA)
                                                 .Include(i => i.ServiceOrderImage)
                                                 .Include(i => i.Project)
-                                                .FirstOrDefaultAsync(f => f.ProjectId == projectId && !f.IsDelete);
+                                                .FirstOrDefaultAsync(f => f.Id == id && !f.IsDelete);
         }
         public async Task<List<TemplateServiceOrderQuestion>> GetQuestion(Guid projectId)
         {

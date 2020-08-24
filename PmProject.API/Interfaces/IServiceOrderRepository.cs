@@ -7,7 +7,7 @@ namespace PmProject.API.Interfaces
 {
     public interface IServiceOrderRepository
     {
-        Task<List<TemplateServiceOrderQuestion>> GetQuestion(Guid projectId);
+        Task<List<TemplateServiceOrderQuestion>> GetQuestion(Guid id);
         Task<List<ServiceOrder>> Get();
         Task<ServiceOrder> Get(Guid projectId);
         Task<bool> Add(ServiceOrder serviceOrder);

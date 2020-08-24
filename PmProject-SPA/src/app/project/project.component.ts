@@ -88,7 +88,7 @@ export class ProjectComponent implements OnInit {
     this.router.navigate(['project/export/' + id]);
   }
   serviceOrder(id: string) {
-    this.router.navigate(['serviceOrder/edit/' + id]);
+    this.router.navigate(['serviceOrder/add/' + id]);
   }
   openDialog() {
     const dialogRef = this.dialog.open(ProjectAddEditComponent,
@@ -102,8 +102,8 @@ export class ProjectComponent implements OnInit {
     });
   }
   edit(id: string) {
-    console.log('id',id);
-    
+    console.log('id', id);
+
     const dialogRef = this.dialog.open(ProjectAddEditComponent, {
       data: { id: id },
     });

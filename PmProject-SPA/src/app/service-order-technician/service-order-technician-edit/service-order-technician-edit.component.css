@@ -1,0 +1,7 @@
+::ng-deep .mat-checkbox-disabled .mat-checkbox-label  {
+    color: black !important;
+}
+
+::ng-deep .mat-radio-button.mat-radio-disabled .mat-radio-label-content {
+    color: black !important;
+}

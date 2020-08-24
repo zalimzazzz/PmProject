@@ -13,7 +13,7 @@ namespace PmProject.API.Models
         public string Description { get; set; }
         [Required]
         public int Status { get; set; }
-        [Required]
+
         public string CustomerSignature { get; set; }
         public bool IsDelete { get; set; }
 

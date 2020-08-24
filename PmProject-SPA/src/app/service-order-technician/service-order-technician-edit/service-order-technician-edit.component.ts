@@ -9,12 +9,13 @@ import { ServiceOrder } from 'src/app/_models/service-order';
 import { ServiceOrderQAndA } from 'src/app/_models/service-order-q-and-a';
 import { ServiceOrderImage } from 'src/app/_models/service-order-image';
 
+
 @Component({
-  selector: 'app-service-order-add-edit',
-  templateUrl: './service-order-add-edit.component.html',
-  styleUrls: ['./service-order-add-edit.component.css']
+  selector: 'app-service-order-technician-edit',
+  templateUrl: './service-order-technician-edit.component.html',
+  styleUrls: ['./service-order-technician-edit.component.css']
 })
-export class ServiceOrderAddEditComponent implements OnInit {
+export class ServiceOrderTechnicianEditComponent implements OnInit {
 
   @ViewChild('sPad', { static: true }) signaturePadElement;
   signaturePad: any;
@@ -23,8 +24,6 @@ export class ServiceOrderAddEditComponent implements OnInit {
   questionList = new Array<TemplateServiceOrderQuestion>();
   serviceOrder = new ServiceOrder();
   images = new Array<FormData>();
-  isNew: boolean;
-  projecid: string;
   constructor(private serviceOrderService: ServiceOrderService,
     private spinner: NgxSpinnerService,
     private alertify: AlertifyService,
@@ -32,26 +31,26 @@ export class ServiceOrderAddEditComponent implements OnInit {
     private router: Router,) {
     this.serviceOrder.serviceOrderQAndA = new Array<ServiceOrderQAndA>();
     this.serviceOrder.serviceOrderImage = new Array<ServiceOrderImage>();
-
   }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.id = params['id'];
-      this.isNew = params['mode'] === 'add';
-      this.projecid = params['projecid'];
       this.spinner.show();
-      this.serviceOrderService.getQuestion(this.projecid).then((res: Array<TemplateServiceOrderQuestion>) => {
+      this.serviceOrderService.getQuestion(this.id).then((res: Array<TemplateServiceOrderQuestion>) => {
         console.log(res);
         this.questionList = res;
         console.log(this.serviceOrder.serviceOrderQAndA);
         return this.serviceOrderService.getById(this.id)
       }).then((res: ServiceOrder) => {
         console.log('ServiceOrder', res);
-        if (res !== null && !this.isNew) {
+        if (res !== null) {
+          this.mode = 'Edit';
           this.serviceOrder = res;
           console.log(this.signaturePad);
-          // this.signaturePad.fromDataURL(this.serviceOrder.customerSignature);
+
+          this.signaturePad.fromDataURL(this.serviceOrder.customerSignature);
+
         }
         else {
           this.createAnswer();
@@ -64,6 +63,9 @@ export class ServiceOrderAddEditComponent implements OnInit {
         this.spinner.hide();
       });
     });
+  }
+  onEvent(event) {
+    event.stopPropagation();
   }
   answerText(id: string) {
     let answer = this.serviceOrder.serviceOrderQAndA.filter(f => f.questionId === id)[0];
@@ -184,10 +186,13 @@ export class ServiceOrderAddEditComponent implements OnInit {
   async seve() {
     // await this.uploadFile();
     this.spinner.show();
-    // this.serviceOrder.customerSignature = '';
+    this.serviceOrder.customerSignature = this.signaturePad.toDataURL();
     this.serviceOrder.projectId = this.id;
     if (this.mode === 'New') {
-      this.serviceOrderService.add(this.serviceOrder).then(async res => {
+      await this.uploadFile().then(async res => {
+        console.log('save', res);
+        return this.serviceOrderService.add(this.serviceOrder);
+      }).then(async res => {
         this.router.navigate(['/serviceOrder']);
       }).catch(ex => {
         this.alertify.error('Save Failed');
@@ -196,7 +201,10 @@ export class ServiceOrderAddEditComponent implements OnInit {
       });
     }
     else {
-      this.serviceOrderService.update(this.serviceOrder).then(async res => {
+      await this.uploadFile().then(async res => {
+        console.log('save', res);
+        return this.serviceOrderService.update(this.serviceOrder);
+      }).then(async res => {
         this.router.navigate(['/serviceOrder']);
       }).catch(ex => {
         this.alertify.error('Save Failed');
@@ -215,9 +223,9 @@ export class ServiceOrderAddEditComponent implements OnInit {
     console.log('End UploadFile');
     return Promise.resolve('Uploaded');
   }
-  // ngAfterViewInit(): void {
-  //   this.signaturePad = new SignaturePad(this.signaturePadElement.nativeElement);
-  // }
+  ngAfterViewInit(): void {
+    this.signaturePad = new SignaturePad(this.signaturePadElement.nativeElement);
+  }
 
   changeColor() {
     const r = Math.round(Math.random() * 255);
