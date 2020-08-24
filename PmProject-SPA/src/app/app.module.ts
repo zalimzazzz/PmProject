@@ -62,6 +62,8 @@ import { ServiceOrderTechnicianComponent } from './service-order-technician/serv
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material/card';
 import { ServiceOrderTechnicianEditComponent } from './service-order-technician/service-order-technician-edit/service-order-technician-edit.component';
+import { LoginComponent } from './login/login.component';
+import { AppRootComponent } from './app-root/app-root.component';
 
 export function tokenGetter() {
    return localStorage.getItem('token');
@@ -75,7 +77,7 @@ export class CustomHammerConfig extends HammerGestureConfig {
 }
 
 @NgModule({
-   declarations: [
+   declarations: [	
       AppComponent,
       NavComponent,
       HomeComponent,
@@ -98,6 +100,8 @@ export class CustomHammerConfig extends HammerGestureConfig {
       ExportComponent,
       ServiceOrderTechnicianComponent,
       ServiceOrderTechnicianEditComponent,
+      LoginComponent,
+      AppRootComponent
    ],
    imports: [
       BrowserModule,

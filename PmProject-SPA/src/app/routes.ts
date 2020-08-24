@@ -23,13 +23,19 @@ import { ServiceOrderAddEditComponent } from './service-order/service-order-add-
 import { ExportComponent } from './project/export/export.component';
 import { ServiceOrderTechnicianComponent } from './service-order-technician/service-order-technician.component';
 import { ServiceOrderTechnicianEditComponent } from './service-order-technician/service-order-technician-edit/service-order-technician-edit.component';
+import { LoginComponent } from './login/login.component';
+import { AppRootComponent } from './app-root/app-root.component';
+import { RegisterComponent } from './register/register.component';
 
 export const appRoutes: Routes = [
-    { path: '', component: HomeComponent },
+    // { path: '', component: AppRootComponent },
+    { path: '', component: LoginComponent },
+    { path: 'register', component: RegisterComponent },
     {
         path: '',
         runGuardsAndResolvers: 'always',
         canActivate: [AuthGuard],
+        component: AppRootComponent,
         children: [
             {
                 path: 'members', component: MemberListComponent,

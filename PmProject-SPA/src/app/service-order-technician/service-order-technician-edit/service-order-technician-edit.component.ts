@@ -54,6 +54,7 @@ export class ServiceOrderTechnicianEditComponent implements OnInit {
           this.mode = 'Edit';
           this.serviceOrder = res;
           console.log(this.signaturePad);
+          console.log(this.signaturePadElement);
           this.signaturePad.fromDataURL(this.serviceOrder.customerSignature);
         }
         else {
@@ -229,6 +230,8 @@ export class ServiceOrderTechnicianEditComponent implements OnInit {
   }
   ngAfterViewInit(): void {
     this.signaturePad = new SignaturePad(this.signaturePadElement.nativeElement);
+    console.log('ngAfterViewInit', this.signaturePadElement);
+
   }
 
   changeColor() {

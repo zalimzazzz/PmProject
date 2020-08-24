@@ -1,0 +1,33 @@
+<body class="align">
+
+  <div class="grid">
+    <div class="login__body">
+      <h3>Project Management</h3>
+      <div class="form__field">
+        <mat-form-field appearance="outline">
+          <mat-label>Username</mat-label>
+          <input [(ngModel)]="model.username" matInput placeholder="UserName">
+          <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+        </mat-form-field>
+      </div>
+
+      <div class="form__field">
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input [(ngModel)]="model.password" (keyup.enter)="login()" type="password" matInput placeholder="Password">
+          <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+        </mat-form-field>
+      </div>
+
+    </div>
+
+    <footer class="login__footer">
+      <input class="col-sm-12 btn-login" type="button" (click)="login()" value="Login">
+      <br>
+    </footer>
+    <footer class="login__footer">
+      <input class="col-sm-12 btn-login" type="button" [routerLink]="['/register']" value="Register">
+    </footer>
+  </div>
+
+</body>

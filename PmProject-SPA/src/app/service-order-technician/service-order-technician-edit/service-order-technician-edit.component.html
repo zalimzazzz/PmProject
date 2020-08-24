@@ -107,23 +107,23 @@
         </ng-container>
         <hr>
         <div class="form-group row">
-          <label for="inputEmail3" class="col-sm-2 col-form-label">Customer Signature</label>
+          <!-- <label for="inputEmail3" class="col-sm-2 col-form-label">Customer Signature</label>
           <div class="col-sm-8 text-center">
             <div class="signature-pad">
-              <!-- <div class="signature-pad--body">
+              <div class="signature-pad--body">
                 <canvas #sPad height="200"
                   style="touch-action: none; background-color: honeydew; max-width: 280px; max-height: 200px;"></canvas>
-              </div> -->
-            </div>
-          </div>
-          <div class="col-sm-2  clo-12 text-right">
+              </div> 
+        </div>
+      </div> -->
+          <div class="col-sm-12  clo-12 text-right">
             <button class="btn btn-danger" (click)="clear()">Clear</button>
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-12">
+          <div class="col-sm-12 text-center">
             <canvas #sPad width="280" height="200"
-              style="touch-action: none; background-color: honeydew; max-width: 280px; max-height: 200px;"></canvas>
+              style="touch-action: none; background-color: honeydew; max-width: 280px; max-height: 200px; min-width: 280px; min-height: 200px;"></canvas>
           </div>
         </div>
         <div class="form-group row">
