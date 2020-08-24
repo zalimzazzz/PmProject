@@ -19,6 +19,20 @@
             <input class="mr-3" type="radio" value="female" formControlName="gender">Female
           </label>
         </div> -->
+        <div class="form-group">
+          <select formControlName="companyId" class="form-control" id="status">
+            <option selected>Company</option>
+            <option value="1b7b50b8-6886-4463-9391-64c68a215ea9">com1</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <select formControlName="roleId" class="form-control" id="status">
+            <option selected>Role</option>
+            <option value="1">Admin</option>
+            <option value="2">Technician</option>
+          </select>
+        </div>
 
         <div class="form-group">
           <input type="text" [ngClass]="{'is-invalid': registerForm.get('username').errors
@@ -26,6 +40,7 @@
             placeholder="Username">
           <div class="invalid-feedback">Please choose a username</div>
         </div>
+
 
         <!-- <div class="form-group">
           <input [ngClass]="{'is-invalid': registerForm.get('knownAs').errors && registerForm.get('knownAs').touched}"

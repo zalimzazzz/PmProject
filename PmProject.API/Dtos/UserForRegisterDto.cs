@@ -28,6 +28,10 @@ namespace PmProject.API.Dtos
         public string Country { get; set; }
         public DateTime Created { get; set; }
         public DateTime LastActive { get; set; }
+
+        public Guid CompanyId { get; set; }
+        public int RoleId { get; set; }
+
         public UserForRegisterDto()
         {
             Created = DateTime.Now;

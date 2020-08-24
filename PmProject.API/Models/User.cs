@@ -23,5 +23,10 @@ namespace PmProject.API.Models
         public ICollection<Photo> Photos { get; set; }
         public virtual ICollection<Like> Likers { get; set; }
         public virtual ICollection<Like> Likees { get; set; }
+
+        public Guid CompanyId { get; set; }
+        public Company Company { get; set; }
+        public int RoleId { get; set; }
+        public Role Role { get; set; }
     }
 }
