@@ -5,3 +5,8 @@
 ::ng-deep .mat-radio-button.mat-radio-disabled .mat-radio-label-content {
     color: black !important;
 }
+
+
+canvas {
+  width: 100%;
+}

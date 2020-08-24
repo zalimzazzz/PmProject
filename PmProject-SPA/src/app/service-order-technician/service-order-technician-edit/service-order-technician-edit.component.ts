@@ -38,7 +38,7 @@ export class ServiceOrderTechnicianEditComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.id = params['id'] === undefined ? '' : params['id'];
-      console.log(this.id);
+      console.log();
 
       this.isNew = params['mode'] === 'add';
       this.projecid = params['projecid'];
@@ -54,9 +54,7 @@ export class ServiceOrderTechnicianEditComponent implements OnInit {
           this.mode = 'Edit';
           this.serviceOrder = res;
           console.log(this.signaturePad);
-
           this.signaturePad.fromDataURL(this.serviceOrder.customerSignature);
-
         }
         else {
           this.createAnswer();

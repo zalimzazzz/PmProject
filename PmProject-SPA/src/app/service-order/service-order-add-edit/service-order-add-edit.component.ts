@@ -37,7 +37,7 @@ export class ServiceOrderAddEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.id = params['id'];
+      this.id = params['id'] === undefined ? '' : params['id'];
       this.isNew = params['mode'] === 'add';
       this.projecid = params['projecid'];
       this.spinner.show();
@@ -185,7 +185,7 @@ export class ServiceOrderAddEditComponent implements OnInit {
     // await this.uploadFile();
     this.spinner.show();
     // this.serviceOrder.customerSignature = '';
-    this.serviceOrder.projectId = this.id;
+    this.serviceOrder.projectId = this.projecid;
     if (this.mode === 'New') {
       this.serviceOrderService.add(this.serviceOrder).then(async res => {
         this.router.navigate(['/serviceOrder']);
