@@ -19,11 +19,13 @@ export class ServiceOrderTechnicianEditComponent implements OnInit {
 
   @ViewChild('sPad', { static: true }) signaturePadElement;
   signaturePad: any;
-  id: string
+  id: string;
   mode = 'New';
   questionList = new Array<TemplateServiceOrderQuestion>();
   serviceOrder = new ServiceOrder();
   images = new Array<FormData>();
+  isNew: boolean;
+  projecid: string;
   constructor(private serviceOrderService: ServiceOrderService,
     private spinner: NgxSpinnerService,
     private alertify: AlertifyService,
@@ -35,16 +37,20 @@ export class ServiceOrderTechnicianEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.id = params['id'];
+      this.id = params['id'] === undefined ? '' : params['id'];
+      console.log(this.id);
+
+      this.isNew = params['mode'] === 'add';
+      this.projecid = params['projecid'];
       this.spinner.show();
-      this.serviceOrderService.getQuestion(this.id).then((res: Array<TemplateServiceOrderQuestion>) => {
+      this.serviceOrderService.getQuestion(this.projecid).then((res: Array<TemplateServiceOrderQuestion>) => {
         console.log(res);
         this.questionList = res;
         console.log(this.serviceOrder.serviceOrderQAndA);
         return this.serviceOrderService.getById(this.id)
       }).then((res: ServiceOrder) => {
         console.log('ServiceOrder', res);
-        if (res !== null) {
+        if (res !== null && !this.isNew) {
           this.mode = 'Edit';
           this.serviceOrder = res;
           console.log(this.signaturePad);

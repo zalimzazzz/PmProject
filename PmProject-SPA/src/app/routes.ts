@@ -60,10 +60,10 @@ export const appRoutes: Routes = [
             { path: 'project/edit/:id', component: ProjectAddEditComponent },
             { path: 'project/export/:id', component: ExportComponent },
             { path: 'serviceOrder', component: ServiceOrderComponent },
-            { path: 'serviceOrder/:mode/:id', component: ServiceOrderAddEditComponent },
+            { path: 'serviceOrder/:mode/:projecid', component: ServiceOrderAddEditComponent },
             { path: 'serviceOrder/edit/:id/:projecid', component: ServiceOrderAddEditComponent },
             { path: 'service-order/technician', component: ServiceOrderTechnicianComponent },
-            { path: 'service-order/technician/:id', component: ServiceOrderTechnicianEditComponent },
+            { path: 'service-order/technician/:id/:projecid', component: ServiceOrderTechnicianEditComponent },
         ]
     },
     { path: '**', redirectTo: '', pathMatch: 'full' }

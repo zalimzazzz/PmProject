@@ -24,7 +24,9 @@
         <div mat-subheader>Order</div>
         <mat-list-item *ngFor="let note of notes">
           <mat-icon mat-list-icon><i class="fas fa-briefcase"></i></mat-icon>
-          <div mat-line><a href="/service-order/technician/83d2f066-d896-4fa6-1935-08d84788f7fb">{{note.name}}</a></div>
+          <div mat-line><a
+              href="/service-order/technician/35f99dc2-722b-43ea-1203-08d8478cf3b0/83d2f066-d896-4fa6-1935-08d84788f7fb">{{note.name}}</a>
+          </div>
           <div mat-line> {{note.updated | date}} </div>
         </mat-list-item>
         <mat-divider></mat-divider>

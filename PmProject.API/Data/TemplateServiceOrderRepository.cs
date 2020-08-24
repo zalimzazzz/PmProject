@@ -21,6 +21,11 @@ namespace PmProject.API.Data
             templateServiceOrder.Id = Guid.NewGuid();
             templateServiceOrder.CompanyId = Guid.Parse("1b7b50b8-6886-4463-9391-64c68a215ea9");
             _context.Add(templateServiceOrder);
+            var remark = new TemplateServiceOrderQuestion();
+            remark.Id = Guid.NewGuid();
+            remark.Name = "**remark";
+            remark.AnswerTypeId = 1;
+            templateServiceOrder.TemplateServiceOrderQuestion.Add(remark);
             foreach (var templateServiceOrderQuestion in templateServiceOrder.TemplateServiceOrderQuestion)
             {
                 if (templateServiceOrderQuestion.AnswerTypeId != 1) // Type Text
@@ -36,6 +41,7 @@ namespace PmProject.API.Data
                 {
                     templateServiceOrderQuestion.TemplateServiceOrderAnswer.Clear();
                 }
+
                 _context.Add(templateServiceOrderQuestion);
             }
             return await _context.SaveChangesAsync() > 0;
