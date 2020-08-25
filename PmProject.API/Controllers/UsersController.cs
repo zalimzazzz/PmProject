@@ -20,16 +20,18 @@ namespace PmProject.API.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IProjectManagementRepository _repo;
+        private readonly IUserRepository _repoUser;
         private readonly IMapper _mapper;
 
-        public UsersController(IProjectManagementRepository repo, IMapper mapper)
+        public UsersController(IProjectManagementRepository repo, IMapper mapper, IUserRepository repoUser)
         {
             _repo = repo;
             _mapper = mapper;
+            _repoUser = repoUser;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetUsers([FromQuery]UserParams userParams)
+        public async Task<IActionResult> GetUsers([FromQuery] UserParams userParams)
         {
             var currentUserId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
@@ -46,7 +48,7 @@ namespace PmProject.API.Controllers
 
             var usersToReturn = _mapper.Map<IEnumerable<UserForListDto>>(users);
 
-            Response.AddPagination(users.CurrentPage, users.PageSize, 
+            Response.AddPagination(users.CurrentPage, users.PageSize,
                 users.TotalCount, users.TotalPages);
 
             return Ok(usersToReturn);
@@ -56,10 +58,19 @@ namespace PmProject.API.Controllers
         public async Task<IActionResult> GetUser(Guid id)
         {
             var user = await _repo.GetUser(id);
-            
+
             var userToReturn = _mapper.Map<UserForDetailDto>(user);
 
             return Ok(userToReturn);
+        }
+        [HttpGet("technician")]
+        public async Task<IActionResult> GetTechnician()
+        {
+            var technician = await _repoUser.GetTechnician();
+
+            var technicianoReturn = _mapper.Map<List<UserForDetailDto>>(technician);
+
+            return Ok(technicianoReturn);
         }
 
         [HttpPut("{id}")]

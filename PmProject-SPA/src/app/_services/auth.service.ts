@@ -27,10 +27,12 @@ export class AuthService {
     return this.http.post(this.baseUrl + 'login', user)
       .pipe(
         map((response: any) => {
+          console.log(response);
           const user = response;
           if (user) {
             localStorage.setItem('token', user.token);
             localStorage.setItem('user', JSON.stringify(user.user));
+            localStorage.setItem('menus', JSON.stringify(user.menus));
             this.decodedToken = this.jwtHelper.decodeToken(user.token);
             this.currentUser = user.user;
             this.changeMemberPhoto(this.currentUser.photoUrl);
@@ -48,5 +50,9 @@ export class AuthService {
   loggedIn() {
     const token = localStorage.getItem('token');
     return !this.jwtHelper.isTokenExpired(token);
+  }
+
+  getMenu() {
+    return JSON.parse(localStorage.getItem('menus'));
   }
 }

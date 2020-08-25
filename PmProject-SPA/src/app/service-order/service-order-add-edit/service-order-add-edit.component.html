@@ -2,7 +2,7 @@
   <div class="container mt-5">
     <div class="card">
       <div class="card-header">
-        {{mode}} Service Order / Company A
+        {{mode}} Service Order
       </div>
       <div class="card-body">
         <div class="form-group row">
@@ -15,6 +15,16 @@
           <label for="inputEmail3" class="col-sm-2 col-form-label">Description</label>
           <div class="col-sm-10">
             <input type="text" [(ngModel)]="serviceOrder.description" class="form-control">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="inputEmail3" class="col-sm-2 col-form-label">Technician</label>
+          <div class="col-sm-10">
+            <!-- <input type="text" class="form-control"> -->
+            <select class="form-control" [(ngModel)]="serviceOrder.userId">
+              <option value=null>Choose...</option>
+              <option *ngFor="let item of technician" [value]="item.id">{{item.fullName}}</option>
+            </select>
           </div>
         </div>
         <div class="row mb-3">

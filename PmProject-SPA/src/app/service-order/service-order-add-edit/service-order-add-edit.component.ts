@@ -8,6 +8,8 @@ import { TemplateServiceOrderQuestion } from 'src/app/_models/template-service-o
 import { ServiceOrder } from 'src/app/_models/service-order';
 import { ServiceOrderQAndA } from 'src/app/_models/service-order-q-and-a';
 import { ServiceOrderImage } from 'src/app/_models/service-order-image';
+import { UserService } from 'src/app/_services/user.service';
+import { User } from 'src/app/_models/user';
 
 @Component({
   selector: 'app-service-order-add-edit',
@@ -25,11 +27,14 @@ export class ServiceOrderAddEditComponent implements OnInit {
   images = new Array<FormData>();
   isNew: boolean;
   projecid: string;
+  technician: any;
+
   constructor(private serviceOrderService: ServiceOrderService,
     private spinner: NgxSpinnerService,
     private alertify: AlertifyService,
     private route: ActivatedRoute,
-    private router: Router,) {
+    private router: Router,
+    private userService: UserService) {
     this.serviceOrder.serviceOrderQAndA = new Array<ServiceOrderQAndA>();
     this.serviceOrder.serviceOrderImage = new Array<ServiceOrderImage>();
 
@@ -49,6 +54,7 @@ export class ServiceOrderAddEditComponent implements OnInit {
       }).then((res: ServiceOrder) => {
         console.log('ServiceOrder', res);
         if (res !== null && !this.isNew) {
+          this.mode = 'Edit';
           this.serviceOrder = res;
           console.log(this.signaturePad);
           // this.signaturePad.fromDataURL(this.serviceOrder.customerSignature);
@@ -56,7 +62,10 @@ export class ServiceOrderAddEditComponent implements OnInit {
         else {
           this.createAnswer();
         }
-
+        return this.userService.getTechnician();
+      }).then((res: Array<User>) => {
+        console.log('getTechnician', res);
+        this.technician = res;
       }).catch(ex => {
         console.log(ex);
         this.alertify.error('Internal Server Error');
@@ -181,6 +190,7 @@ export class ServiceOrderAddEditComponent implements OnInit {
     var index = this.serviceOrder.serviceOrderImage.indexOf(img);
     this.serviceOrder.serviceOrderImage.splice(index, 1);
   }
+
   async seve() {
     // await this.uploadFile();
     this.spinner.show();

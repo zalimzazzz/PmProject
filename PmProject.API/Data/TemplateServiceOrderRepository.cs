@@ -23,6 +23,7 @@ namespace PmProject.API.Data
             _context.Add(templateServiceOrder);
             var remark = new TemplateServiceOrderQuestion();
             remark.Id = Guid.NewGuid();
+            remark.TemplateServiceOrderId = templateServiceOrder.Id;
             remark.Name = "**remark";
             remark.AnswerTypeId = 1;
             templateServiceOrder.TemplateServiceOrderQuestion.Add(remark);
@@ -39,7 +40,7 @@ namespace PmProject.API.Data
                 }
                 else
                 {
-                    templateServiceOrderQuestion.TemplateServiceOrderAnswer.Clear();
+                    templateServiceOrderQuestion.TemplateServiceOrderAnswer?.Clear();
                 }
 
                 _context.Add(templateServiceOrderQuestion);
@@ -51,6 +52,8 @@ namespace PmProject.API.Data
             var template = await _context.TemplateServiceOrder.FirstOrDefaultAsync(f => f.Id == templateServiceOrder.Id && !f.IsDelete);
             template.Name = templateServiceOrder.Name;
 
+            var remarkRemove = templateServiceOrder.TemplateServiceOrderQuestion.FirstOrDefault(f => f.Name == "**remark");
+            templateServiceOrder.TemplateServiceOrderQuestion.Remove(remarkRemove); // remove remark
             // remove all
             var templateServiceOrderQuestionRemoveItem = await _context.TemplateServiceOrderQuestion.Where(f => f.TemplateServiceOrderId == templateServiceOrder.Id).ToListAsync();
             foreach (var question in templateServiceOrderQuestionRemoveItem)
@@ -61,6 +64,12 @@ namespace PmProject.API.Data
             }
             var seved = await _context.SaveChangesAsync() > 0;
             // re add 
+            var remark = new TemplateServiceOrderQuestion();
+            remark.Id = Guid.NewGuid();
+            remark.TemplateServiceOrderId = template.Id;
+            remark.Name = "**remark";
+            remark.AnswerTypeId = 1;
+            templateServiceOrder.TemplateServiceOrderQuestion.Add(remark);
             foreach (var templateServiceOrderQuestion in templateServiceOrder.TemplateServiceOrderQuestion)
             {
                 templateServiceOrderQuestion.TemplateServiceOrderId = template.Id;
@@ -75,7 +84,7 @@ namespace PmProject.API.Data
                 }
                 else
                 {
-                    templateServiceOrderQuestion.TemplateServiceOrderAnswer.Clear();
+                    templateServiceOrderQuestion.TemplateServiceOrderAnswer?.Clear();
                 }
                 _context.Add(templateServiceOrderQuestion);
             }

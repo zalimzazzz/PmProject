@@ -17,5 +17,6 @@ export interface User {
     lokkingFor?: string;
     photos?: Photo[];
     companyId: string;
+    fullname: string;
     roleId: number;
 }

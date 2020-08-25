@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-primary">
   <div class="container">
-    <a class="navbar-brand">Project Management</a>
+    <a class="navbar-brand" href="{{menus[0].path}}">Project Management</a>
     <button (click)="toggleNavbar()" class="navbar-toggler" type="button" data-toggle="collapse"
       data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false"
       aria-label="Toggle navigation">
@@ -19,10 +19,13 @@
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" [routerLink]="['/messages']">Messages</a>
         </li> -->
-        <li class="nav-item" routerLinkActive="active">
+        <li class="nav-item" routerLinkActive="active" *ngFor="let item of menus">
+          <a class="nav-link" [routerLink]="[item.path]">{{item.name}}</a>
+        </li>
+        <!-- <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" [routerLink]="['/company']">Company</a>
         </li>
-        <li class="nav-item" routerLinkActive="active">
+         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" [routerLink]="['/template']">Template Service Order</a>
         </li>
         <li class="nav-item" routerLinkActive="active">
@@ -30,7 +33,7 @@
         </li>
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" [routerLink]="['/serviceOrder']">Service Order</a>
-        </li>
+        </li> -->
       </ul>
 
       <div *ngIf="loggedIn()" class="dropdown" dropdown>

@@ -43,8 +43,8 @@ namespace PmProject.API.Data
         }
         public async Task<bool> Update(ServiceOrder serviceOrder)
         {
-            var remove = await _context.ServiceOrder.Include(i => i.ServiceOrderImage).FirstAsync(f => f.Id == serviceOrder.Id);
-            _context.ServiceOrder.RemoveRange(remove);
+            var _serviceOrder = await _context.ServiceOrder.Include(i => i.ServiceOrderImage).FirstAsync(f => f.Id == serviceOrder.Id);
+            _context.ServiceOrder.RemoveRange(_serviceOrder);
             _context.Update(serviceOrder);
             return await _context.SaveChangesAsync() > 0;
         }
