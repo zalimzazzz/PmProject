@@ -36,4 +36,7 @@ export class ServiceOrderService {
   async getQuestion(id: string) {
     return await this.http.get(this.baseUrl + 'ServiceOrder/Question/' + id).toPromise();
   }
+  async getByTechnicianId(id: string) {
+    return await this.http.get(this.baseUrl + 'ServiceOrder/order/' + id).toPromise();
+  }
 }

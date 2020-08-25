@@ -18,6 +18,7 @@ namespace PmProject.API.Data
         public DbSet<Project> Project { get; set; }
         public DbSet<ServiceOrder> ServiceOrder { get; set; }
         public DbSet<ServiceOrderQAndA> ServiceOrderQAndA { get; set; }
+        public DbSet<Role> Role { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Like>()

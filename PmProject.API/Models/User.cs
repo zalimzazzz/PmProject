@@ -8,6 +8,7 @@ namespace PmProject.API.Models
     {
         public Guid Id { get; set; }
         public string Username { get; set; }
+        public string FullName { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
         public string Gender { get; set; }
@@ -23,5 +24,12 @@ namespace PmProject.API.Models
         public ICollection<Photo> Photos { get; set; }
         public virtual ICollection<Like> Likers { get; set; }
         public virtual ICollection<Like> Likees { get; set; }
+
+        public Guid CompanyId { get; set; }
+        public Company Company { get; set; }
+        public int RoleId { get; set; }
+        public Role Role { get; set; }
+        public bool IsDelete { get; set; }
+
     }
 }

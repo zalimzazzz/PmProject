@@ -21,12 +21,16 @@ namespace PmProject.API.Data
             return await _context.ServiceOrder.Where(w => !w.IsDelete).ToListAsync();
         }
 
-        public async Task<ServiceOrder> Get(Guid projectId)
+        public async Task<ServiceOrder> Get(Guid id)
         {
             return await _context.ServiceOrder.Include(i => i.ServiceOrderQAndA)
                                                 .Include(i => i.ServiceOrderImage)
                                                 .Include(i => i.Project)
-                                                .FirstOrDefaultAsync(f => f.ProjectId == projectId && !f.IsDelete);
+                                                .FirstOrDefaultAsync(f => f.Id == id && !f.IsDelete);
+        }
+        public async Task<List<ServiceOrder>> GetByTechnicianId(Guid userId)
+        {
+            return await _context.ServiceOrder.Where(f => f.UserId == userId && !f.IsDelete).ToListAsync();
         }
         public async Task<List<TemplateServiceOrderQuestion>> GetQuestion(Guid projectId)
         {
@@ -43,8 +47,8 @@ namespace PmProject.API.Data
         }
         public async Task<bool> Update(ServiceOrder serviceOrder)
         {
-            var remove = await _context.ServiceOrder.Include(i => i.ServiceOrderImage).FirstAsync(f => f.Id == serviceOrder.Id);
-            _context.ServiceOrder.RemoveRange(remove);
+            var _serviceOrder = await _context.ServiceOrder.Include(i => i.ServiceOrderImage).FirstAsync(f => f.Id == serviceOrder.Id);
+            _context.ServiceOrder.RemoveRange(_serviceOrder);
             _context.Update(serviceOrder);
             return await _context.SaveChangesAsync() > 0;
         }

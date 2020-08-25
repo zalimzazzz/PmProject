@@ -23,5 +23,8 @@ namespace PmProject.API.Dtos
         public string Country { get; set; }
 
         public string PhotoUrl { get; set; }
+
+        public Guid CompanyId { get; set; }
+        public int RoleId { get; set; }
     }
 }

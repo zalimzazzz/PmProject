@@ -8,22 +8,25 @@
         <div class="form-group row">
           <label for="inputEmail3" class="col-sm-2 col-form-label">Service Order</label>
           <div class="col-sm-10">
-            <input type="text" [(ngModel)]="serviceOrder.serviceOrderNo" class="form-control">
+            <div class="form-control">{{serviceOrder.serviceOrderNo}}</div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="inputEmail3" class="col-sm-2 col-form-label">Description</label>
+          <div class="col-sm-10">
+            <div class="form-control">{{serviceOrder.description}}</div>
           </div>
         </div>
         <div class="form-group row">
           <label for="inputEmail3" class="col-sm-2 col-form-label">Description</label>
           <div class="col-sm-10">
-            <input type="text" [(ngModel)]="serviceOrder.description" class="form-control">
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="inputEmail3" class="col-sm-2 col-form-label">Technician</label>
-          <div class="col-sm-10">
-            <!-- <input type="text" class="form-control"> -->
-            <select class="form-control" [(ngModel)]="serviceOrder.userId">
-              <option value=null>Choose...</option>
-              <option *ngFor="let item of technician" [value]="item.id">{{item.fullName}}</option>
+            <select [(ngModel)]="serviceOrder.status" class="form-control" id="status">
+              <option selected>Choose...</option>
+              <option value="0">Open</option>
+              <option value="1">In Process</option>
+              <option value="2">Hold</option>
+              <option value="3">Close</option>
             </select>
           </div>
         </div>
@@ -42,8 +45,9 @@
                     <div class="form-row">
                       <div class="form-group col-md-12">
                         <label for="inputEmail4">{{question.name}}</label>
-                        <input type="text" (change)="setAnswerText(question.id, $event.target.value)"
-                          [ngModel]="answerText(question.id)" class="form-control" id="inputEmail4">
+                        <!-- <input disabled type="text" (change)="setAnswerText(question.id, $event.target.value)"
+                          [ngModel]="answerText(question.id)" class="form-control" id="inputEmail4"> -->
+                        <div class="form-control">{{answerText(question.id)}}</div>
                       </div>
                     </div>
                   </ng-container>
@@ -58,7 +62,7 @@
                         <div *ngFor="let answer of question.templateServiceOrderAnswer">
                           <mat-radio-group (change)="setAnswerOne(question.id, $event)"
                             [ngModel]="answerOne(question.id)">
-                            <mat-radio-button [value]="answer.id">{{answer.answer}}</mat-radio-button>
+                            <mat-radio-button disabled [value]="answer.id">{{answer.answer}}</mat-radio-button>
                           </mat-radio-group>
                         </div>
                       </div>
@@ -73,8 +77,8 @@
                     <div class="form-row">
                       <div class="form-group col-md-12">
                         <div *ngFor="let answer of question.templateServiceOrderAnswer">
-                          <mat-checkbox (change)="setAnswerMany(question.id, answer.id, $event.checked)"
-                            [ngModel]="answerMany(question.id, answer.id)" class="example-margin mr-2">
+                          <mat-checkbox disabled [ngModel]="answerMany(question.id, answer.id)"
+                            class="example-margin mr-2">
                             {{answer.answer}}
                           </mat-checkbox>
                         </div>
@@ -86,7 +90,7 @@
             </div>
           </div>
         </div>
-        <!-- <div class="form-group row">
+        <div class="form-group row">
           <label for="inputEmail3" class="col-sm-2 col-form-label">Upload Image</label>
           <div class="col-sm-10">
             <div class="custom-file">
@@ -113,19 +117,25 @@
         </ng-container>
         <hr>
         <div class="form-group row">
-          <label for="inputEmail3" class="col-sm-2 col-form-label">Customer Signature</label>
+          <!-- <label for="inputEmail3" class="col-sm-2 col-form-label">Customer Signature</label>
           <div class="col-sm-8 text-center">
             <div class="signature-pad">
               <div class="signature-pad--body">
-                <canvas #sPad width="250rem;" height="200"
-                  style="touch-action: none; background-color: honeydew;"></canvas>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-2  clo-12 text-right">
+                <canvas #sPad height="200"
+                  style="touch-action: none; background-color: honeydew; max-width: 280px; max-height: 200px;"></canvas>
+              </div> 
+        </div>
+      </div> -->
+          <div class="col-sm-12  clo-12 text-right">
             <button class="btn btn-danger" (click)="clear()">Clear</button>
           </div>
-        </div> -->
+        </div>
+        <div class="row">
+          <div class="col-sm-12 text-center">
+            <canvas #sPad width="280" height="200"
+              style="touch-action: none; background-color: honeydew; max-width: 280px; max-height: 200px; min-width: 280px; min-height: 200px;"></canvas>
+          </div>
+        </div>
         <div class="form-group row">
           <div class="col-sm-12 text-center">
             <button type="button " (click)="seve()" class="btn  btn-success mr-2">Save</button>
