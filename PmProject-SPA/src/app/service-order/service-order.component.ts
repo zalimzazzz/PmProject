@@ -86,8 +86,10 @@ export class ServiceOrderComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${this.serviceOrderItem.findIndex(rowIndex)}`;
   }
 
-  edit(id: string) {
-    this.router.navigate(['/serviceOrder/edit/' + id]);
+  edit(id: string, projectId: string) {
+    console.log(projectId);
+
+    this.router.navigate(['/serviceOrder/edit/' + id + '/' + projectId]);
   }
   openDialog() {
     this.dialog.open(ServiceOrderAddEditComponent, {

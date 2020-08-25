@@ -13,7 +13,7 @@ import { map } from 'rxjs/operators';
 export class UserService {
   baseUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getUsers(
     page?,
@@ -64,6 +64,10 @@ export class UserService {
 
   getUser(id: Guid): Observable<User> {
     return this.http.get<User>(this.baseUrl + 'users/' + id);
+  }
+
+  getTechnician() {
+    return this.http.get<Array<User>>(this.baseUrl + 'users/technician').toPromise();
   }
 
   updateUser(id: Guid, user: User) {

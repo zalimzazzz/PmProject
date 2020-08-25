@@ -11,6 +11,7 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using AutoMapper;
 using PmProject.API.Interfaces;
+using System.Collections.Generic;
 
 namespace PmProject.API.Controllers
 {
@@ -43,13 +44,16 @@ namespace PmProject.API.Controllers
 
             var userToReturn = _mapper.Map<UserForDetailDto>(createdUser);
 
-            return CreatedAtRoute("GetUser", new { controller = "Users", 
-                id = createdUser.Id }, userToReturn);
+            return CreatedAtRoute("GetUser", new
+            {
+                controller = "Users",
+                id = createdUser.Id
+            }, userToReturn);
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)
-        {            
+        {
             var userFromRepo = await _repo.Login(userForLoginDto.Username
                 .ToLower(), userForLoginDto.Password);
 
@@ -80,11 +84,34 @@ namespace PmProject.API.Controllers
 
             var user = _mapper.Map<UserForListDto>(userFromRepo);
 
+            var menus = new List<Routes>();
+            bool isAdmin = userFromRepo.RoleId == 1;
+            bool isTechnician = userFromRepo.RoleId == 2;
+            if (isAdmin)
+            {
+                menus.Add(CrateRoutes("/template", "Template Service"));
+                menus.Add(CrateRoutes("/company", "Company"));
+                menus.Add(CrateRoutes("/project", "Project"));
+                menus.Add(CrateRoutes("/serviceOrder", "Service Order"));
+
+            }
+            else if (isTechnician)
+            {
+                menus.Add(CrateRoutes("/service-order/technician", "Order"));
+            }
             return Ok(new
             {
                 token = tokenHandler.WriteToken(token),
-                user
+                user = user,
+                menus = menus
             });
+        }
+        private Routes CrateRoutes(string path, string name)
+        {
+            var menu = new Routes();
+            menu.Name = name;
+            menu.Path = path;
+            return menu;
         }
     }
 }

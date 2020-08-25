@@ -11,6 +11,7 @@ import { TemplateServiceOrderAnswer } from '../../_models/template-service-order
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Guid } from 'guid-typescript';
+import { AuthService } from 'src/app/_services/auth.service';
 
 @Component({
   selector: 'app-template-service-order-add-edit',
@@ -31,10 +32,13 @@ export class TemplateServiceOrderAddEditComponent implements OnInit {
     private alertify: AlertifyService,
     private router: Router,
     private spinner: NgxSpinnerService,
-    private route: ActivatedRoute,) {
+    private route: ActivatedRoute,
+    private authService: AuthService) {
     this.templateServiceOrder.templateServiceOrderQuestion = new Array<TemplateServiceOrderQuestion>();
   }
   ngOnInit() {
+    console.log(this.templateServiceOrder);
+
     this.route.params.subscribe(params => {
       this.id = params['id'];
       if (this.id !== undefined) {
@@ -105,6 +109,10 @@ export class TemplateServiceOrderAddEditComponent implements OnInit {
       return;
     }
     this.spinner.show();
+    this.templateServiceOrder.companyId = this.authService.getUser().companyId;
+    console.log(this.templateServiceOrder.companyId);
+    console.log(this.authService.getUser().companyId);
+
     if (this.mode === 'New') {
       this.templateServiceOrderServiceService.add(this.templateServiceOrder).then(res => {
         console.log('save', res);

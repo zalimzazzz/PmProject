@@ -1,4 +1,4 @@
-/* // @use postcss-cssnext; */
+// @use postcss-cssnext;
 /* helpers/align.css */
 
 .align {
@@ -37,10 +37,16 @@
 /* modules/form.css */
 
 
-input ,button{
-
+input {
+  appearance: none;
+  border: none;
+  font: inherit;
+  margin: 0;
+  outline: none;
+  padding: 0;
   width: 100%;
 }
+
 
 
 
@@ -83,7 +89,6 @@ input ,button{
   order: 1;
   padding: 0.75em 1.25em;
   transition: background-color 0.3s;
-  width: 500px;
 }
 
 .btn-login:focus,
@@ -114,8 +119,4 @@ input ,button{
   width: 100%;
    text-align: right;
    color: #1dabb8 !important;
-}
-
-.grid{
-    width: 500px;
 }

@@ -33,7 +33,9 @@ namespace PmProject.API.Dtos
         public string Country { get; set; }
 
         public string PhotoUrl { get; set; }
-        
+        public bool IsDelete { get; set; }
+        public string FullName { get; set; }
+
         public ICollection<Photo> Photos { get; set; }
     }
 }

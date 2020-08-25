@@ -48,6 +48,7 @@ namespace PmProject.API
             services.AddScoped<ITemplateServiceOrderRepository, TemplateServiceOrderRepository>();
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<IServiceOrderRepository, ServiceOrderRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {

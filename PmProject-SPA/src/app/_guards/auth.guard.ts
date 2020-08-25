@@ -12,7 +12,7 @@ export class AuthGuard implements CanActivate {
     private authService: AuthService,
     private router: Router,
     private alertify: AlertifyService
-  ) {}
+  ) { }
 
   canActivate(): boolean {
     if (this.authService.loggedIn()) {
@@ -20,6 +20,6 @@ export class AuthGuard implements CanActivate {
     }
 
     this.alertify.error('You shall not pass!!!');
-    this.router.navigate(['/home']);
+    this.router.navigate(['/loging']);
   }
 }

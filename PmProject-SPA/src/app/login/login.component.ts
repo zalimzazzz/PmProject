@@ -4,22 +4,23 @@ import { AlertifyService } from '../_services/alertify.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-nav',
-  templateUrl: './nav.component.html',
-  styleUrls: ['./nav.component.css']
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
 })
-export class NavComponent implements OnInit {
+export class LoginComponent implements OnInit {
+
   model: any = {};
   photoUrl: string;
   navbarOpen = false;
-  menus: any;
   constructor(public authService: AuthService, private alertify: AlertifyService,
-    private router: Router) {
-    this.menus = this.authService.getMenu();
-    console.log(this.menus);
-  }
+    private router: Router) { }
 
   ngOnInit() {
+    if (this.authService.loggedIn()) {
+      let url = this.authService.getMenu()[0].path;
+      this.router.navigate([url]);
+    }
     this.authService.currentPhotoUrl.subscribe(photoUrl => this.photoUrl = photoUrl);
   }
 
@@ -29,7 +30,7 @@ export class NavComponent implements OnInit {
     }, error => {
       this.alertify.error('Failed to login');
     }, () => {
-      this.router.navigate(['/members']);
+      this.router.navigate([this.authService.getMenu()[0].path + '']);
     });
   }
 
@@ -37,18 +38,4 @@ export class NavComponent implements OnInit {
     return this.authService.loggedIn();
   }
 
-  toggleNavbar() {
-    this.navbarOpen = !this.navbarOpen;
-  }
-
-
-  logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    localStorage.removeItem('manus');
-    this.authService.decodedToken = null;
-    this.authService.currentUser = null;
-    this.alertify.message('logged out');
-    this.router.navigate(['/home']);
-  }
 }

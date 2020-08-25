@@ -49,6 +49,11 @@ namespace PmProject.API.Controllers
             return Ok(await _repo.GetQuestion(id));
         }
 
+        [HttpGet("order/{id}")]
+        public async Task<IActionResult> GetOrder(Guid id)
+        {
+            return Ok(await _repo.GetByTechnicianId(id));
+        }
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] ServiceOrder templateServiceOrder)
         {

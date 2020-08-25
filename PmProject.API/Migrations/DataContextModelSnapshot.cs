@@ -116,6 +116,22 @@ namespace PmProject.API.Migrations
                     b.ToTable("Project");
                 });
 
+            modelBuilder.Entity("PmProject.API.Models.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Role");
+                });
+
             modelBuilder.Entity("PmProject.API.Models.ServiceOrder", b =>
                 {
                     b.Property<Guid>("Id")
@@ -129,7 +145,6 @@ namespace PmProject.API.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CustomerSignature")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
@@ -154,14 +169,14 @@ namespace PmProject.API.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("TechnicianId")
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProjectId");
 
-                    b.HasIndex("TechnicianId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("ServiceOrder");
                 });
@@ -252,32 +267,6 @@ namespace PmProject.API.Migrations
                     b.HasIndex("CompanyId");
 
                     b.ToTable("SurveyHeaders");
-                });
-
-            modelBuilder.Entity("PmProject.API.Models.Technician", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CreateBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("ModifiedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Technician");
                 });
 
             modelBuilder.Entity("PmProject.API.Models.TemplateServiceOrder", b =>
@@ -391,7 +380,7 @@ namespace PmProject.API.Migrations
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("CompanyId")
+                    b.Property<Guid>("CompanyId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Country")
@@ -403,6 +392,9 @@ namespace PmProject.API.Migrations
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("FullName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Gender")
                         .HasColumnType("nvarchar(max)");
 
@@ -411,6 +403,9 @@ namespace PmProject.API.Migrations
 
                     b.Property<string>("Introduction")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
 
                     b.Property<string>("KnownAs")
                         .HasColumnType("nvarchar(max)");
@@ -427,12 +422,17 @@ namespace PmProject.API.Migrations
                     b.Property<byte[]>("PasswordSalt")
                         .HasColumnType("varbinary(max)");
 
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Username")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyId");
+
+                    b.HasIndex("RoleId");
 
                     b.ToTable("Users");
                 });
@@ -493,9 +493,9 @@ namespace PmProject.API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PmProject.API.Models.Technician", "Technician")
+                    b.HasOne("PmProject.API.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("TechnicianId");
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("PmProject.API.Models.ServiceOrderImage", b =>
@@ -554,9 +554,17 @@ namespace PmProject.API.Migrations
 
             modelBuilder.Entity("PmProject.API.Models.User", b =>
                 {
-                    b.HasOne("PmProject.API.Models.Company", null)
-                        .WithMany("User")
-                        .HasForeignKey("CompanyId");
+                    b.HasOne("PmProject.API.Models.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PmProject.API.Models.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

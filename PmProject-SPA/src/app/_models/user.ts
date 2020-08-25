@@ -16,4 +16,7 @@ export interface User {
     introduction?: string;
     lokkingFor?: string;
     photos?: Photo[];
+    companyId: string;
+    fullname: string;
+    roleId: number;
 }

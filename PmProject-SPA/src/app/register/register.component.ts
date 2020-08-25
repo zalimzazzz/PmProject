@@ -27,9 +27,15 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private alertify: AlertifyService,
     private fb: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit() {
+    console.log(this.authService.loggedIn());
+
+    if (this.authService.loggedIn()) {
+      let url = this.authService.getMenu()[0].path;
+      this.router.navigate([url]);
+    }
     (this.bsConfig = {
       containerClass: 'theme-orange',
     }),
@@ -41,10 +47,13 @@ export class RegisterComponent implements OnInit {
       {
         gender: ['male'],
         username: ['', Validators.required],
-        knownAs: ['', Validators.required],
-        dateOfBirth: [null, Validators.required],
-        city: ['', Validators.required],
-        country: ['', Validators.required],
+        roleId: [2, Validators.required],
+        companyId: ['', Validators.required],
+        fullName: ['', Validators.required],
+        // knownAs: ['', Validators.required],
+        // dateOfBirth: [null, Validators.required],
+        // city: ['', Validators.required],
+        // country: ['', Validators.required],
         password: [
           '',
           [
@@ -61,12 +70,14 @@ export class RegisterComponent implements OnInit {
 
   passwordMatchValidator(g: FormGroup) {
     return g.get('password').value === g.get('confirmPassword').value
-      ? null 
+      ? null
       : { mismatch: true };
   }
 
   register() {
     if (this.registerForm.valid) {
+      console.log('valid');
+
       this.user = Object.assign({}, this.registerForm.value);
       this.authService.register(this.user).subscribe(
         () => {
@@ -76,7 +87,7 @@ export class RegisterComponent implements OnInit {
           this.alertify.error(error);
         }, () => {
           this.authService.login(this.user).subscribe(() => {
-            this.router.navigate(['/members']);
+            this.router.navigate(['/']);
           });
         }
       );
