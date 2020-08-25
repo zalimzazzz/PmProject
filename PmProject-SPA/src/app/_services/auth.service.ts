@@ -55,4 +55,7 @@ export class AuthService {
   getMenu() {
     return JSON.parse(localStorage.getItem('menus'));
   }
+  getUser() {
+    return JSON.parse(localStorage.getItem('user'));
+  }
 }

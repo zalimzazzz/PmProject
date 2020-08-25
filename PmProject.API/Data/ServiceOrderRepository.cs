@@ -28,6 +28,10 @@ namespace PmProject.API.Data
                                                 .Include(i => i.Project)
                                                 .FirstOrDefaultAsync(f => f.Id == id && !f.IsDelete);
         }
+        public async Task<List<ServiceOrder>> GetByTechnicianId(Guid userId)
+        {
+            return await _context.ServiceOrder.Where(f => f.UserId == userId && !f.IsDelete).ToListAsync();
+        }
         public async Task<List<TemplateServiceOrderQuestion>> GetQuestion(Guid projectId)
         {
             var project = await _context.Project.Include(i => i.TemplateServiceOrder)

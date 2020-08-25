@@ -19,7 +19,7 @@ namespace PmProject.API.Data
         public async Task<bool> Add(TemplateServiceOrder templateServiceOrder)
         {
             templateServiceOrder.Id = Guid.NewGuid();
-            templateServiceOrder.CompanyId = Guid.Parse("1b7b50b8-6886-4463-9391-64c68a215ea9");
+            // templateServiceOrder.CompanyId = Guid.Parse("1b7b50b8-6886-4463-9391-64c68a215ea9");
             _context.Add(templateServiceOrder);
             var remark = new TemplateServiceOrderQuestion();
             remark.Id = Guid.NewGuid();

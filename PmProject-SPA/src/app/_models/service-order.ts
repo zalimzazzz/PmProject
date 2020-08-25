@@ -10,7 +10,7 @@ export class ServiceOrder {
     customerSignature: string;
     projectId: string;
     project: Project;
-    technicianId: string;
+    userId: string;
     // technician: Technician;
     serviceOrderQAndA: ServiceOrderQAndA[];
     serviceOrderImage: ServiceOrderImage[];

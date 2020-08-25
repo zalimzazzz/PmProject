@@ -30,6 +30,12 @@ export class RegisterComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log(this.authService.loggedIn());
+
+    if (this.authService.loggedIn()) {
+      let url = this.authService.getMenu()[0].path;
+      this.router.navigate([url]);
+    }
     (this.bsConfig = {
       containerClass: 'theme-orange',
     }),
@@ -43,6 +49,7 @@ export class RegisterComponent implements OnInit {
         username: ['', Validators.required],
         roleId: [2, Validators.required],
         companyId: ['', Validators.required],
+        fullName: ['', Validators.required],
         // knownAs: ['', Validators.required],
         // dateOfBirth: [null, Validators.required],
         // city: ['', Validators.required],
@@ -68,8 +75,6 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
-    console.log('1');
-
     if (this.registerForm.valid) {
       console.log('valid');
 

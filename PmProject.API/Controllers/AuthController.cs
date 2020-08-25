@@ -97,7 +97,7 @@ namespace PmProject.API.Controllers
             }
             else if (isTechnician)
             {
-                menus.Add(CrateRoutes("service-order/technician", "Order"));
+                menus.Add(CrateRoutes("/service-order/technician", "Order"));
             }
             return Ok(new
             {

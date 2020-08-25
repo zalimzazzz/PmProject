@@ -17,6 +17,10 @@ export class LoginComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
+    if (this.authService.loggedIn()) {
+      let url = this.authService.getMenu()[0].path;
+      this.router.navigate([url]);
+    }
     this.authService.currentPhotoUrl.subscribe(photoUrl => this.photoUrl = photoUrl);
   }
 

@@ -198,7 +198,7 @@ export class ServiceOrderTechnicianEditComponent implements OnInit {
         console.log('save', res);
         return this.serviceOrderService.add(this.serviceOrder);
       }).then(async res => {
-        this.router.navigate(['/serviceOrder']);
+        this.router.navigate(['/service-order/technician']);
       }).catch(ex => {
         this.alertify.error('Save Failed');
       }).finally(() => {
@@ -210,7 +210,7 @@ export class ServiceOrderTechnicianEditComponent implements OnInit {
         console.log('save', res);
         return this.serviceOrderService.update(this.serviceOrder);
       }).then(async res => {
-        this.router.navigate(['/serviceOrder']);
+        this.router.navigate(['/service-order/technician']);
       }).catch(ex => {
         this.alertify.error('Save Failed');
       }).finally(() => {

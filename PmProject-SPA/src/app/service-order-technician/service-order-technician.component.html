@@ -1,104 +1,73 @@
 <div class="container mt-3">
   <mat-tab-group mat-align-tabs="center">
     <mat-tab label="Open">
-      <!-- <mat-list>
-        <mat-list-item *ngFor="let note of notes">
-          <mat-icon mat-list-icon><i class="fas fa-briefcase"></i></mat-icon>
-          <div style="width: 70%;">
-            <div mat-line>{{note.name}}</div>
-            <div mat-line> {{note.updated | date}}</div>
-          </div>
-          <div style="width: auto; text-align: right;">
-            <select style="width: 100%; min-width: 80px;" class="form-control" id="exampleFormControlSelect1">
-              <option selected>Choose...</option>
-              <option value="0">Open</option>
-              <option value="1">In Process</option>
-              <option value="2">Hold</option>
-              <option value="3">Close</option>
-            </select>
-          </div>
-          <mat-divider></mat-divider>
-        </mat-list-item>
-      </mat-list> -->
       <mat-list>
         <div mat-subheader>Order</div>
-        <mat-list-item *ngFor="let note of notes">
-          <mat-icon mat-list-icon><i class="fas fa-briefcase"></i></mat-icon>
-          <div mat-line><a
-              href="/service-order/technician/35f99dc2-722b-43ea-1203-08d8478cf3b0/83d2f066-d896-4fa6-1935-08d84788f7fb">{{note.name}}</a>
-          </div>
-          <div mat-line> {{note.updated | date}} </div>
-        </mat-list-item>
+        <ng-container *ngFor="let item of serviceOrder">
+          <ng-container *ngIf="item.status === 0">
+            <mat-list-item>
+              <mat-icon mat-list-icon><i class="fas fa-briefcase"></i></mat-icon>
+              <div mat-line><a [routerLink]="['/service-order/technician/' + item.id +'/'+item.projectId]"
+                  routerLinkActive="router-link-active">{{item.description}}</a>
+              </div>
+              <div mat-line>No. {{item.serviceOrderNo }} </div>
+            </mat-list-item>
+          </ng-container>
+        </ng-container>
         <mat-divider></mat-divider>
       </mat-list>
     </mat-tab>
-
     <mat-tab label="In Process">
       <mat-list>
-        <!-- <div mat-subheader>Notes</div> -->
-        <mat-list-item *ngFor="let note of notes">
-          <mat-icon mat-list-icon><i class="fas fa-briefcase"></i></mat-icon>
-          <div style="width: 70%;">
-            <div mat-line>{{note.name}}</div>
-            <div mat-line> {{note.updated | date}}</div>
-          </div>
-          <div style="width: auto; text-align: right;">
-            <select style="width: 100%; min-width: 80px;" class="form-control" id="exampleFormControlSelect1">
-              <option selected>Choose...</option>
-              <option value="0">Open</option>
-              <option value="1">In Process</option>
-              <option value="2">Hold</option>
-              <option value="3">Close</option>
-            </select>
-          </div>
-          <mat-divider></mat-divider>
-        </mat-list-item>
+        <div mat-subheader>Order</div>
+        <ng-container *ngFor="let item of serviceOrder">
+          <ng-container *ngIf="item.status === 1">
+            <mat-list-item>
+              <mat-icon mat-list-icon><i class="fas fa-briefcase"></i></mat-icon>
+              <div mat-line><a [routerLink]="['/service-order/technician/' + item.id +'/'+item.projectId]"
+                  routerLinkActive="router-link-active">{{item.description}}</a>
+              </div>
+              <div mat-line>No. {{item.serviceOrderNo }} </div>
+            </mat-list-item>
+          </ng-container>
+        </ng-container>
+        <mat-divider></mat-divider>
       </mat-list>
     </mat-tab>
 
     <mat-tab label="Hold">
       <mat-list>
-        <!-- <div mat-subheader>Notes</div> -->
-        <mat-list-item *ngFor="let note of notes">
-          <mat-icon mat-list-icon><i class="fas fa-briefcase"></i></mat-icon>
-          <div style="width: 70%;">
-            <div mat-line>{{note.name}}</div>
-            <div mat-line> {{note.updated | date}}</div>
-          </div>
-          <div style="width: auto; text-align: right;">
-            <select style="width: 100%; min-width: 80px;" class="form-control" id="exampleFormControlSelect1">
-              <option selected>Choose...</option>
-              <option value="0">Open</option>
-              <option value="1">In Process</option>
-              <option value="2">Hold</option>
-              <option value="3">Close</option>
-            </select>
-          </div>
-          <mat-divider></mat-divider>
-        </mat-list-item>
+        <div mat-subheader>Order</div>
+        <ng-container *ngFor="let item of serviceOrder">
+          <ng-container *ngIf="item.status === 2">
+            <mat-list-item>
+              <mat-icon mat-list-icon><i class="fas fa-briefcase"></i></mat-icon>
+              <div mat-line><a [routerLink]="['/service-order/technician/' + item.id +'/'+item.projectId]"
+                  routerLinkActive="router-link-active">{{item.description}}</a>
+              </div>
+              <div mat-line>No. {{item.serviceOrderNo }} </div>
+            </mat-list-item>
+          </ng-container>
+        </ng-container>
+        <mat-divider></mat-divider>
       </mat-list>
     </mat-tab>
 
     <mat-tab label="Close">
       <mat-list>
-        <!-- <div mat-subheader>Notes</div> -->
-        <mat-list-item *ngFor="let note of notes">
-          <mat-icon mat-list-icon><i class="fas fa-briefcase"></i></mat-icon>
-          <div style="width: 70%;">
-            <div mat-line>{{note.name}}</div>
-            <div mat-line> {{note.updated | date}}</div>
-          </div>
-          <div style="width: auto; text-align: right;">
-            <select style="width: 100%; min-width: 80px;" class="form-control" id="exampleFormControlSelect1">
-              <option selected>Choose...</option>
-              <option value="0">Open</option>
-              <option value="1">In Process</option>
-              <option value="2">Hold</option>
-              <option value="3">Close</option>
-            </select>
-          </div>
-          <mat-divider></mat-divider>
-        </mat-list-item>
+        <div mat-subheader>Order</div>
+        <ng-container *ngFor="let item of serviceOrder">
+          <ng-container *ngIf="item.status === 3">
+            <mat-list-item>
+              <mat-icon mat-list-icon><i class="fas fa-briefcase"></i></mat-icon>
+              <div mat-line><a [routerLink]="['/service-order/technician/' + item.id +'/'+item.projectId]"
+                  routerLinkActive="router-link-active">{{item.description}}</a>
+              </div>
+              <div mat-line>No. {{item.serviceOrderNo }} </div>
+            </mat-list-item>
+          </ng-container>
+        </ng-container>
+        <mat-divider></mat-divider>
       </mat-list>
     </mat-tab>
   </mat-tab-group>
