@@ -26,6 +26,7 @@ namespace PmProject.API.Controllers
             _mapper = mapper;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetCompanies()
         {

@@ -63,10 +63,10 @@ namespace PmProject.API.Controllers
 
             return Ok(userToReturn);
         }
-        [HttpGet("technician")]
-        public async Task<IActionResult> GetTechnician()
+        [HttpGet("technician/{id}")]
+        public async Task<IActionResult> GetTechnician(Guid id)
         {
-            var technician = await _repoUser.GetTechnician();
+            var technician = await _repoUser.GetTechnician(id);
 
             var technicianoReturn = _mapper.Map<List<UserForDetailDto>>(technician);
 

@@ -66,8 +66,8 @@ export class UserService {
     return this.http.get<User>(this.baseUrl + 'users/' + id);
   }
 
-  getTechnician() {
-    return this.http.get<Array<User>>(this.baseUrl + 'users/technician').toPromise();
+  getTechnician(id: string) {
+    return this.http.get<Array<User>>(this.baseUrl + 'users/technician/' + id).toPromise();
   }
 
   updateUser(id: Guid, user: User) {

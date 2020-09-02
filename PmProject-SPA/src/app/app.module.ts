@@ -64,6 +64,7 @@ import { ServiceOrderTechnicianEditComponent } from './service-order-technician/
 import { LoginComponent } from './login/login.component';
 import { AppRootComponent } from './app-root/app-root.component';
 import { CompanyAddEditComponent } from './company/company-add-edit/company-add-edit.component';
+import { TechnicianComponent } from './technician/technician.component';
 
 export function tokenGetter() {
    return localStorage.getItem('token');
@@ -77,7 +78,7 @@ export class CustomHammerConfig extends HammerGestureConfig {
 }
 
 @NgModule({
-   declarations: [
+   declarations: [	
       AppComponent,
       NavComponent,
       HomeComponent,
@@ -103,6 +104,7 @@ export class CustomHammerConfig extends HammerGestureConfig {
       LoginComponent,
       AppRootComponent,
       CompanyAddEditComponent,
+      TechnicianComponent
    ],
    imports: [
       BrowserModule,

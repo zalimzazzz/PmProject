@@ -93,6 +93,7 @@ namespace PmProject.API.Controllers
                 menus.Add(CrateRoutes("/company", "Company"));
                 menus.Add(CrateRoutes("/project", "Project"));
                 menus.Add(CrateRoutes("/serviceOrder", "Service Order"));
+                menus.Add(CrateRoutes("/technician", "Technician"));
 
             }
             else if (isTechnician)

@@ -24,6 +24,7 @@ import { ServiceOrderTechnicianEditComponent } from './service-order-technician/
 import { LoginComponent } from './login/login.component';
 import { AppRootComponent } from './app-root/app-root.component';
 import { RegisterComponent } from './register/register.component';
+import { TechnicianComponent } from './technician/technician.component';
 
 export const appRoutes: Routes = [
     // { path: '', component: AppRootComponent },
@@ -67,6 +68,7 @@ export const appRoutes: Routes = [
             { path: 'serviceOrder/edit/:id/:projecid', component: ServiceOrderAddEditComponent },
             { path: 'service-order/technician', component: ServiceOrderTechnicianComponent },
             { path: 'service-order/technician/:id/:projecid', component: ServiceOrderTechnicianEditComponent },
+            { path: 'technician', component: TechnicianComponent },
         ]
     },
     { path: '**', redirectTo: '', pathMatch: 'full' }

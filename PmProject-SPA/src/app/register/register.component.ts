@@ -10,6 +10,9 @@ import {
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker/public_api';
 import { User } from '../_models/user';
 import { Router } from '@angular/router';
+import { CompanyService } from '../_services/company.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { Company } from '../_models/company';
 
 @Component({
   selector: 'app-register',
@@ -21,16 +24,28 @@ export class RegisterComponent implements OnInit {
   user: User;
   registerForm: FormGroup;
   bsConfig: Partial<BsDatepickerConfig>;
+  company: Company[];
 
   constructor(
     private authService: AuthService,
+    private companyService: CompanyService,
     private router: Router,
     private alertify: AlertifyService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private spinner: NgxSpinnerService,
   ) { }
 
   ngOnInit() {
-    console.log(this.authService.loggedIn());
+    this.spinner.show();
+    this.companyService.get().then((res: Array<Company>) => {
+      console.log(res);
+      this.company = res;
+    }).catch(ex => {
+      console.log(ex);
+      this.alertify.error('Internal Server Error');
+    }).finally(() => {
+      this.spinner.hide();
+    });
 
     if (this.authService.loggedIn()) {
       let url = this.authService.getMenu()[0].path;

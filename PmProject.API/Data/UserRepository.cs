@@ -17,9 +17,10 @@ namespace PmProject.API.Data
             _context = context;
         }
 
-        public async Task<List<User>> GetTechnician()
+        public async Task<List<User>> GetTechnician(Guid id)
         {
-            return await _context.Users.Where(f => !f.IsDelete && f.RoleId == 2).ToListAsync();
+            var user = await _context.Users.FirstOrDefaultAsync(f => f.Id == id);
+            return await _context.Users.Where(f => !f.IsDelete && f.RoleId == 2 && f.CompanyId == user.CompanyId).ToListAsync();
         }
         //  public async Task<List<User>> GetTechnician(Guid id)
         // {
