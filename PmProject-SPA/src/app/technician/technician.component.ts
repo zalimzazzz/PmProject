@@ -10,6 +10,10 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertifyService } from '../_services/alertify.service';
 import { Project } from '../_models/project';
 import { TechnicianAddEditComponent } from './technician-add-edit/technician-add-edit.component';
+import { UserService } from '../_services/user.service';
+import { User } from '../_models/user';
+import { async } from 'rxjs/internal/scheduler/async';
+import { AuthService } from '../_services/auth.service';
 
 @Component({
   selector: 'app-technician',
@@ -19,16 +23,20 @@ import { TechnicianAddEditComponent } from './technician-add-edit/technician-add
 export class TechnicianComponent implements OnInit {
 
 
-  displayedColumns: string[] = ['select', 'name', 'templateServiceOrder', 'export', 'serviceOrder', 'action'];
+  displayedColumns: string[] = ['select', 'name', 'phoneNumber', 'action'];
   // dataSource = new MatTableDataSource<Procject>(templateServiceOrderItem);
   dataSource: any;
-  procjects = new Array<Project>();
   selection = new SelectionModel<Project>(true, []);
+  userId: string;
+  technician: User[];
+
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   constructor(private router: Router,
+    public userService: UserService,
     public dialog: MatDialog,
+    public authService: AuthService,
     private projectService: ProjectService,
     private spinner: NgxSpinnerService,
     private alertify: AlertifyService,) {
@@ -40,10 +48,11 @@ export class TechnicianComponent implements OnInit {
 
   setTable() {
     this.spinner.show();
-    this.projectService.get().then((res: Array<Project>) => {
-      console.log(res);
-      this.procjects = res;
-      this.dataSource = new MatTableDataSource<Project>(this.procjects);
+    this.userId = this.authService.getUser().id;
+    this.userService.getTechnician(this.userId).then((res: Array<User>) => {
+      console.log('getTechnician', res);
+      this.technician = res;
+      this.dataSource = new MatTableDataSource<User>(this.technician);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     }).catch(ex => {
@@ -80,7 +89,7 @@ export class TechnicianComponent implements OnInit {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
     const rowIndex = (element) => element == row.id;
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${this.procjects.findIndex(rowIndex)}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${this.technician.findIndex(rowIndex)}`;
   }
 
   export(id: string) {
