@@ -1,0 +1,22 @@
+<div class="add-form">
+  <div mat-dialog-content>
+    <div class="row">
+      <div class="col">
+        <h4>{{mode}} Company</h4>
+      </div>
+    </div>
+    <div class="form-group row mt-2">
+      <label for="projectName" class="col-sm-3 col-form-label">Company Name</label>
+      <div class="col-sm-9">
+        <input type="text" (ngModelChange)="change()" [(ngModel)]="company.name" class="form-control" id="projectName">
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col text-center">
+        <button type="button " [attr.disabled]="btnSave == true ? true : null" (click)="save()"
+          class="btn  btn-success mr-2">Save</button>
+        <button type="button" class="btn  btn-danger" mat-dialog-close>Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

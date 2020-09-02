@@ -12,8 +12,6 @@ import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { MemberListResolver } from './_resolvers/member-list.resolver';
 import { ListsResolver } from './_resolvers/lists.resolver';
 import { CompanyComponent } from './company/company.component';
-import { resolve } from 'dns';
-import { CompanyResolver } from './_resolvers/company.resolver';
 import { TemplateServiceOrderComponent } from './template-service-order/template-service-order.component';
 import { TemplateServiceOrderAddEditComponent } from './template-service-order/template-service-order-add-edit/template-service-order-add-edit.component';
 import { ProjectComponent } from './project/project.component';
@@ -56,7 +54,6 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'company', component: CompanyComponent,
-                resolve: { company: CompanyResolver }
             },
             { path: 'template', component: TemplateServiceOrderComponent },
             { path: 'template/add', component: TemplateServiceOrderAddEditComponent },

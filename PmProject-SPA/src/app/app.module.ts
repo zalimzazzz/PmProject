@@ -38,7 +38,6 @@ import { PhotoEditorComponent } from './members/photo-editor/photo-editor.compon
 import { MemberListResolver } from './_resolvers/member-list.resolver';
 import { ListsResolver } from './_resolvers/lists.resolver';
 import { CompanyComponent } from './company/company.component';
-import { CompanyResolver } from './_resolvers/company.resolver';
 import { TemplateServiceOrderComponent } from './template-service-order/template-service-order.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatSelectModule } from '@angular/material/select';
@@ -64,6 +63,7 @@ import { MatCardModule } from '@angular/material/card';
 import { ServiceOrderTechnicianEditComponent } from './service-order-technician/service-order-technician-edit/service-order-technician-edit.component';
 import { LoginComponent } from './login/login.component';
 import { AppRootComponent } from './app-root/app-root.component';
+import { CompanyAddEditComponent } from './company/company-add-edit/company-add-edit.component';
 
 export function tokenGetter() {
    return localStorage.getItem('token');
@@ -77,7 +77,7 @@ export class CustomHammerConfig extends HammerGestureConfig {
 }
 
 @NgModule({
-   declarations: [	
+   declarations: [
       AppComponent,
       NavComponent,
       HomeComponent,
@@ -101,7 +101,8 @@ export class CustomHammerConfig extends HammerGestureConfig {
       ServiceOrderTechnicianComponent,
       ServiceOrderTechnicianEditComponent,
       LoginComponent,
-      AppRootComponent
+      AppRootComponent,
+      CompanyAddEditComponent,
    ],
    imports: [
       BrowserModule,
@@ -153,7 +154,6 @@ export class CustomHammerConfig extends HammerGestureConfig {
       MemberEditResolver,
       PreventUnsavedChanges,
       ListsResolver,
-      CompanyResolver
    ],
    bootstrap: [
       AppComponent

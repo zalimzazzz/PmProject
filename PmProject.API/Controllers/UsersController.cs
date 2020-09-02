@@ -39,10 +39,10 @@ namespace PmProject.API.Controllers
 
             userParams.UserId = currentUserId;
 
-            if (string.IsNullOrEmpty(userParams.Gender))
-            {
-                userParams.Gender = userFromRepo.Gender == "male" ? "female" : "male";
-            }
+            // if (string.IsNullOrEmpty(userParams.Gender))
+            // {
+            //     userParams.Gender = userFromRepo.Gender == "male" ? "female" : "male";
+            // }
 
             var users = await _repo.GetUsers(userParams);
 
@@ -96,21 +96,6 @@ namespace PmProject.API.Controllers
             if (id != Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            var like = await _repo.GetLike(id, recipientId);
-
-            if (like != null)
-                return BadRequest("You already like this user");
-
-            if (await _repo.GetUser(recipientId) == null)
-                return NotFound();
-
-            like = new Like
-            {
-                LikerId = id,
-                LikeeId = recipientId
-            };
-
-            _repo.Add<Like>(like);
 
             if (await _repo.SaveAll())
                 return Ok();

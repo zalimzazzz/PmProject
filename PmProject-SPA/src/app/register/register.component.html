@@ -27,8 +27,8 @@
         </div>
 
         <div class="form-group">
-          <select [ngClass]="{'is-invalid': registerForm.get('fullName').errors
-          && registerForm.get('fullName').touched}" formControlName="fullName" class="form-control" id="status">
+          <select [ngClass]="{'is-invalid': registerForm.get('roleId').errors
+          && registerForm.get('roleId').touched}" formControlName="roleId" class="form-control" id="roleId">
             <option selected>Role</option>
             <option value="1">Admin</option>
             <option value="2">Technician</option>

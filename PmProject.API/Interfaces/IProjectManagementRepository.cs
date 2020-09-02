@@ -7,14 +7,13 @@ namespace PmProject.API.Interfaces
 {
     public interface IProjectManagementRepository
     {
-        void Add<T>(T entity) where T: class;
-        void Delete<T>(T entity) where T: class;
+        void Add<T>(T entity) where T : class;
+        void Delete<T>(T entity) where T : class;
         Task<bool> SaveAll();
         Task<PagedList<User>> GetUsers(UserParams userParams);
         Task<User> GetUser(Guid id);
         Task<Photo> GetPhoto(Guid id);
         Task<Photo> GetMainPhotoForUser(Guid userId);
-        Task<Like> GetLike(Guid userId, Guid recipientId);
-        
+
     }
 }
