@@ -65,11 +65,18 @@ export class UserService {
   getUser(id: Guid): Observable<User> {
     return this.http.get<User>(this.baseUrl + 'users/' + id);
   }
-
-  getTechnician(id: string) {
-    return this.http.get<Array<User>>(this.baseUrl + 'users/technician/' + id).toPromise();
+  async getById(id: Guid) {
+    return await this.http.get<User>(this.baseUrl + 'users/' + id).toPromise();
   }
-
+  async update(user: User) {
+    return await this.http.put(this.baseUrl + 'users/' + user.id, user).toPromise();
+  }
+  async getTechnician(id: string) {
+    return await this.http.get<Array<User>>(this.baseUrl + 'users/technician/' + id).toPromise();
+  }
+  async delete(id: string) {
+    return await this.http.delete(this.baseUrl + 'users/' + id).toPromise();
+  }
   updateUser(id: Guid, user: User) {
     return this.http.put(this.baseUrl + 'users/' + id, user);
   }
@@ -82,7 +89,7 @@ export class UserService {
     return this.http.delete(this.baseUrl + 'users/' + userId + '/photos/' + id);
   }
 
-  sendLike(id: Guid, recipientId: Guid) {
+  sendLike(id: Guid, recipientId: string) {
     return this.http.post(
       this.baseUrl + 'users/' + id + '/like/' + recipientId,
       {}

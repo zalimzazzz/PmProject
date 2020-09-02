@@ -121,9 +121,9 @@ export class CompanyComponent implements OnInit {
     for (let index = 0; index < selected.length; index++) {
       const id = selected[index].id;
       console.log(id);
-      // let res = await this.projectService.delete(id).catch(ex => {
-      //   this.alertify.error('Delete Failed');
-      // })
+      let res = await this.companyService.delete(id).catch(ex => {
+        this.alertify.error('Delete Failed');
+      })
     }
     this.selection.clear();
     this.setTable();
@@ -132,13 +132,13 @@ export class CompanyComponent implements OnInit {
 
   delete(id: string) {
     this.spinner.show();
-    // this.projectService.delete(id).then(t => {
-    //   this.alertify.success('Deleted');
-    //   this.setTable();
-    // }).catch(ex => {
-    //   this.alertify.error('Delete Failed');
-    // }).finally(() => {
-    //   this.spinner.hide();
-    // });
+    this.companyService.delete(id).then(t => {
+      this.alertify.success('Deleted');
+      this.setTable();
+    }).catch(ex => {
+      this.alertify.error('Delete Failed');
+    }).finally(() => {
+      this.spinner.hide();
+    });
   }
 }

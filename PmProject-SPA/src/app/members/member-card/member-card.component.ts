@@ -18,7 +18,7 @@ export class MemberCardComponent implements OnInit {
   ngOnInit() {
   }
 
-  sendLike(id: Guid) {
+  sendLike(id: string) {
     this.userService.sendLike(this.authService.decodedToken.nameid, id).subscribe(data => {
       this.alertify.success('You have liked: ' + this.user.knownAs);
     }, error => {

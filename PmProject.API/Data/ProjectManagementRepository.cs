@@ -47,7 +47,12 @@ namespace PmProject.API.Data
 
             return user;
         }
-
+        public async Task<bool> Delete(Guid id)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(f => f.Id == id);
+            user.IsDelete = true;
+            return await _context.SaveChangesAsync() > 0;
+        }
         public async Task<PagedList<User>> GetUsers(UserParams userParams)
         {
             var users = _context.Users.Include(p => p.Photos)

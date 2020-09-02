@@ -55,6 +55,7 @@ namespace PmProject.API.Controllers
             try
             {
                 _repo.Add<Company>(company);
+                await _repo.SaveAll();
                 return Ok();
 
             }

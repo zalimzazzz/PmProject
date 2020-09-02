@@ -9,11 +9,12 @@ import { ProjectService } from '../_services/project.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertifyService } from '../_services/alertify.service';
 import { Project } from '../_models/project';
-import { TechnicianAddEditComponent } from './technician-add-edit/technician-add-edit.component';
+import { TechnicianAddComponent } from './technician-add/technician-add.component';
 import { UserService } from '../_services/user.service';
 import { User } from '../_models/user';
 import { async } from 'rxjs/internal/scheduler/async';
 import { AuthService } from '../_services/auth.service';
+import { TechnicianEditComponent } from './technician-edit/technician-edit.component';
 
 @Component({
   selector: 'app-technician',
@@ -37,7 +38,6 @@ export class TechnicianComponent implements OnInit {
     public userService: UserService,
     public dialog: MatDialog,
     public authService: AuthService,
-    private projectService: ProjectService,
     private spinner: NgxSpinnerService,
     private alertify: AlertifyService,) {
   }
@@ -99,7 +99,7 @@ export class TechnicianComponent implements OnInit {
     this.router.navigate(['serviceOrder/add/' + id]);
   }
   openDialog() {
-    const dialogRef = this.dialog.open(TechnicianAddEditComponent,
+    const dialogRef = this.dialog.open(TechnicianAddComponent,
       {
         data: { id: null },
       });
@@ -112,7 +112,7 @@ export class TechnicianComponent implements OnInit {
   edit(id: string) {
     console.log('id', id);
 
-    const dialogRef = this.dialog.open(TechnicianAddEditComponent, {
+    const dialogRef = this.dialog.open(TechnicianEditComponent, {
       data: { id: id },
     });
 
@@ -131,7 +131,7 @@ export class TechnicianComponent implements OnInit {
     for (let index = 0; index < selected.length; index++) {
       const id = selected[index].id;
       console.log(id);
-      let res = await this.projectService.delete(id).catch(ex => {
+      let res = await this.userService.delete(id).catch(ex => {
         this.alertify.error('Delete Failed');
       })
     }
@@ -142,7 +142,7 @@ export class TechnicianComponent implements OnInit {
 
   delete(id: string) {
     this.spinner.show();
-    this.projectService.delete(id).then(t => {
+    this.userService.delete(id).then(t => {
       this.alertify.success('Deleted');
       this.setTable();
     }).catch(ex => {

@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace PmProject.API.Dtos
 {
@@ -7,6 +8,9 @@ namespace PmProject.API.Dtos
         public Guid Id { get; set; }
 
         public string FullName { get; set; }
+
+        [MaxLength(10)]
+        public string PhoneNumber { get; set; }
 
     }
 }

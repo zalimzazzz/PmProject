@@ -2,7 +2,7 @@ import { Guid } from 'guid-typescript';
 import { Photo } from './photo';
 
 export interface User {
-    id: Guid;
+    id: string;
     username: string;
     knownAs: string;
     age: number;
@@ -17,6 +17,7 @@ export interface User {
     lokkingFor?: string;
     photos?: Photo[];
     companyId: string;
-    fullname: string;
+    fullName: string;
+    phoneNumber: string;
     roleId: number;
 }

@@ -65,7 +65,8 @@ import { LoginComponent } from './login/login.component';
 import { AppRootComponent } from './app-root/app-root.component';
 import { CompanyAddEditComponent } from './company/company-add-edit/company-add-edit.component';
 import { TechnicianComponent } from './technician/technician.component';
-import { TechnicianAddEditComponent } from './technician/technician-add-edit/technician-add-edit.component';
+import { TechnicianAddComponent } from './technician/technician-add/technician-add.component';
+import { TechnicianEditComponent } from './technician/technician-edit/technician-edit.component';
 
 export function tokenGetter() {
    return localStorage.getItem('token');
@@ -106,7 +107,8 @@ export class CustomHammerConfig extends HammerGestureConfig {
       AppRootComponent,
       CompanyAddEditComponent,
       TechnicianComponent,
-      TechnicianAddEditComponent
+      TechnicianAddComponent,
+      TechnicianEditComponent
    ],
    imports: [
       BrowserModule,

@@ -1,7 +1,7 @@
 <div class="add-edit-form">
   <div class="row mb-3">
     <div class="col-sm-12">
-      <h3>{{mode}} Technician</h3>
+      <h3>New Technician</h3>
     </div>
   </div>
   <form [formGroup]="registerForm" (ngSubmit)="save()">
@@ -13,7 +13,7 @@
     </div>
 
     <div class="form-group">
-      <input type="text" class="form-control" formControlName="phoneNumber" placeholder="Phone Number">
+      <input type="text" class="form-control" maxlength="10" formControlName="phoneNumber" placeholder="Phone Number">
     </div>
 
     <div class="form-group">
@@ -46,7 +46,11 @@
       <div class="invalid-feedback" *ngIf="registerForm.hasError('mismatch')
       && registerForm.get('confirmPassword').touched">Password must match</div>
     </div>
-
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <div class="row mt-4">
+      <div class="col text-center">
+        <button type="submit " class="btn  btn-success mr-2">Save</button>
+        <button type="button" class="btn  btn-danger" mat-dialog-close>Cancel</button>
+      </div>
+    </div>
   </form>
 </div>

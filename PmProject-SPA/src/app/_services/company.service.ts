@@ -52,5 +52,8 @@ export class CompanyService {
   async getById(id: string) {
     return await this.http.get(this.baseUrl + 'company/' + id).toPromise();
   }
+  async delete(id: string) {
+    return await this.http.delete(this.baseUrl + 'company/' + id).toPromise();
+  }
 
 }

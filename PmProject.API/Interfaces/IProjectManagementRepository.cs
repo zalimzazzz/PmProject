@@ -14,6 +14,7 @@ namespace PmProject.API.Interfaces
         Task<User> GetUser(Guid id);
         Task<Photo> GetPhoto(Guid id);
         Task<Photo> GetMainPhotoForUser(Guid userId);
+        Task<bool> Delete(Guid id);
 
     }
 }

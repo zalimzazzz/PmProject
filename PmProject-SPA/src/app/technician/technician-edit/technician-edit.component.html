@@ -1,0 +1,30 @@
+<div class="add-edit-form">
+  <div class="row mb-3">
+    <div class="col-sm-12">
+      <h3>Edit Technician</h3>
+    </div>
+  </div>
+  <form [formGroup]="registerForm" (ngSubmit)="save()">
+    <div class="form-group">
+      <!-- <input type="text" disabled class="form-control " formControlName="username" placeholder="Username"> -->
+      <label>Username : {{registerForm.value.username}}</label>
+    </div>
+    <div class="form-group">
+      <input type="text" [ngClass]="{'is-invalid': registerForm.get('fullName').errors
+        && registerForm.get('fullName').touched}" class="form-control is-invalid" formControlName="fullName"
+        placeholder="Full Name">
+      <div class="invalid-feedback">Please choose a Full Name</div>
+    </div>
+
+    <div class="form-group">
+      <input type="text" maxlength="10" class="form-control" formControlName="phoneNumber" placeholder="Phone Number">
+    </div>
+
+    <div class="row mt-4">
+      <div class="col text-center">
+        <button type="submit " class="btn  btn-success mr-2">Save</button>
+        <button type="button" class="btn  btn-danger" mat-dialog-close>Cancel</button>
+      </div>
+    </div>
+  </form>
+</div>

@@ -23,7 +23,7 @@ namespace PmProject.API.Data
 
         public async Task<bool> CompanyExists(string name)
         {
-            if (await _context.Company.AnyAsync(x => x.Name == name))
+            if (await _context.Company.AnyAsync(x => x.Name == name && !x.IsDelete))
                 return true;
 
             return false;

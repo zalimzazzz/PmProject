@@ -76,8 +76,6 @@ namespace PmProject.API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(Guid id, UserForUpdateDto userForUpdateDto)
         {
-            if (id != Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-                return Unauthorized();
 
             var userFromRepo = await _repo.GetUser(id);
 
@@ -87,6 +85,18 @@ namespace PmProject.API.Controllers
                 return NoContent();
 
             throw new Exception($"Updating user {id} failed on save");
+
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+
+            var userFromRepo = await _repo.Delete(id);
+            if (userFromRepo)
+            {
+                return Ok();
+            };
+            throw new Exception($"Updating user {id} failed on delete");
 
         }
 
