@@ -33,6 +33,8 @@ namespace PmProject.API.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
         {
+            if (userForRegisterDto.RoleId == 3)
+                return Unauthorized();
             userForRegisterDto.Username = userForRegisterDto.Username.ToLower();
 
             if (await _repo.UserExists(userForRegisterDto.Username))
@@ -87,10 +89,11 @@ namespace PmProject.API.Controllers
             var menus = new List<Routes>();
             bool isAdmin = userFromRepo.RoleId == 1;
             bool isTechnician = userFromRepo.RoleId == 2;
+            bool isAdminSystem = userFromRepo.RoleId == 3;
             if (isAdmin)
             {
                 menus.Add(CrateRoutes("/template", "Template Service"));
-                menus.Add(CrateRoutes("/company", "Company"));
+                // menus.Add(CrateRoutes("/company", "Company"));
                 menus.Add(CrateRoutes("/project", "Project"));
                 menus.Add(CrateRoutes("/serviceOrder", "Service Order"));
                 menus.Add(CrateRoutes("/technician", "Technician"));
@@ -99,6 +102,12 @@ namespace PmProject.API.Controllers
             else if (isTechnician)
             {
                 menus.Add(CrateRoutes("/service-order/technician", "Order"));
+            }
+            else if (isAdminSystem)
+            {
+                menus.Add(CrateRoutes("/company", "Company"));
+                menus.Add(CrateRoutes("/user-management", "User Management"));
+
             }
             return Ok(new
             {

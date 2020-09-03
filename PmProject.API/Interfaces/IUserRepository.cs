@@ -8,5 +8,7 @@ namespace PmProject.API.Interfaces
     public interface IUserRepository
     {
         Task<List<User>> GetTechnician(Guid id);
+
+        Task<List<User>> GetAdmin();
     }
 }

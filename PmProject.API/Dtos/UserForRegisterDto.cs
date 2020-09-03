@@ -15,7 +15,7 @@ namespace PmProject.API.Dtos
         public DateTime Created { get; set; }
         public DateTime LastActive { get; set; }
 
-        public Guid CompanyId { get; set; }
+        public Guid? CompanyId { get; set; }
         public int RoleId { get; set; }
         public string FullName { get; set; }
         [MaxLength(10)]

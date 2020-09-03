@@ -1,25 +1,22 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { AuthService } from '../_services/auth.service';
-import { AlertifyService } from '../_services/alertify.service';
-import {
-  FormGroup,
-  FormControl,
-  Validators,
-  FormBuilder,
-} from '@angular/forms';
-import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker/public_api';
-import { User } from '../_models/user';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { User } from 'src/app/_models/user';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { Company } from 'src/app/_models/company';
+import { AuthService } from 'src/app/_services/auth.service';
+import { CompanyService } from 'src/app/_services/company.service';
 import { Router } from '@angular/router';
-import { CompanyService } from '../_services/company.service';
+import { AlertifyService } from 'src/app/_services/alertify.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { Company } from '../_models/company';
+import { MatDialogRef } from '@angular/material/dialog';
+import { UserManagementComponent } from '../user-management.component';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css'],
+  selector: 'app-user-management-add-edit',
+  templateUrl: './user-management-add-edit.component.html',
+  styleUrls: ['./user-management-add-edit.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class UserManagementAddEditComponent implements OnInit {
   @Output() cancelRegister = new EventEmitter();
   user: User;
   registerForm: FormGroup;
@@ -33,6 +30,7 @@ export class RegisterComponent implements OnInit {
     private alertify: AlertifyService,
     private fb: FormBuilder,
     private spinner: NgxSpinnerService,
+    public dialogRef: MatDialogRef<UserManagementComponent>,
   ) { }
 
   ngOnInit() {
@@ -47,10 +45,7 @@ export class RegisterComponent implements OnInit {
       this.spinner.hide();
     });
 
-    if (this.authService.loggedIn()) {
-      let url = this.authService.getMenu()[0].path;
-      this.router.navigate([url]);
-    }
+
     (this.bsConfig = {
       containerClass: 'theme-orange',
     }),
@@ -61,13 +56,9 @@ export class RegisterComponent implements OnInit {
     this.registerForm = this.fb.group(
       {
         username: ['', Validators.required],
-        roleId: [2, Validators.required],
-        companyId: [''],
+        roleId: [1, Validators.required],
+        companyId: ['', Validators.required],
         fullName: ['', Validators.required],
-        // knownAs: ['', Validators.required],
-        // dateOfBirth: [null, Validators.required],
-        // city: ['', Validators.required],
-        // country: ['', Validators.required],
         password: [
           '',
           [
@@ -88,7 +79,7 @@ export class RegisterComponent implements OnInit {
       : { mismatch: true };
   }
 
-  register() {
+  save() {
     if (this.registerForm.valid) {
       console.log('valid');
 
@@ -97,14 +88,12 @@ export class RegisterComponent implements OnInit {
       // this.user.companyId = 'c80a3b5e-3106-4276-8ac2-c449905d9bff'
       this.authService.register(this.user).subscribe(
         () => {
-          this.alertify.success('registration successful');
+          this.alertify.success('create admin successful');
         },
         (error) => {
           this.alertify.error(error);
         }, () => {
-          this.authService.login(this.user).subscribe(() => {
-            this.router.navigate(['/']);
-          });
+          this.dialogRef.close();
         }
       );
     }

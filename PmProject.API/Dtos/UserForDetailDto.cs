@@ -18,6 +18,8 @@ namespace PmProject.API.Dtos
         public string PhotoUrl { get; set; }
         public bool IsDelete { get; set; }
         public string FullName { get; set; }
+        public Guid? CompanyId { get; set; }
+        public Company Company { get; set; }
 
         public ICollection<Photo> Photos { get; set; }
     }

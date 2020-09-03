@@ -19,7 +19,7 @@ export class MemberListComponent implements OnInit {
   ];
   userParams: any = {};
   pagination: Pagination;
-  
+
   constructor(private userService: UserService, private alertify: AlertifyService,
     private route: ActivatedRoute) { }
 
@@ -28,9 +28,9 @@ export class MemberListComponent implements OnInit {
       //console.log(data.users.result);
       this.users = data.users.result;
       this.pagination = data.users.pagination;
-    }); 
-    
-    this.userParams.gender = this.user.gender === 'female' ? 'male' : 'female';
+    });
+
+    // this.userParams.gender = this.user.gender === 'female' ? 'male' : 'female';
     this.userParams.minAge = 18;
     this.userParams.maxAge = 99;
     this.userParams.orderBy = 'lastActive';
@@ -42,7 +42,7 @@ export class MemberListComponent implements OnInit {
   }
 
   resetFilters() {
-    this.userParams.gender = this.user.gender === 'female' ? 'male' : 'female';
+    // this.userParams.gender = this.user.gender === 'female' ? 'male' : 'female';
     this.userParams.minAge = 18;
     this.userParams.maxAge = 99;
     this.loadUsers();

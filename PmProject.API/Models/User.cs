@@ -20,7 +20,7 @@ namespace PmProject.API.Models
         public DateTime LastActive { get; set; }
         public ICollection<Photo> Photos { get; set; }
 
-        public Guid CompanyId { get; set; }
+        public Guid? CompanyId { get; set; }
         public Company Company { get; set; }
         [Required]
         public int RoleId { get; set; }

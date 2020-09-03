@@ -74,6 +74,9 @@ export class UserService {
   async getTechnician(id: string) {
     return await this.http.get<Array<User>>(this.baseUrl + 'users/technician/' + id).toPromise();
   }
+  async getAdmin() {
+    return await this.http.get<Array<User>>(this.baseUrl + 'users/admin/').toPromise();
+  }
   async delete(id: string) {
     return await this.http.delete(this.baseUrl + 'users/' + id).toPromise();
   }

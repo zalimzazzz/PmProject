@@ -22,9 +22,10 @@ namespace PmProject.API.Data
             var user = await _context.Users.FirstOrDefaultAsync(f => f.Id == id);
             return await _context.Users.Where(f => !f.IsDelete && f.RoleId == 2 && f.CompanyId == user.CompanyId).ToListAsync();
         }
-        //  public async Task<List<User>> GetTechnician(Guid id)
-        // {
-        //     return await _context.Users.Where(f => !f.IsDelete && f.Id == id && f.RoleId == 2).ToListAsync();
-        // }
+
+        public async Task<List<User>> GetAdmin()
+        {
+            return await _context.Users.Include(i => i.Company).Where(f => !f.IsDelete && f.RoleId == 1).ToListAsync();
+        }
     }
 }

@@ -29,8 +29,9 @@
         <div class="form-group">
           <select [ngClass]="{'is-invalid': registerForm.get('roleId').errors
           && registerForm.get('roleId').touched}" formControlName="roleId" class="form-control" id="roleId">
-            <option value="1">Admin</option>
-            <option value="2">Technician</option>
+            <option value=1>Admin</option>
+            <option value=2>Technician</option>
+            <option value=3>Technician</option>
           </select>
           <div class="invalid-feedback">Please choose a Full Name</div>
         </div>
