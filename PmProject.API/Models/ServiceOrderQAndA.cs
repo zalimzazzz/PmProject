@@ -12,7 +12,7 @@ namespace PmProject.API.Models
         public Guid ServiceOrderId { get; set; }
         public ServiceOrder ServiceOrder { get; set; }
         public int AnswerTypeId { get; set; }
-        [Required]
+        
         public string Answer { get; set; }
         [Required]
         public Guid QuestionId { get; set; }
