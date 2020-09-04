@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -48,6 +49,10 @@ namespace PmProject.API.Controllers
 
             var _templateServiceOrder = _mapper.Map<TemplateServiceOrder>(templateServiceOrder);
 
+            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            _templateServiceOrder.CreateBy = userId;
+            _templateServiceOrder.ModifiedBy = userId;
+
             if (await _repo.Add(_templateServiceOrder))
             {
                 return Ok();
@@ -59,6 +64,9 @@ namespace PmProject.API.Controllers
         public async Task<IActionResult> UpdateTemplateServiceOrder(Guid id, [FromBody] TemplateServiceOrderDto templateServiceOrder)
         {
             var _templateServiceOrder = _mapper.Map<TemplateServiceOrder>(templateServiceOrder);
+
+            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            _templateServiceOrder.ModifiedBy = userId;
 
             if (await _repo.UpdateTemplateServiceOrder(_templateServiceOrder))
             {

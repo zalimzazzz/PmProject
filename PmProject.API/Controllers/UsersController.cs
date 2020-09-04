@@ -39,10 +39,10 @@ namespace PmProject.API.Controllers
 
             userParams.UserId = currentUserId;
 
-            if (string.IsNullOrEmpty(userParams.Gender))
-            {
-                userParams.Gender = userFromRepo.Gender == "male" ? "female" : "male";
-            }
+            // if (string.IsNullOrEmpty(userParams.Gender))
+            // {
+            //     userParams.Gender = userFromRepo.Gender == "male" ? "female" : "male";
+            // }
 
             var users = await _repo.GetUsers(userParams);
 
@@ -63,10 +63,20 @@ namespace PmProject.API.Controllers
 
             return Ok(userToReturn);
         }
-        [HttpGet("technician")]
-        public async Task<IActionResult> GetTechnician()
+
+        [HttpGet("admin")]
+        public async Task<IActionResult> GetAdmin()
         {
-            var technician = await _repoUser.GetTechnician();
+            var admin = await _repoUser.GetAdmin();
+            var adminToReturn = _mapper.Map<List<UserForDetailDto>>(admin);
+
+            return Ok(adminToReturn);
+        }
+
+        [HttpGet("technician/{id}")]
+        public async Task<IActionResult> GetTechnician(Guid id)
+        {
+            var technician = await _repoUser.GetTechnician(id);
 
             var technicianoReturn = _mapper.Map<List<UserForDetailDto>>(technician);
 
@@ -76,8 +86,6 @@ namespace PmProject.API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(Guid id, UserForUpdateDto userForUpdateDto)
         {
-            if (id != Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-                return Unauthorized();
 
             var userFromRepo = await _repo.GetUser(id);
 
@@ -89,6 +97,18 @@ namespace PmProject.API.Controllers
             throw new Exception($"Updating user {id} failed on save");
 
         }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+
+            var userFromRepo = await _repo.Delete(id);
+            if (userFromRepo)
+            {
+                return Ok();
+            };
+            throw new Exception($"Updating user {id} failed on delete");
+
+        }
 
         [HttpPost("{id}/like/{recipientId}")]
         public async Task<IActionResult> LikeUser(Guid id, Guid recipientId)
@@ -96,21 +116,6 @@ namespace PmProject.API.Controllers
             if (id != Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            var like = await _repo.GetLike(id, recipientId);
-
-            if (like != null)
-                return BadRequest("You already like this user");
-
-            if (await _repo.GetUser(recipientId) == null)
-                return NotFound();
-
-            like = new Like
-            {
-                LikerId = id,
-                LikeeId = recipientId
-            };
-
-            _repo.Add<Like>(like);
 
             if (await _repo.SaveAll())
                 return Ok();

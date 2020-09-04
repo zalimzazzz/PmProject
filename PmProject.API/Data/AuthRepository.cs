@@ -15,7 +15,7 @@ namespace PmProject.API.Data
         }
         public async Task<User> Login(string username, string password)
         {
-            var user = await _context.Users.Include(p => p.Photos).FirstOrDefaultAsync(x => x.Username == username);
+            var user = await _context.Users.Include(p => p.Photos).FirstOrDefaultAsync(x => x.Username == username && !x.IsDelete);
 
             if (user == null)
                 return null;
@@ -65,7 +65,7 @@ namespace PmProject.API.Data
 
         public async Task<bool> UserExists(string username)
         {
-            if (await _context.Users.AnyAsync(x => x.Username == username))
+            if (await _context.Users.AnyAsync(x => x.Username == username && !x.IsDelete))
                 return true;
 
             return false;

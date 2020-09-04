@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -42,8 +43,11 @@ namespace PmProject.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] ProjectDto projectDto)
         {
-
             var project = _mapper.Map<Project>(projectDto);
+
+            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            project.CreateBy = userId;
+            project.ModifiedBy = userId;
 
             if (await _repo.Add(project))
             {
@@ -57,6 +61,9 @@ namespace PmProject.API.Controllers
         public async Task<IActionResult> Put(Guid id, [FromBody] ProjectDto projectDto)
         {
             var project = _mapper.Map<Project>(projectDto);
+
+            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            project.ModifiedBy = userId;
 
             if (await _repo.Update(project))
             {

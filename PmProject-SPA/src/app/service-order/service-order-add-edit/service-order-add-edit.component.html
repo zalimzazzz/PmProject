@@ -43,7 +43,7 @@
                       <div class="form-group col-md-12">
                         <label for="inputEmail4">{{question.name}}</label>
                         <input type="text" (change)="setAnswerText(question.id, $event.target.value)"
-                          [ngModel]="answerText(question.id)" class="form-control" id="inputEmail4">
+                          [ngModel]="answerText(question.id)" class="form-control">
                       </div>
                     </div>
                   </ng-container>

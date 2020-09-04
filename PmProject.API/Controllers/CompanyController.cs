@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -22,21 +23,16 @@ namespace PmProject.API.Controllers
         private readonly IMapper _mapper;
         public CompanyController(ICompanyRepository repo, IMapper mapper)
         {
-             _repo = repo;
+            _repo = repo;
             _mapper = mapper;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetCompanies()
         {
-            var company = await _repo.GetCompanies();
-
-            var companyToReturn = _mapper.Map<IEnumerable<CompanyForReturnDto>>(company);
-
-            Response.AddPagination(company.CurrentPage, company.PageSize, 
-                company.TotalCount, company.TotalPages);
-
-            return Ok(companyToReturn);
+            var company = await _repo.GetCompany();
+            return Ok(company);
         }
 
         [HttpGet("{id}", Name = "GetCompany")]
@@ -52,38 +48,71 @@ namespace PmProject.API.Controllers
 
         // POST api/values
         [HttpPost]
-        public async Task<IActionResult> AddCompany([FromBody]CompanyForCreationDto companyForCreationDto)
+        public async Task<IActionResult> AddCompany([FromBody] Company company)
         {
-            if (await _repo.CompanyExists(companyForCreationDto.Name))
+            if (await _repo.CompanyExists(company.Name))
                 return BadRequest("Company already exists");
 
-            var company = _mapper.Map<Company>(companyForCreationDto);
-
-            _repo.Add<Company>(company);
-
-            if (await _repo.SaveAll())
+            try
             {
-                var companyToReturn = _mapper.Map<CompanyForReturnDto>(company);
-                return CreatedAtRoute("GetCompanies", new { controller = "Company", 
-                    id = company.Id }, companyToReturn);
-            };
+                var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                company.CreateBy = userId;
+                company.ModifiedBy = userId;
+                _repo.Add<Company>(company);
+                await _repo.SaveAll();
+                return Ok();
 
-            return BadRequest("Could not add the Company");
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return BadRequest("Could not add the Company");
+            }
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(Guid id, [FromBody] string name)
+        public async Task<IActionResult> Put(Guid id, [FromBody] Company company)
         {
-            //return Unauthorized();
+            if (id != company.Id)
+            {
+                return BadRequest();
+            }
+
+
+            try
+            {
+                var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                company.ModifiedBy = userId;
+                await _repo.Update(company);
+
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return BadRequest();
+            }
+
+            return NoContent();
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            //if (userId != Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-                //return Unauthorized();
+            if (id == null)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                await _repo.Delete(id);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return BadRequest();
+            }
+
+            return NoContent();
         }
     }
 }

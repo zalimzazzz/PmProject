@@ -10,6 +10,7 @@ import { ServiceOrderQAndA } from 'src/app/_models/service-order-q-and-a';
 import { ServiceOrderImage } from 'src/app/_models/service-order-image';
 import { UserService } from 'src/app/_services/user.service';
 import { User } from 'src/app/_models/user';
+import { AuthService } from 'src/app/_services/auth.service';
 
 @Component({
   selector: 'app-service-order-add-edit',
@@ -28,19 +29,21 @@ export class ServiceOrderAddEditComponent implements OnInit {
   isNew: boolean;
   projecid: string;
   technician: any;
-
+  userId: string;
   constructor(private serviceOrderService: ServiceOrderService,
     private spinner: NgxSpinnerService,
     private alertify: AlertifyService,
     private route: ActivatedRoute,
     private router: Router,
-    private userService: UserService) {
+    private userService: UserService,
+    private authService: AuthService) {
     this.serviceOrder.serviceOrderQAndA = new Array<ServiceOrderQAndA>();
     this.serviceOrder.serviceOrderImage = new Array<ServiceOrderImage>();
 
   }
 
   ngOnInit(): void {
+    this.userId = this.authService.getUser().id;
     this.route.params.subscribe(params => {
       this.id = params['id'] === undefined ? '' : params['id'];
       this.isNew = params['mode'] === 'add';
@@ -62,7 +65,7 @@ export class ServiceOrderAddEditComponent implements OnInit {
         else {
           this.createAnswer();
         }
-        return this.userService.getTechnician();
+        return this.userService.getTechnician(this.userId);
       }).then((res: Array<User>) => {
         console.log('getTechnician', res);
         this.technician = res;

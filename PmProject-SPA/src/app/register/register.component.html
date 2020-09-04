@@ -21,18 +21,17 @@
         </div> -->
         <div class="form-group">
           <select formControlName="companyId" class="form-control" id="status">
-            <option selected>Company</option>
-            <option value="1b7b50b8-6886-4463-9391-64c68a215ea9">com1</option>
+            <option value="">Company</option>
+            <option *ngFor="let item of company" [value]="item.id">{{item.name}}</option>
           </select>
         </div>
 
         <div class="form-group">
-          <select [ngClass]="{'is-invalid': registerForm.get('fullName').errors
-          && registerForm.get('fullName').touched}" formControlName="fullName" class="form-control" id="status">
-            <option selected>Role</option>
-            <option value="1">Super Admin</option>
-            <option value="2">Admin</option>
-            <option value="3">Technician</option>
+          <select [ngClass]="{'is-invalid': registerForm.get('roleId').errors
+          && registerForm.get('roleId').touched}" formControlName="roleId" class="form-control" id="roleId">
+            <option value=1>Admin</option>
+            <option value=2>Technician</option>
+            <option value=3>Technician</option>
           </select>
           <div class="invalid-feedback">Please choose a Role</div>
         </div>
