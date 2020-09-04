@@ -166,9 +166,10 @@ export class ServiceOrderTechnicianEditComponent implements OnInit {
       let type = '.' + file.name.split(".").pop();
       let num = this.serviceOrder.serviceOrderImage.length + 1;
       let name = this.serviceOrder.serviceOrderNo + '_' + num + type;
-      formData.append('uploadFile', file, name);
 
-      console.log('file', file);
+      let file_resized: any = this.resize(file);
+
+      formData.append('uploadFile', file_resized, name);
 
       this.images.push(formData);
       let serviceOrderImage = new ServiceOrderImage();
@@ -188,24 +189,47 @@ export class ServiceOrderTechnicianEditComponent implements OnInit {
     }
   }
 
-  getBase64(file) {
+  resize(file) {
+    let me = this;
     var reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = function () {
-      console.log(reader.result);
+
+      let img = me.reCompressFileRe(reader.result.toString(), -1, 50);
+      let type = file.name.split(".").pop();
+
+      const imageBlob = me.dataURItoBlob(img, type);
+
+      return new File([imageBlob], 'resized', { type: 'image/' + type });;
     };
     reader.onerror = function (error) {
       console.log('Error: ', error);
     };
   }
 
-  compressFile() {
+  dataURItoBlob(dataURI, type: string) {
+    console.log(type.split("."));
 
-    this.imageCompress.uploadFile().then(({ image, orientation }) => {
-      this.reCompressFileRe(image, orientation, 50);
-    });
-
+    const byteString = window.atob(dataURI);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const int8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+      int8Array[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([int8Array], { type: 'image/' + type });
+    return blob;
   }
+
+  // compressFile() {
+
+  //   this.imageCompress.uploadFile().then(({ image, orientation }) => {
+  //     console.log('orientation', orientation);
+
+  //     this.reCompressFileRe(image, orientation, 50);
+  //   });
+
+  // }
+
   reCompressFileRe(image: any, orientation: any, quality: number) {
 
     this.imageCompress.compressFile(image, orientation, 70, quality).then(
