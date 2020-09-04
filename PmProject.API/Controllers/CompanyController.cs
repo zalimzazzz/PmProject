@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -54,6 +55,9 @@ namespace PmProject.API.Controllers
 
             try
             {
+                var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                company.CreateBy = userId;
+                company.ModifiedBy = userId;
                 _repo.Add<Company>(company);
                 await _repo.SaveAll();
                 return Ok();
@@ -77,6 +81,8 @@ namespace PmProject.API.Controllers
 
             try
             {
+                var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                company.ModifiedBy = userId;
                 await _repo.Update(company);
 
             }

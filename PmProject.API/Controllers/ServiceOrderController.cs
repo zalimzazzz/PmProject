@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http.Headers;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -57,6 +58,10 @@ namespace PmProject.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] ServiceOrder templateServiceOrder)
         {
+            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            templateServiceOrder.CreateBy = userId;
+            templateServiceOrder.ModifiedBy = userId;
+
             if (await _repo.Add(templateServiceOrder))
             {
                 return Ok();
@@ -67,6 +72,8 @@ namespace PmProject.API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(Guid id, [FromBody] ServiceOrder serviceOrder)
         {
+            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            serviceOrder.ModifiedBy = userId;
 
             if (await _repo.Update(serviceOrder))
             {

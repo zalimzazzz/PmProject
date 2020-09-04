@@ -22,7 +22,7 @@ export class UserManagementAddEditComponent implements OnInit {
   registerForm: FormGroup;
   bsConfig: Partial<BsDatepickerConfig>;
   company: Company[];
-
+  mode = 'New'
   constructor(
     private authService: AuthService,
     private companyService: CompanyService,
