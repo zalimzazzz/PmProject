@@ -9,6 +9,7 @@ import { ServiceOrder } from 'src/app/_models/service-order';
 import { ServiceOrderQAndA } from 'src/app/_models/service-order-q-and-a';
 import { ServiceOrderImage } from 'src/app/_models/service-order-image';
 import { NgxImageCompressService } from 'ngx-image-compress';
+import { async } from 'rxjs/internal/scheduler/async';
 
 @Component({
   selector: 'app-service-order-technician-edit',
@@ -43,23 +44,17 @@ export class ServiceOrderTechnicianEditComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.id = params['id'] === undefined ? '' : params['id'];
-      console.log();
 
       this.isNew = params['mode'] === 'add';
       this.projecid = params['projecid'];
       this.spinner.show();
       this.serviceOrderService.getQuestion(this.projecid).then((res: Array<TemplateServiceOrderQuestion>) => {
-        console.log(res);
         this.questionList = res;
-        console.log(this.serviceOrder.serviceOrderQAndA);
         return this.serviceOrderService.getById(this.id)
       }).then((res: ServiceOrder) => {
-        console.log('ServiceOrder', res);
         if (res !== null && !this.isNew) {
           this.mode = 'Edit';
           this.serviceOrder = res;
-          console.log(this.signaturePad);
-          console.log(this.signaturePadElement);
           if (this.serviceOrder.customerSignature !== null)
             this.signaturePad.fromDataURL(this.serviceOrder.customerSignature);
         }
@@ -68,7 +63,6 @@ export class ServiceOrderTechnicianEditComponent implements OnInit {
         }
 
       }).catch(ex => {
-        console.log(ex);
         this.alertify.error('Internal Server Error');
       }).finally(() => {
         this.spinner.hide();
@@ -107,10 +101,8 @@ export class ServiceOrderTechnicianEditComponent implements OnInit {
   setAnswerText(id: string, value: string) {
     let answer = this.serviceOrder.serviceOrderQAndA.filter(f => f.questionId === id)[0];
     answer.answer = value;
-    console.log(answer);
   }
   setAnswerMany(id: string, value: string, checked: boolean) {
-    console.log(checked);
 
     let answer = this.serviceOrder.serviceOrderQAndA.filter(f => f.questionId === id)[0];
     let answerMany = JSON.parse(answer.answer);
@@ -126,14 +118,12 @@ export class ServiceOrderTechnicianEditComponent implements OnInit {
     }
     answer.answer = JSON.stringify(answerMany);
     // answer.answer = value;
-    console.log(answer);
   }
 
 
   setAnswerOne(id: string, event: any) {
     let answer = this.serviceOrder.serviceOrderQAndA.filter(f => f.questionId === id)[0];
     answer.answer = event.value;
-    console.log(answer);
   }
 
 
@@ -152,8 +142,8 @@ export class ServiceOrderTechnicianEditComponent implements OnInit {
     }
   }
 
-  handleFileInput(fileList: FileList) {
-    console.log(fileList);
+  async handleFileInput(fileList: FileList) {
+    this.spinner.show();
     if (fileList.length < 0)
       return;
 
@@ -167,7 +157,7 @@ export class ServiceOrderTechnicianEditComponent implements OnInit {
       let num = this.serviceOrder.serviceOrderImage.length + 1;
       let name = this.serviceOrder.serviceOrderNo + '_' + num + type;
 
-      let file_resized: any = this.resize(file);
+      let file_resized: any = await this.resize(file);
 
       formData.append('uploadFile', file_resized, name);
 
@@ -178,7 +168,6 @@ export class ServiceOrderTechnicianEditComponent implements OnInit {
 
       if (this.serviceOrder.serviceOrderImage.length !== 0) {
         let index = this.serviceOrder.serviceOrderImage.length;
-        console.log(this.serviceOrder.serviceOrderImage[index - 1].imagePath);
         let path = this.serviceOrder.serviceOrderImage[index - 1].imagePath;
         let name = this.serviceOrder.serviceOrderNo + '_' + this.getLast(path) + type;
 
@@ -186,37 +175,38 @@ export class ServiceOrderTechnicianEditComponent implements OnInit {
       }
 
       this.serviceOrder.serviceOrderImage.push(serviceOrderImage);
+      this.spinner.hide();
+
     }
   }
 
-  resize(file) {
-    let me = this;
-    var reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = function () {
+  async resize(file) {
+    let promise = new Promise((resolve, reject) => {
+      let me = this;
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = async () => {
 
-      let img = me.reCompressFileRe(reader.result.toString(), -1, 50);
-      let type = file.name.split(".").pop();
+        let img = await me.reCompressFileRe(reader.result.toString(), -1, 50);
 
-      const imageBlob = me.dataURItoBlob(img, type);
 
-      return new File([imageBlob], 'resized', { type: 'image/' + type });;
-    };
-    reader.onerror = function (error) {
-      console.log('Error: ', error);
-    };
+        let type = file.name.split(".").pop();
+
+        const imageBlob = await me.dataURItoBlob(img);
+
+        resolve(new File([imageBlob], 'resized', { type: 'image/' + type }));
+      };
+      reader.onerror = function (error) {
+      };
+    });
+    let result = await promise;
+    return result;
+
   }
 
-  dataURItoBlob(dataURI, type: string) {
-    console.log(type.split("."));
-
-    const byteString = window.atob(dataURI);
-    const arrayBuffer = new ArrayBuffer(byteString.length);
-    const int8Array = new Uint8Array(arrayBuffer);
-    for (let i = 0; i < byteString.length; i++) {
-      int8Array[i] = byteString.charCodeAt(i);
-    }
-    const blob = new Blob([int8Array], { type: 'image/' + type });
+  async dataURItoBlob(dataURI: string) {
+    let blob = await fetch(dataURI)
+      .then(res => { return res.blob(); });
     return blob;
   }
 
@@ -230,10 +220,10 @@ export class ServiceOrderTechnicianEditComponent implements OnInit {
 
   // }
 
-  reCompressFileRe(image: any, orientation: any, quality: number) {
+  async reCompressFileRe(image: any, orientation: any, quality: number) {
 
-    this.imageCompress.compressFile(image, orientation, 70, quality).then(
-      (result: any) => {
+    let resule = await this.imageCompress.compressFile(image, orientation, 70, quality).then(
+      async (result: any) => {
         let size = this.imageCompress.byteCount(result);
 
 
@@ -246,16 +236,18 @@ export class ServiceOrderTechnicianEditComponent implements OnInit {
         if (size > 153600) {
 
           if (size < 400000) {
-            console.log('size < 400000');
 
-            this.reCompressFileRe(result, orientation, 99);
+            return await this.reCompressFileRe(result, orientation, 99);
           }
           else {
-            this.reCompressFileRe(result, orientation, quality);
+            return await this.reCompressFileRe(result, orientation, quality);
           }
         }
       }
     );
+
+    return await resule;
+
   }
 
 
@@ -276,7 +268,6 @@ export class ServiceOrderTechnicianEditComponent implements OnInit {
     this.serviceOrder.projectId = this.id;
     if (this.mode === 'New') {
       await this.uploadFile().then(async res => {
-        console.log('save', res);
         return this.serviceOrderService.add(this.serviceOrder);
       }).then(async res => {
         this.router.navigate(['/service-order/technician']);
@@ -288,7 +279,6 @@ export class ServiceOrderTechnicianEditComponent implements OnInit {
     }
     else {
       await this.uploadFile().then(async res => {
-        console.log('save', res);
         return this.serviceOrderService.update(this.serviceOrder);
       }).then(async res => {
         this.router.navigate(['/service-order/technician']);
@@ -304,7 +294,6 @@ export class ServiceOrderTechnicianEditComponent implements OnInit {
     for (let index = 0; index < this.images.length; index++) {
       const image = this.images[index];
       let res = await this.serviceOrderService.uploadFile(image);
-      console.log(index);
     }
     console.log('End UploadFile');
     return Promise.resolve('Uploaded');
@@ -313,7 +302,6 @@ export class ServiceOrderTechnicianEditComponent implements OnInit {
 
   ngAfterViewInit(): void {
     this.signaturePad = new SignaturePad(this.signaturePadElement.nativeElement);
-    console.log('ngAfterViewInit', this.signaturePadElement);
 
   }
 
