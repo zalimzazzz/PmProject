@@ -8,7 +8,7 @@ import { TemplateServiceOrderQuestion } from 'src/app/_models/template-service-o
 import { ServiceOrder } from 'src/app/_models/service-order';
 import { ServiceOrderQAndA } from 'src/app/_models/service-order-q-and-a';
 import { ServiceOrderImage } from 'src/app/_models/service-order-image';
-
+import { NgxImageCompressService } from 'ngx-image-compress';
 
 @Component({
   selector: 'app-service-order-technician-edit',
@@ -26,10 +26,15 @@ export class ServiceOrderTechnicianEditComponent implements OnInit {
   images = new Array<FormData>();
   isNew: boolean;
   projecid: string;
+
+  imgResultBeforeCompress: string;
+  imgResultAfterCompress: string;
+
   constructor(private serviceOrderService: ServiceOrderService,
     private spinner: NgxSpinnerService,
     private alertify: AlertifyService,
     private route: ActivatedRoute,
+    private imageCompress: NgxImageCompressService,
     private router: Router,) {
     this.serviceOrder.serviceOrderQAndA = new Array<ServiceOrderQAndA>();
     this.serviceOrder.serviceOrderImage = new Array<ServiceOrderImage>();
@@ -55,7 +60,8 @@ export class ServiceOrderTechnicianEditComponent implements OnInit {
           this.serviceOrder = res;
           console.log(this.signaturePad);
           console.log(this.signaturePadElement);
-          this.signaturePad.fromDataURL(this.serviceOrder.customerSignature);
+          if (this.serviceOrder.customerSignature !== null)
+            this.signaturePad.fromDataURL(this.serviceOrder.customerSignature);
         }
         else {
           this.createAnswer();
@@ -161,6 +167,9 @@ export class ServiceOrderTechnicianEditComponent implements OnInit {
       let num = this.serviceOrder.serviceOrderImage.length + 1;
       let name = this.serviceOrder.serviceOrderNo + '_' + num + type;
       formData.append('uploadFile', file, name);
+
+      console.log('file', file);
+
       this.images.push(formData);
       let serviceOrderImage = new ServiceOrderImage();
       serviceOrderImage.imagePath = name;
@@ -178,6 +187,54 @@ export class ServiceOrderTechnicianEditComponent implements OnInit {
       this.serviceOrder.serviceOrderImage.push(serviceOrderImage);
     }
   }
+
+  getBase64(file) {
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+      console.log(reader.result);
+    };
+    reader.onerror = function (error) {
+      console.log('Error: ', error);
+    };
+  }
+
+  compressFile() {
+
+    this.imageCompress.uploadFile().then(({ image, orientation }) => {
+      this.reCompressFileRe(image, orientation, 50);
+    });
+
+  }
+  reCompressFileRe(image: any, orientation: any, quality: number) {
+
+    this.imageCompress.compressFile(image, orientation, 70, quality).then(
+      (result: any) => {
+        let size = this.imageCompress.byteCount(result);
+
+
+        if (size < 200000) {
+          console.warn('Size in bytes is now (After):', this.imageCompress.byteCount(result));
+          this.imgResultAfterCompress = result;
+          return result;
+        }
+
+        if (size > 153600) {
+
+          if (size < 400000) {
+            console.log('size < 400000');
+
+            this.reCompressFileRe(result, orientation, 99);
+          }
+          else {
+            this.reCompressFileRe(result, orientation, quality);
+          }
+        }
+      }
+    );
+  }
+
+
   getLast(name: string) {
     let a = name.split('_').pop();
     let b = a.split('.');
@@ -228,6 +285,8 @@ export class ServiceOrderTechnicianEditComponent implements OnInit {
     console.log('End UploadFile');
     return Promise.resolve('Uploaded');
   }
+
+
   ngAfterViewInit(): void {
     this.signaturePad = new SignaturePad(this.signaturePadElement.nativeElement);
     console.log('ngAfterViewInit', this.signaturePadElement);

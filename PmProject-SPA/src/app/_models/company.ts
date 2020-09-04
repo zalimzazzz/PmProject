@@ -1,6 +1,6 @@
 import { Guid } from 'guid-typescript';
 
-export interface Company {
+export class Company {
     id: Guid;
     name: string;
 }
