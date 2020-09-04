@@ -69,6 +69,7 @@ import { TechnicianAddComponent } from './technician/technician-add/technician-a
 import { TechnicianEditComponent } from './technician/technician-edit/technician-edit.component';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { UserManagementAddEditComponent } from './user-management/user-management-add-edit/user-management-add-edit.component';
+import { NgxImageCompressService } from 'ngx-image-compress';
 
 export function tokenGetter() {
    return localStorage.getItem('token');
@@ -164,6 +165,7 @@ export class CustomHammerConfig extends HammerGestureConfig {
       MemberEditResolver,
       PreventUnsavedChanges,
       ListsResolver,
+      NgxImageCompressService,
    ],
    bootstrap: [
       AppComponent
