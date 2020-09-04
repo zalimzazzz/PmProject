@@ -85,15 +85,22 @@ namespace PmProject.API.Controllers
             var user = _mapper.Map<UserForListDto>(userFromRepo);
 
             var menus = new List<Routes>();
-            bool isAdmin = userFromRepo.RoleId == 1;
-            bool isTechnician = userFromRepo.RoleId == 2;
-            if (isAdmin)
+            bool isSuperAdmin = userFromRepo.RoleId == 1;
+            bool isAdmin = userFromRepo.RoleId == 2;
+            bool isTechnician = userFromRepo.RoleId == 3;
+            if (isSuperAdmin)
             {
                 menus.Add(CrateRoutes("/template", "Template Service"));
                 menus.Add(CrateRoutes("/company", "Company"));
                 menus.Add(CrateRoutes("/project", "Project"));
                 menus.Add(CrateRoutes("/serviceOrder", "Service Order"));
 
+            }
+            else if (isAdmin)
+            {
+                menus.Add(CrateRoutes("/template", "Template Service"));
+                menus.Add(CrateRoutes("/project", "Project"));
+                menus.Add(CrateRoutes("/serviceOrder", "Service Order"));
             }
             else if (isTechnician)
             {
