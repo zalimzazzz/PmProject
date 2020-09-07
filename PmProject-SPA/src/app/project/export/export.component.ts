@@ -10,7 +10,7 @@ import { ServiceOrderImage } from 'src/app/_models/service-order-image';
 import { environment } from 'src/environments/environment';
 
 import { saveAs } from 'file-saver';
-import { Document, Packer, Paragraph, Media } from "docx";
+import { Document, Packer, Paragraph, Media } from 'docx';
 import { async } from '@angular/core/testing';
 
 @Component({
@@ -23,7 +23,7 @@ export class ExportComponent implements OnInit {
   serviceOrder = new ServiceOrder();
   baseUrl = environment.apiUrl + 'ServiceOrder/Download/';
   isDataAvailable: boolean;
-  document: any
+  document: any;
   numberDisplay: number;
   imageLength: number;
   constructor(private projectService: ProjectService,
