@@ -18,7 +18,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class TemplateServiceOrderComponent implements OnInit {
 
   displayedColumns: string[] = ['select', 'name', 'action'];
-  templateServiceOrder = new Array<TemplateServiceOrder>()
+  templateServiceOrder = new Array<TemplateServiceOrder>();
   // dataSource = new MatTableDataSource<TemplateServiceOrder>(templateServiceOrderItem);
   dataSource: any;
   selection = new SelectionModel<TemplateServiceOrder>(true, []);
@@ -38,7 +38,7 @@ export class TemplateServiceOrderComponent implements OnInit {
     this.spinner.show();
     this.templateServiceOrderServiceService.get().then((res: Array<TemplateServiceOrder>) => {
       this.templateServiceOrder = res;
-      this.dataSource = new MatTableDataSource<TemplateServiceOrder>(this.templateServiceOrder)
+      this.dataSource = new MatTableDataSource<TemplateServiceOrder>(this.templateServiceOrder);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     }).catch(ex => {
@@ -71,7 +71,7 @@ export class TemplateServiceOrderComponent implements OnInit {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
-    const rowIndex = (element) => element == row.id;
+    const rowIndex = (element) => element === row.id;
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${this.templateServiceOrder.findIndex(rowIndex)}`;
   }
 
@@ -91,7 +91,7 @@ export class TemplateServiceOrderComponent implements OnInit {
       console.log(id);
       let res = await this.templateServiceOrderServiceService.delete(id).catch(ex => {
         this.alertify.error('Delete Failed');
-      })
+      });
     }
     this.selection.clear();
     this.setTable();

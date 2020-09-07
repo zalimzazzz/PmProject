@@ -8,19 +8,19 @@
   <div class="container mt-5">
     <div class="card">
       <div class="card-header">
-        Service Order
+        ใบสั่งงาน
       </div>
       <div class="card-body">
         <div class="row">
           <div class="col-6">
             <!-- <button type="button " [routerLink]="['/serviceOrder/add']" class="btn btn-success mr-2">New Service Order
             </button> -->
-            <button type="button" (click)="deleteSelected()" class="btn btn-danger">Delete</button>
+            <button type="button" (click)="deleteSelected()" class="btn btn-danger">ลบข้อมูลใบสั่งงาน</button>
           </div>
           <div class="col-6 text-right">
             <mat-form-field>
-              <mat-label>search</mat-label>
-              <input matInput (keyup)="applyFilter($event)" placeholder="search" #input>
+              <mat-label>ค้นหา</mat-label>
+              <input matInput (keyup)="applyFilter($event)" placeholder="ค้นหา" #input>
             </mat-form-field>
           </div>
         </div>
@@ -44,17 +44,17 @@
                 </ng-container>
 
                 <ng-container matColumnDef="serviceOrderNo">
-                  <th style="width: 30%;" mat-header-cell *matHeaderCellDef mat-sort-header>Service Order No. </th>
-                  <td mat-cell *matCellDef="let element" data-label="ervice Order No."> {{element.serviceOrderNo}} </td>
+                  <th style="width: 30%;" mat-header-cell *matHeaderCellDef mat-sort-header>หมายเลขใบสั่งงาน</th>
+                  <td mat-cell *matCellDef="let element" data-label="หมายเลขใบสั่งงาน"> {{element.serviceOrderNo}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="description">
-                  <th style="width: 30%;" mat-header-cell *matHeaderCellDef mat-sort-header>Description </th>
-                  <td mat-cell *matCellDef="let element" data-label="Description"> {{element.description}} </td>
+                  <th style="width: 30%;" mat-header-cell *matHeaderCellDef mat-sort-header>รายละเอียดใบสั่งงาน</th>
+                  <td mat-cell *matCellDef="let element" data-label="รายละเอียดใบสั่งงาน"> {{element.description}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="status">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>สถานะใบสั่งงาน</th>
                   <td mat-cell *matCellDef="let element" data-label="Status">
                     <p *ngIf="element.status === 0">Open</p>
                     <p *ngIf="element.status === 1">In Process</p>
@@ -67,8 +67,8 @@
                   <th mat-header-cell *matHeaderCellDef> </th>
                   <td class="text-right" mat-cell *matCellDef="let element ">
                     <button type="button " (click)="edit(element.id, element.projectId)"
-                      class="btn btn-sm btn-success mr-2">Edit</button>
-                    <button type="button" (click)="delete(element.id)" class="btn btn-sm btn-danger">Delete</button>
+                      class="btn btn-sm btn-success mr-2">แก้ไข</button>
+                    <button type="button" (click)="delete(element.id)" class="btn btn-sm btn-danger">ลบ</button>
                   </td>
                 </ng-container>
 

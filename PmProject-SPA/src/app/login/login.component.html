@@ -5,16 +5,16 @@
       <h3>Project Management</h3>
       <div class="form__field">
         <mat-form-field appearance="outline">
-          <mat-label>Username</mat-label>
-          <input [(ngModel)]="model.username" matInput placeholder="UserName">
+          <mat-label>รหัสผู้ใช้งาน</mat-label>
+          <input [(ngModel)]="model.username" matInput placeholder="รหัสผู้ใช้งาน">
           <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
         </mat-form-field>
       </div>
 
       <div class="form__field">
         <mat-form-field appearance="outline">
-          <mat-label>Password</mat-label>
-          <input [(ngModel)]="model.password" (keyup.enter)="login()" type="password" matInput placeholder="Password">
+          <mat-label>รหัสผ่าน</mat-label>
+          <input [(ngModel)]="model.password" (keyup.enter)="login()" type="password" matInput placeholder="รหัสผ่าน">
           <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
         </mat-form-field>
       </div>
@@ -22,7 +22,7 @@
     </div>
 
     <footer class="login__footer">
-      <input class="col-sm-12 btn-login" type="button" (click)="login()" value="Login">
+      <input class="col-sm-12 btn-login" type="button" (click)="login()" value="เข้าสู่ระบบ">
       <br>
     </footer>
   </div>

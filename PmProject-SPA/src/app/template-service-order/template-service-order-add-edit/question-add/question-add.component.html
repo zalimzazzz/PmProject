@@ -2,28 +2,28 @@
   <div mat-dialog-content>
     <div class="row">
       <div class="col">
-        <h4>Add Question</h4>
+        <h4>เพิ่มหัวข้อ</h4>
       </div>
     </div>
     <div class="form-group row mt-2">
-      <label for="question" class="col-sm-3 col-form-label">Question</label>
+      <label for="question" class="col-sm-3 col-form-label">หัวข้อแบบฟอร์ม</label>
       <div class="col-sm-9">
         <input [(ngModel)]="question.name" type="text" class="form-control" id="question">
       </div>
     </div>
     <div class="form-group row">
-      <label for="answerType" class="col-sm-3 col-form-label">Answer Type</label>
+      <label for="answerType" class="col-sm-3 col-form-label">ประเภทตัวเลือก</label>
       <div class="col-sm-9">
         <select [(ngModel)]="question.answerTypeId" class="form-control" id="answerType">
-          <option selected>Choose...</option>
-          <option value="1">Text</option>
-          <option value="2">One Choice</option>
-          <option value="3">Many Choice</option>
+          <option selected>กรุณาเลือก...</option>
+          <option value="1">ตัวเลือกแบบกรอกข้อมูล</option>
+          <option value="2">ตัวเลือกแบบเลือกได้ 1 คำตอบ</option>
+          <option value="3">ตัวเลือกแบบเลือกได้มากกว่า 1 คำตอบ</option>
         </select>
       </div>
     </div>
     <div class="form-group row" *ngFor="let item of question?.templateServiceOrderAnswer; let i = index">
-      <label for="choice" class="col-sm-3 col-form-label">Choice {{i + 1}}</label>
+      <label for="choice" class="col-sm-3 col-form-label">ตัวเลือก {{i + 1}}</label>
       <div class="col-sm-9">
         <input type="text" [(ngModel)]="item.answer" class="form-control">
       </div>
@@ -35,8 +35,8 @@
     </div>
     <div class="row mt-4">
       <div class="col text-center">
-        <button type="button " class="btn  btn-success mr-2" [mat-dialog-close]="question" cdkFocusInitial>Save</button>
-        <button type="button" class="btn  btn-danger" (click)="onNoClick()">Cancel</button>
+        <button type="button " class="btn  btn-success mr-2" [mat-dialog-close]="question" cdkFocusInitial>บันทึก</button>
+        <button type="button" class="btn  btn-danger" (click)="onNoClick()">ยกเลิก</button>
       </div>
     </div>
   </div>

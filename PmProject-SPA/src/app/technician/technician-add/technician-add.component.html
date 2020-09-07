@@ -1,38 +1,38 @@
 <div class="add-edit-form">
   <div class="row mb-3">
     <div class="col-sm-12">
-      <h3>New Technician</h3>
+      <h3>เพิ่มข้อมูลช่าง</h3>
     </div>
   </div>
   <form [formGroup]="registerForm" (ngSubmit)="save()">
     <div class="form-group">
       <input type="text" [ngClass]="{'is-invalid': registerForm.get('fullName').errors
         && registerForm.get('fullName').touched}" class="form-control is-invalid" formControlName="fullName"
-        placeholder="Full Name">
-      <div class="invalid-feedback">Please choose a Full Name</div>
+        placeholder="ชื่อ-นามสกุลช่าง">
+      <div class="invalid-feedback">กรุณากรอกชื่อ-นามสกุลช่าง</div>
     </div>
 
     <div class="form-group">
-      <input type="text" class="form-control" maxlength="10" formControlName="phoneNumber" placeholder="Phone Number">
+      <input type="text" class="form-control" maxlength="10" formControlName="phoneNumber" placeholder="เบอร์โทรศัพท์">
     </div>
 
     <div class="form-group">
       <input type="text" [ngClass]="{'is-invalid': registerForm.get('username').errors
         && registerForm.get('username').touched}" class="form-control is-invalid" formControlName="username"
-        placeholder="Username">
-      <div class="invalid-feedback">Please choose a User Name</div>
+        placeholder="ชื่อผู้เข้าใช้งาน">
+      <div class="invalid-feedback">กรุณากรอกชื่อผู้เข้าใช้งาน</div>
     </div>
 
 
     <div class="form-group">
       <input type="password" [ngClass]="{'is-invalid': registerForm.get('password').errors
-      && registerForm.get('password').touched}" class="form-control" formControlName="password" placeholder="Password">
+      && registerForm.get('password').touched}" class="form-control" formControlName="password" placeholder="รหัสผ่าน">
       <div class="invalid-feedback" *ngIf="registerForm.get('password').hasError('required')
-      && registerForm.get('password').touched">Password is required</div>
+      && registerForm.get('password').touched">กรุณากรอกรหัสผ่าน</div>
       <div class="invalid-feedback" *ngIf="registerForm.get('password').hasError('minlength')
-      && registerForm.get('password').touched">Password must be at least 4 characters</div>
+      && registerForm.get('password').touched">รหัสผ่านต้องมากกว่า 4 ตัวอักษร</div>
       <div class="invalid-feedback" *ngIf="registerForm.get('password').hasError('maxlength')
-      && registerForm.get('password').touched">Password cannot exceed 8 characters</div>
+      && registerForm.get('password').touched">รหัสผ่านต้องไม่เกิน 8 ตัวอักษร</div>
     </div>
 
     <div class="form-group">
@@ -40,16 +40,16 @@
       && registerForm.get('confirmPassword').touched
       || registerForm.get('confirmPassword').touched
       && registerForm.hasError('mismatch')}" class="form-control" formControlName="confirmPassword"
-        placeholder="Confirm Password">
+        placeholder="ยืนยันรหัสผ่าน">
       <div class="invalid-feedback" *ngIf="registerForm.get('confirmPassword').hasError('required')
       && registerForm.get('confirmPassword').touched">Password is required</div>
       <div class="invalid-feedback" *ngIf="registerForm.hasError('mismatch')
-      && registerForm.get('confirmPassword').touched">Password must match</div>
+      && registerForm.get('confirmPassword').touched">รหัสผ่านไม่ถูกต้อง</div>
     </div>
     <div class="row mt-4">
       <div class="col text-center">
-        <button type="submit " class="btn  btn-success mr-2">Save</button>
-        <button type="button" class="btn  btn-danger" mat-dialog-close>Cancel</button>
+        <button type="submit " class="btn  btn-success mr-2">บันทึก</button>
+        <button type="button" class="btn  btn-danger" mat-dialog-close>ยกเลิก</button>
       </div>
     </div>
   </form>

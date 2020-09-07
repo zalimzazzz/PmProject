@@ -1,28 +1,31 @@
 <div class="container mt-5">
   <div class="container mt-5">
     <div class="card">
-      <div class="card-header">
-        {{mode}} Service Order
+      <div class="card-header" *ngIf="mode === 'Add'">
+        เพิ่มใบสั่งงาน
+      </div>
+      <div class="card-header" *ngIf="mode === 'Edit'">
+        แก้ไขใบสั่งงาน
       </div>
       <div class="card-body">
         <div class="form-group row">
-          <label for="inputEmail3" class="col-sm-2 col-form-label">Service Order</label>
+          <label for="inputEmail3" class="col-sm-2 col-form-label">หมายเลขใบสั่งงาน</label>
           <div class="col-sm-10">
             <input type="text" [(ngModel)]="serviceOrder.serviceOrderNo" class="form-control">
           </div>
         </div>
         <div class="form-group row">
-          <label for="inputEmail3" class="col-sm-2 col-form-label">Description</label>
+          <label for="inputEmail3" class="col-sm-2 col-form-label">รายละเอียดใบสั่งงาน</label>
           <div class="col-sm-10">
             <input type="text" [(ngModel)]="serviceOrder.description" class="form-control">
           </div>
         </div>
         <div class="form-group row">
-          <label for="inputEmail3" class="col-sm-2 col-form-label">Technician</label>
+          <label for="inputEmail3" class="col-sm-2 col-form-label">ช่างที่รับงาน</label>
           <div class="col-sm-10">
             <!-- <input type="text" class="form-control"> -->
             <select class="form-control" [(ngModel)]="serviceOrder.userId">
-              <option value=null>Choose...</option>
+              <option value=null>กรุณาเลือกช่าง...</option>
               <option *ngFor="let item of technician" [value]="item.id">{{item.fullName}}</option>
             </select>
           </div>
@@ -33,12 +36,12 @@
           <div class="col-12 col-md-12">
             <div class="card">
               <div class="card-header">
-                Qustion
+                รายละเอียดใบสั่งงาน
               </div>
               <div class="card-body">
 
                 <ng-container *ngFor="let question of questionList">
-                  <ng-container *ngIf="question.answerTypeId === 1">
+                  <ng-container *ngIf="question.answerTypeId === '1'">
                     <div class="form-row">
                       <div class="form-group col-md-12">
                         <label for="inputEmail4">{{question.name}}</label>
@@ -47,7 +50,7 @@
                       </div>
                     </div>
                   </ng-container>
-                  <ng-container *ngIf="question.answerTypeId === 2">
+                  <ng-container *ngIf="question.answerTypeId === '2'">
                     <div class="form-row">
                       <div class="form-group col-md-12">
                         <label>{{question.name}}</label>
@@ -64,7 +67,7 @@
                       </div>
                     </div>
                   </ng-container>
-                  <ng-container *ngIf="question.answerTypeId === 3">
+                  <ng-container *ngIf="question.answerTypeId === '3'">
                     <div class="form-row">
                       <div class="form-group col-md-12">
                         <label>{{question.name}}</label>
@@ -128,8 +131,8 @@
         </div> -->
         <div class="form-group row">
           <div class="col-sm-12 text-center">
-            <button type="button " (click)="seve()" class="btn  btn-success mr-2">Save</button>
-            <button type="button" class="btn  btn-danger" [routerLink]="['/serviceOrder']">Cancel</button>
+            <button type="button " (click)="seve()" class="btn  btn-success mr-2">บันทึก</button>
+            <button type="button" class="btn  btn-danger" [routerLink]="['/serviceOrder']">ยกเลิก</button>
           </div>
         </div>
       </div>

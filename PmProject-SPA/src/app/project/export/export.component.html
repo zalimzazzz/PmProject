@@ -8,14 +8,14 @@
         <div class="row">
           <div class="col">
             <div class="form-group row">
-              <label class="col-sm-12 col-md-2 col-form-label">Project Name</label>
+              <label class="col-sm-12 col-md-2 col-form-label">ชื่อโครงการ</label>
               <div class="col-md-10 col-sm-12">
                 <input type="text" disabled [(ngModel)]="serviceOrder.project.name" class="form-control"
-                  placeholder="Project Name">
+                  placeholder="ชื่อโครงการ">
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-sm-12 col-md-2 col-form-label">Use Image Layout</label>
+              <label class="col-sm-12 col-md-2 col-form-label">แบบฟอร์มที่ใช้งาน</label>
               <div class="col-md-10 col-sm-12">
                 <select [(ngModel)]="imageLength" class="form-control">
                   <option *ngFor="let item of [].constructor(numberDisplay); let i = index" [value]="i + 1">{{i + 1}}
@@ -23,7 +23,7 @@
                 </select>
               </div>
             </div>
-            <h4>Preview</h4>
+            <h4>ดูตัวอย่าง</h4>
             <div class="row" id="contentToConvert">
               <div class="col">
                 <div class="jumbotron jumbotron-fluid">
@@ -52,5 +52,4 @@
       </div>
     </div>
   </div>
-
 </div>

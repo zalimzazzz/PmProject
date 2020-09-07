@@ -92,22 +92,22 @@ namespace PmProject.API.Controllers
             bool isAdminSystem = userFromRepo.RoleId == 3;
             if (isAdmin)
             {
-                menus.Add(CrateRoutes("/template", "Template Service"));
+                menus.Add(CrateRoutes("/template", "แบบฟอร์มเอกสารใบสั่งงาน"));
                 // menus.Add(CrateRoutes("/company", "Company"));
-                menus.Add(CrateRoutes("/project", "Project"));
-                menus.Add(CrateRoutes("/serviceOrder", "Service Order"));
-                menus.Add(CrateRoutes("/technician", "Technician"));
+                menus.Add(CrateRoutes("/project", "ข้อมูลโครงการ"));
+                menus.Add(CrateRoutes("/serviceOrder", "ข้อมูลใบสั่งงาน"));
+                menus.Add(CrateRoutes("/technician", "ข้อมูลช่าง"));
 
             }
             else if (isAdmin)
             {
-                menus.Add(CrateRoutes("/template", "Template Service"));
-                menus.Add(CrateRoutes("/project", "Project"));
-                menus.Add(CrateRoutes("/serviceOrder", "Service Order"));
+                menus.Add(CrateRoutes("/template", "แบบฟอร์มเอกสารใบสั่งงาน"));
+                menus.Add(CrateRoutes("/project", "ข้อมูลโครงการ"));
+                menus.Add(CrateRoutes("/serviceOrder", "ข้อมูลใบสั่งงาน"));
             }
             else if (isTechnician)
             {
-                menus.Add(CrateRoutes("/service-order/technician", "Order"));
+                menus.Add(CrateRoutes("/service-order/technician", "ข้อมูลใบสั่งงาน"));
             }
             else if (isAdminSystem)
             {

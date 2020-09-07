@@ -1,29 +1,29 @@
 <div class="add-edit-form">
   <div class="row mb-3">
     <div class="col-sm-12">
-      <h3>Edit Technician</h3>
+      <h3>แก้ไขข้อมูลช่าง</h3>
     </div>
   </div>
   <form [formGroup]="registerForm" (ngSubmit)="save()">
     <div class="form-group">
       <!-- <input type="text" disabled class="form-control " formControlName="username" placeholder="Username"> -->
-      <label>Username : {{registerForm.value.username}}</label>
+      <label>ชื่อผู้เข้าใช้งาน : {{registerForm.value.username}}</label>
     </div>
     <div class="form-group">
       <input type="text" [ngClass]="{'is-invalid': registerForm.get('fullName').errors
         && registerForm.get('fullName').touched}" class="form-control is-invalid" formControlName="fullName"
-        placeholder="Full Name">
-      <div class="invalid-feedback">Please choose a Full Name</div>
+        placeholder="ชื่อ-นามสกุลช่าง">
+      <div class="invalid-feedback">กรุณากรอกชื่อ-นามสกุลช่าง</div>
     </div>
 
     <div class="form-group">
-      <input type="text" maxlength="10" class="form-control" formControlName="phoneNumber" placeholder="Phone Number">
+      <input type="text" maxlength="10" class="form-control" formControlName="phoneNumber" placeholder="เบอร์โทรศัพท์">
     </div>
 
     <div class="row mt-4">
       <div class="col text-center">
-        <button type="submit " class="btn  btn-success mr-2">Save</button>
-        <button type="button" class="btn  btn-danger" mat-dialog-close>Cancel</button>
+        <button type="submit " class="btn  btn-success mr-2">บันทึก</button>
+        <button type="button" class="btn  btn-danger" mat-dialog-close>ยกเลิก</button>
       </div>
     </div>
   </form>
