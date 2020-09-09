@@ -1,6 +1,6 @@
 import { BrowserModule, HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
@@ -70,6 +70,7 @@ import { TechnicianEditComponent } from './technician/technician-edit/technician
 import { UserManagementComponent } from './user-management/user-management.component';
 import { UserManagementAddEditComponent } from './user-management/user-management-add-edit/user-management-add-edit.component';
 import { NgxImageCompressService } from 'ngx-image-compress';
+import { TokenInterceptor } from './_services/token-interceptor.service';
 
 export function tokenGetter() {
    return localStorage.getItem('token');
@@ -166,6 +167,11 @@ export class CustomHammerConfig extends HammerGestureConfig {
       PreventUnsavedChanges,
       ListsResolver,
       NgxImageCompressService,
+      {
+         provide: HTTP_INTERCEPTORS,
+         useClass: TokenInterceptor,
+         multi: true
+      }
    ],
    bootstrap: [
       AppComponent

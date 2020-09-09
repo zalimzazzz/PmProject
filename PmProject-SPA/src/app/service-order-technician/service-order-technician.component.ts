@@ -50,7 +50,7 @@ export class ServiceOrderTechnicianComponent implements OnInit {
     this.id = this.authService.getUser().id;
     this.serviceOrderService.getByTechnicianId(this.id)
       .then(async (res: Array<ServiceOrder>) => {
-        console.log(res);
+        //console.log(res);
         this.serviceOrder = res;
       }).catch(ex => {
         this.alertify.error('Server Internet Error');

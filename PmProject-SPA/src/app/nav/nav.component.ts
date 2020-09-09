@@ -16,7 +16,7 @@ export class NavComponent implements OnInit {
   constructor(public authService: AuthService, private alertify: AlertifyService,
     private router: Router) {
     this.menus = this.authService.getMenu();
-    console.log(this.menus);
+    //console.log(this.menus);
   }
 
   ngOnInit() {

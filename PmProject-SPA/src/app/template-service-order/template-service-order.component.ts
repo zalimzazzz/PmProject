@@ -76,7 +76,7 @@ export class TemplateServiceOrderComponent implements OnInit {
   }
 
   edit(id: string) {
-    console.log(id);
+    //console.log(id);
     this.router.navigate(['/template/edit/' + id]);
   }
 
@@ -88,7 +88,7 @@ export class TemplateServiceOrderComponent implements OnInit {
     this.spinner.show();
     for (let index = 0; index < selected.length; index++) {
       const id = selected[index].id;
-      console.log(id);
+      //console.log(id);
       let res = await this.templateServiceOrderServiceService.delete(id).catch(ex => {
         this.alertify.error('Delete Failed');
       });

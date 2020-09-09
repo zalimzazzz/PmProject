@@ -16,7 +16,7 @@ export class QuestionAddComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('question', this.question);
+    //console.log('question', this.question);
   }
 
   addChoice() {

@@ -37,14 +37,14 @@ export class TemplateServiceOrderAddEditComponent implements OnInit {
     this.templateServiceOrder.templateServiceOrderQuestion = new Array<TemplateServiceOrderQuestion>();
   }
   ngOnInit() {
-    console.log(this.templateServiceOrder);
+    //console.log(this.templateServiceOrder);
 
     this.route.params.subscribe(params => {
       this.id = params['id'];
       if (this.id !== undefined) {
         this.mode = 'Edit'
         this.templateServiceOrderServiceService.getById(this.id).then((res: TemplateServiceOrder) => {
-          console.log(res);
+          //console.log(res);
           this.templateServiceOrder = res;
           this.setTable();
         });
@@ -69,18 +69,18 @@ export class TemplateServiceOrderAddEditComponent implements OnInit {
       if (result === undefined) {
         return;
       }
-      console.log(result);
+      //console.log(result);
       result.id = Guid.create().toString();
       result.answerTypeId = result.answerTypeId;
       this.templateServiceOrder.templateServiceOrderQuestion.push(result);
-      console.log(this.templateServiceOrder.templateServiceOrderQuestion);
+      //console.log(this.templateServiceOrder.templateServiceOrderQuestion);
 
       this.setTable();
     });
   }
 
   openDialogEdite(id: string) {
-    console.log('openDialogEdite');
+    //console.log('openDialogEdite');
 
     let question = this.templateServiceOrder.templateServiceOrderQuestion.filter(f => f.id === id)[0];
     const dialogRef = this.dialog.open(QuestionAddComponent, {
@@ -91,13 +91,13 @@ export class TemplateServiceOrderAddEditComponent implements OnInit {
       if (result === undefined) {
         return;
       }
-      console.log(result.id);
+      //console.log(result.id);
       let question = this.templateServiceOrder.templateServiceOrderQuestion.filter(f => f.id === result.id)[0];
 
       // question.templateServiceOrderAnswer = +result.templateServiceOrderAnswerId;
       question.answerTypeId = result.answerTypeId
       //   this.templateServiceOrder.templateServiceOrderQuestion.push(result);
-      console.log(this.templateServiceOrder.templateServiceOrderQuestion);
+      //console.log(this.templateServiceOrder.templateServiceOrderQuestion);
 
       this.setTable();
     });
@@ -110,12 +110,12 @@ export class TemplateServiceOrderAddEditComponent implements OnInit {
     }
     this.spinner.show();
     this.templateServiceOrder.companyId = this.authService.getUser().companyId;
-    console.log(this.templateServiceOrder.companyId);
-    console.log(this.authService.getUser().companyId);
+    //console.log(this.templateServiceOrder.companyId);
+    //console.log(this.authService.getUser().companyId);
 
     if (this.mode === 'New') {
       this.templateServiceOrderServiceService.add(this.templateServiceOrder).then(res => {
-        console.log('save', res);
+        //console.log('save', res);
         this.router.navigate(['/template']);
       }).catch(ex => {
         this.alertify.error('Save Failed');
@@ -125,7 +125,7 @@ export class TemplateServiceOrderAddEditComponent implements OnInit {
     }
     else {
       this.templateServiceOrderServiceService.update(this.templateServiceOrder).then(res => {
-        console.log('update', res);
+        //console.log('update', res);
         this.router.navigate(['/template']);
       }).catch(ex => {
         this.alertify.error('Save Failed');
@@ -136,7 +136,7 @@ export class TemplateServiceOrderAddEditComponent implements OnInit {
   }
 
   delete(id: string) {
-    console.log(id);
+    //console.log(id);
 
     let question = this.templateServiceOrder.templateServiceOrderQuestion;
     let item = question.filter(f => f.id === id)[0];

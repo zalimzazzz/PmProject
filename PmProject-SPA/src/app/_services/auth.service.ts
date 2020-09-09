@@ -10,6 +10,7 @@ import { User } from '../_models/user';
   providedIn: 'root'
 })
 export class AuthService {
+
   baseUrl = environment.apiUrl + 'auth/';
   jwtHelper = new JwtHelperService();
   decodedToken: any;
@@ -27,7 +28,7 @@ export class AuthService {
     return this.http.post(this.baseUrl + 'login', user)
       .pipe(
         map((response: any) => {
-          console.log(response);
+          //console.log(response);
           const user = response;
           if (user) {
             localStorage.setItem('token', user.token);
@@ -37,12 +38,14 @@ export class AuthService {
             this.currentUser = user.user;
             this.changeMemberPhoto(this.currentUser.photoUrl);
             // tslint:disable-next-line: comment-format
-            //console.log(this.decodedToken);
+            ////console.log(this.decodedToken);
           }
         })
       );
   }
-
+  getToken() {
+    return localStorage.getItem('token');
+  }
   register(user: User) {
     return this.http.post(this.baseUrl + 'register', user);
   }
