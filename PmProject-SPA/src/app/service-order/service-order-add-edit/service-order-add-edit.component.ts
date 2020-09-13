@@ -50,7 +50,7 @@ export class ServiceOrderAddEditComponent implements OnInit {
       this.projecid = params['projecid'];
       this.spinner.show();
       this.serviceOrderService.getQuestion(this.projecid).then((res: Array<TemplateServiceOrderQuestion>) => {
-        console.log(res);
+        // console.log(res);
         this.questionList = res;
         //console.log(this.serviceOrder.serviceOrderQAndA);
         return this.serviceOrderService.getById(this.id)

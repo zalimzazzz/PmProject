@@ -44,7 +44,7 @@ export class ServiceOrderComponent implements OnInit {
   setTable() {
     this.spinner.show();
     this.serviceOrderService.get().then((res: Array<ServiceOrder>) => {
-      console.log(res);
+      // console.log(res);
 
       if (res !== null)
         this.serviceOrderItem = res;

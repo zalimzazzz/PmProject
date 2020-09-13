@@ -42,7 +42,7 @@ export class ProjectComponent implements OnInit {
   setTable() {
     this.spinner.show();
     this.projectService.get().then((res: Array<Project>) => {
-      console.log(res);
+      // console.log(res);
       this.procjects = res;
       this.dataSource = new MatTableDataSource<Project>(this.procjects);
       this.dataSource.paginator = this.paginator;
