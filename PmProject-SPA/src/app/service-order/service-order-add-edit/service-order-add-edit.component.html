@@ -39,18 +39,8 @@
                 รายละเอียดใบสั่งงาน
               </div>
               <div class="card-body">
-
                 <ng-container *ngFor="let question of questionList">
-                  <ng-container *ngIf="question.answerTypeId === '1'">
-                    <div class="form-row">
-                      <div class="form-group col-md-12">
-                        <label for="inputEmail4">{{question.name}}</label>
-                        <input type="text" (change)="setAnswerText(question.id, $event.target.value)"
-                          [ngModel]="answerText(question.id)" class="form-control">
-                      </div>
-                    </div>
-                  </ng-container>
-                  <ng-container *ngIf="question.answerTypeId === '2'">
+                  <ng-container *ngIf="question.answerTypeId === 2">
                     <div class="form-row">
                       <div class="form-group col-md-12">
                         <label>{{question.name}}</label>
@@ -67,7 +57,7 @@
                       </div>
                     </div>
                   </ng-container>
-                  <ng-container *ngIf="question.answerTypeId === '3'">
+                  <ng-container *ngIf="question.answerTypeId === 3">
                     <div class="form-row">
                       <div class="form-group col-md-12">
                         <label>{{question.name}}</label>
@@ -81,6 +71,15 @@
                             {{answer.answer}}
                           </mat-checkbox>
                         </div>
+                      </div>
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="question.answerTypeId === 1">
+                    <div class="form-row">
+                      <div class="form-group col-md-12">
+                        <label for="inputEmail4">{{question.name}}</label>
+                        <input type="text" (change)="setAnswerText(question.id, $event.target.value)"
+                          [ngModel]="answerText(question.id)" class="form-control">
                       </div>
                     </div>
                   </ng-container>

@@ -24,7 +24,7 @@ export class ServiceOrderComponent implements OnInit {
   // dataSource: any;
   // selection: any;
   serviceOrderItem = new Array<ServiceOrder>();
-  displayedColumns: string[] = ['select', 'serviceOrderNo', 'description', 'status', 'action'];
+  displayedColumns: string[] = ['select', 'serviceOrderNo', 'description', 'project', 'status', 'action'];
   dataSource: any;
   selection = new SelectionModel<ServiceOrder>(true, []);
 
@@ -44,7 +44,7 @@ export class ServiceOrderComponent implements OnInit {
   setTable() {
     this.spinner.show();
     this.serviceOrderService.get().then((res: Array<ServiceOrder>) => {
-      //console.log(res);
+      console.log(res);
 
       if (res !== null)
         this.serviceOrderItem = res;

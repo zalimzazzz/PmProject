@@ -50,7 +50,7 @@ export class ServiceOrderAddEditComponent implements OnInit {
       this.projecid = params['projecid'];
       this.spinner.show();
       this.serviceOrderService.getQuestion(this.projecid).then((res: Array<TemplateServiceOrderQuestion>) => {
-        //console.log(res);
+        console.log(res);
         this.questionList = res;
         //console.log(this.serviceOrder.serviceOrderQAndA);
         return this.serviceOrderService.getById(this.id)
@@ -78,12 +78,12 @@ export class ServiceOrderAddEditComponent implements OnInit {
     });
   }
   answerText(id: string) {
-    let answer = this.serviceOrder.serviceOrderQAndA.filter(f => f.questionId === id)[0];
+    let answer = this.serviceOrder.serviceOrderQAndA?.filter(f => f.questionId === id)[0];
     return answer?.answer;
   }
   answerMany(id: string, value: string) {
 
-    let answer = this.serviceOrder.serviceOrderQAndA.filter(f => f.questionId === id)[0];
+    let answer = this.serviceOrder.serviceOrderQAndA?.filter(f => f.questionId === id)[0];
 
     if (answer === undefined)
       return;
@@ -100,18 +100,18 @@ export class ServiceOrderAddEditComponent implements OnInit {
     }
   }
   answerOne(id: string) {
-    let answer = this.serviceOrder.serviceOrderQAndA.filter(f => f.questionId === id)[0];
+    let answer = this.serviceOrder.serviceOrderQAndA?.filter(f => f.questionId === id)[0];
     return answer?.answer;
   }
   setAnswerText(id: string, value: string) {
-    let answer = this.serviceOrder.serviceOrderQAndA.filter(f => f.questionId === id)[0];
+    let answer = this.serviceOrder.serviceOrderQAndA?.filter(f => f.questionId === id)[0];
     answer.answer = value;
     //console.log(answer);
   }
   setAnswerMany(id: string, value: string, checked: boolean) {
     //console.log(checked);
 
-    let answer = this.serviceOrder.serviceOrderQAndA.filter(f => f.questionId === id)[0];
+    let answer = this.serviceOrder.serviceOrderQAndA?.filter(f => f.questionId === id)[0];
     let answerMany = JSON.parse(answer.answer);
     // let answerMany = [];
     let isHeve = answerMany.filter(f => f === value)
