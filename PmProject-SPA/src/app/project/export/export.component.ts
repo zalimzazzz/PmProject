@@ -42,7 +42,7 @@ export class ExportComponent implements OnInit {
       this.id = params['id'];
       this.spinner.show();
       this.serviceOrderService.getById(this.id).then(async (res: ServiceOrder) => {
-        console.log(res);
+        //console.log(res);
         if (res === null) {
           this.alertify.warning('Please enter service order before export');
           this.router.navigate(['/serviceOrder/edit/', this.id]);
@@ -54,7 +54,7 @@ export class ExportComponent implements OnInit {
         this.numberDisplay = this.serviceOrder.serviceOrderImage.length;
         this.imageLength = this.serviceOrder.serviceOrderImage.length;
       }).catch(ex => {
-        console.log(ex);
+        //console.log(ex);
         this.alertify.error('Internal Server Error');
       }).finally(() => {
         this.spinner.hide();
@@ -68,7 +68,7 @@ export class ExportComponent implements OnInit {
     for (let index = 0; index < images.length; index++) {
       const element = images[index];
       let res = await this.serviceOrderService.download(element.imagePath).catch(ex => { });
-      // console.log(index);
+      // //console.log(index);
     }
 
   }
@@ -91,7 +91,7 @@ export class ExportComponent implements OnInit {
       let url = 'http://localhost:5000/api/ServiceOrder/Download/' + element.imagePath;
       let res_paragraph = await this.base64(url).then((res: any) => {
         const image = Media.addImage(this.document, res, 400, 300);
-        console.log(index);
+        //console.log(index);
         paragraph.push(new Paragraph(element.imagePath));
         paragraph.push(new Paragraph(image));
       })
@@ -117,16 +117,16 @@ export class ExportComponent implements OnInit {
 
 
   export(paragraph: Array<Paragraph>) {
-    console.log('paragraph', paragraph);
+    //console.log('paragraph', paragraph);
 
     this.document.addSection({
       children: paragraph
     });
 
     Packer.toBlob(this.document).then(blob => {
-      console.log(blob);
+      //console.log(blob);
       saveAs(blob, this.serviceOrder.project.name + ".docx");
-      console.log("Document created successfully");
+      //console.log("Document created successfully");
     });
   }
 

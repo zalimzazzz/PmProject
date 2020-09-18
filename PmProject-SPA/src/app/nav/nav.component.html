@@ -1,6 +1,7 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-primary">
   <div class="container">
-    <a class="navbar-brand" href="{{menus[0].path}}">Project Management</a>
+    <a class="navbar-brand" [routerLink]="['menus[0].path']" routerLinkActive="router-link-active">Project
+      Management</a>
     <button (click)="toggleNavbar()" class="navbar-toggler" type="button" data-toggle="collapse"
       data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false"
       aria-label="Toggle navigation">

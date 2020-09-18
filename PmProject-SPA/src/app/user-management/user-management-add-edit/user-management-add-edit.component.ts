@@ -36,10 +36,10 @@ export class UserManagementAddEditComponent implements OnInit {
   ngOnInit() {
     this.spinner.show();
     this.companyService.get().then((res: Array<Company>) => {
-      console.log(res);
+      //console.log(res);
       this.company = res;
     }).catch(ex => {
-      console.log(ex);
+      //console.log(ex);
       this.alertify.error('Internal Server Error');
     }).finally(() => {
       this.spinner.hide();
@@ -81,7 +81,7 @@ export class UserManagementAddEditComponent implements OnInit {
 
   save() {
     if (this.registerForm.valid) {
-      console.log('valid');
+      //console.log('valid');
 
       this.user = Object.assign({}, this.registerForm.value);
       // this.user.roleId = +this.user.roleId;
@@ -102,7 +102,7 @@ export class UserManagementAddEditComponent implements OnInit {
     }, error => {
       this.alertify.error(error);
     }); */
-    console.log(this.registerForm.value);
+    //console.log(this.registerForm.value);
   }
 
   cancel() {

@@ -50,13 +50,13 @@ export class TechnicianComponent implements OnInit {
     this.spinner.show();
     this.userId = this.authService.getUser().id;
     this.userService.getTechnician(this.userId).then((res: Array<User>) => {
-      console.log('getTechnician', res);
+      //console.log('getTechnician', res);
       this.technician = res;
       this.dataSource = new MatTableDataSource<User>(this.technician);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     }).catch(ex => {
-      console.log(ex);
+      //console.log(ex);
       this.alertify.error('Internal Server Error');
     }).finally(() => {
       this.spinner.hide();
@@ -110,7 +110,7 @@ export class TechnicianComponent implements OnInit {
     });
   }
   edit(id: string) {
-    console.log('id', id);
+    //console.log('id', id);
 
     const dialogRef = this.dialog.open(TechnicianEditComponent, {
       data: { id: id },
@@ -130,7 +130,7 @@ export class TechnicianComponent implements OnInit {
     this.spinner.show();
     for (let index = 0; index < selected.length; index++) {
       const id = selected[index].id;
-      console.log(id);
+      //console.log(id);
       let res = await this.userService.delete(id).catch(ex => {
         this.alertify.error('Delete Failed');
       })

@@ -4,7 +4,7 @@
       <mat-list>
         <div mat-subheader>ใบสั่งงาน</div>
         <ng-container *ngFor="let item of serviceOrder">
-          <ng-container *ngIf="item.status === '0'">
+          <ng-container *ngIf="item.status === 0">
             <mat-list-item>
               <mat-icon mat-list-icon><i class="fas fa-briefcase"></i></mat-icon>
               <div mat-line><a [routerLink]="['/service-order/technician/' + item.id +'/'+item.projectId]"
@@ -21,7 +21,7 @@
       <mat-list>
         <div mat-subheader>ใบสั่งงาน</div>
         <ng-container *ngFor="let item of serviceOrder">
-          <ng-container *ngIf="item.status === '1'">
+          <ng-container *ngIf="item.status === 1">
             <mat-list-item>
               <mat-icon mat-list-icon><i class="fas fa-briefcase"></i></mat-icon>
               <div mat-line><a [routerLink]="['/service-order/technician/' + item.id +'/'+item.projectId]"
@@ -39,7 +39,7 @@
       <mat-list>
         <div mat-subheader>ใบสั่งงาน</div>
         <ng-container *ngFor="let item of serviceOrder">
-          <ng-container *ngIf="item.status === '2'">
+          <ng-container *ngIf="item.status === 2">
             <mat-list-item>
               <mat-icon mat-list-icon><i class="fas fa-briefcase"></i></mat-icon>
               <div mat-line><a [routerLink]="['/service-order/technician/' + item.id +'/'+item.projectId]"
@@ -57,7 +57,7 @@
       <mat-list>
         <div mat-subheader>ใบสั่งงาน</div>
         <ng-container *ngFor="let item of serviceOrder">
-          <ng-container *ngIf="item.status === '3'">
+          <ng-container *ngIf="item.status === 3">
             <mat-list-item>
               <mat-icon mat-list-icon><i class="fas fa-briefcase"></i></mat-icon>
               <div mat-line><a [routerLink]="['/service-order/technician/' + item.id +'/'+item.projectId]"

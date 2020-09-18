@@ -213,7 +213,7 @@ export class ServiceOrderTechnicianEditComponent implements OnInit {
   // compressFile() {
 
   //   this.imageCompress.uploadFile().then(({ image, orientation }) => {
-  //     console.log('orientation', orientation);
+  //     //console.log('orientation', orientation);
 
   //     this.reCompressFileRe(image, orientation, 50);
   //   });
@@ -295,7 +295,7 @@ export class ServiceOrderTechnicianEditComponent implements OnInit {
       const image = this.images[index];
       let res = await this.serviceOrderService.uploadFile(image);
     }
-    console.log('End UploadFile');
+    //console.log('End UploadFile');
     return Promise.resolve('Uploaded');
   }
 

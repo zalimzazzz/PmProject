@@ -66,7 +66,7 @@ export class TechnicianAddComponent implements OnInit {
   }
 
   save() {
-    console.log('getUser', this.authService.getUser());
+    //console.log('getUser', this.authService.getUser());
     // return;
     if (this.registerForm.valid) {
       this.user = Object.assign({}, this.registerForm.value);

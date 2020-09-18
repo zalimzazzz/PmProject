@@ -24,7 +24,7 @@ export class ServiceOrderComponent implements OnInit {
   // dataSource: any;
   // selection: any;
   serviceOrderItem = new Array<ServiceOrder>();
-  displayedColumns: string[] = ['select', 'serviceOrderNo', 'description', 'status', 'action'];
+  displayedColumns: string[] = ['select', 'serviceOrderNo', 'description', 'project', 'status', 'action'];
   dataSource: any;
   selection = new SelectionModel<ServiceOrder>(true, []);
 
@@ -44,7 +44,7 @@ export class ServiceOrderComponent implements OnInit {
   setTable() {
     this.spinner.show();
     this.serviceOrderService.get().then((res: Array<ServiceOrder>) => {
-      console.log(res);
+      // console.log(res);
 
       if (res !== null)
         this.serviceOrderItem = res;
@@ -87,7 +87,7 @@ export class ServiceOrderComponent implements OnInit {
   }
 
   edit(id: string, projectId: string) {
-    console.log(projectId);
+    //console.log(projectId);
 
     this.router.navigate(['/serviceOrder/edit/' + id + '/' + projectId]);
   }
@@ -107,7 +107,7 @@ export class ServiceOrderComponent implements OnInit {
     this.spinner.show();
     for (let index = 0; index < selected.length; index++) {
       const id = selected[index].id;
-      console.log(id);
+      //console.log(id);
       let res = await this.serviceOrderService.delete(id).catch(ex => {
         this.alertify.error('Delete Failed');
       })
