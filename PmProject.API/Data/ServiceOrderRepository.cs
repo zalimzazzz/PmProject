@@ -16,9 +16,10 @@ namespace PmProject.API.Data
         {
             _context = context;
         }
-        public async Task<List<ServiceOrder>> Get()
+        public async Task<List<ServiceOrder>> GetAll(Guid companyId)
         {
-            return await _context.ServiceOrder.Where(w => !w.IsDelete).ToListAsync();
+            var result = await _context.ServiceOrder.Include(i => i.Project).Where(w => !w.IsDelete && w.CompanyId == companyId)?.ToListAsync();
+            return result;
         }
 
         public async Task<ServiceOrder> Get(Guid id)

@@ -30,7 +30,9 @@ namespace PmProject.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _repo.Get());
+            var companyId = Guid.Parse(User.FindFirst("CompanyId").Value);
+
+            return Ok(await _repo.GetAll(companyId));
         }
 
         [HttpGet("{id}")]
@@ -44,8 +46,9 @@ namespace PmProject.API.Controllers
         public async Task<IActionResult> Add([FromBody] ProjectDto projectDto)
         {
             var project = _mapper.Map<Project>(projectDto);
-
+            var companyId = Guid.Parse(User.FindFirst("CompanyId").Value);
             var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            project.CompanyId = companyId;
             project.CreateBy = userId;
             project.ModifiedBy = userId;
 

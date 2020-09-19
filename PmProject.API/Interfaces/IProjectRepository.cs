@@ -9,7 +9,7 @@ namespace PmProject.API.Interfaces
     public interface IProjectRepository
     {
         Task<bool> Add(Project project);
-        Task<List<Project>> Get();
+        Task<List<Project>> GetAll(Guid companyId);
         Task<Project> Get(Guid id);
         Task<bool> Update(Project project);
         Task<bool> Delete(Guid id);

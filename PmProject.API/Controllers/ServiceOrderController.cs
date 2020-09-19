@@ -31,7 +31,8 @@ namespace PmProject.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _repo.Get());
+            var companyId = Guid.Parse(User.FindFirst("CompanyId").Value);
+            return Ok(await _repo.GetAll(companyId));
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
@@ -58,7 +59,9 @@ namespace PmProject.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] ServiceOrder templateServiceOrder)
         {
+            var companyId = Guid.Parse(User.FindFirst("CompanyId").Value);
             var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            templateServiceOrder.CompanyId = companyId;
             templateServiceOrder.CreateBy = userId;
             templateServiceOrder.ModifiedBy = userId;
 

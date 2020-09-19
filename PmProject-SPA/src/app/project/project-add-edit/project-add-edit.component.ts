@@ -68,6 +68,7 @@ export class ProjectAddEditComponent implements OnInit {
   }
   save() {
     this.spinner.show();
+    this.project.status = 0;
     if (this.mode === 'New') {
       this.projectService.add(this.project).then(res => {
         //console.log('save', res);

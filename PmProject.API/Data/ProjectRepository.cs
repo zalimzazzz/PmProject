@@ -22,9 +22,9 @@ namespace PmProject.API.Data
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<List<Project>> Get()
+        public async Task<List<Project>> GetAll(Guid companyId)
         {
-            return await _context.Project.Include(i => i.TemplateServiceOrder).Where(w => !w.IsDelete).ToListAsync();
+            return await _context.Project.Include(i => i.TemplateServiceOrder).Where(w => !w.IsDelete && w.CompanyId == companyId).ToListAsync();
         }
         public async Task<Project> Get(Guid id)
         {

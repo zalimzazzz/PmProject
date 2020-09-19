@@ -9,7 +9,7 @@ namespace PmProject.API.Interfaces
     {
         Task<List<TemplateServiceOrderQuestion>> GetQuestion(Guid id);
         Task<List<ServiceOrder>> GetByTechnicianId(Guid userId);
-        Task<List<ServiceOrder>> Get();
+        Task<List<ServiceOrder>> GetAll(Guid companyId);
         Task<ServiceOrder> Get(Guid projectId);
         Task<bool> Add(ServiceOrder serviceOrder);
         Task<bool> Update(ServiceOrder serviceOrder);

@@ -76,6 +76,7 @@ namespace PmProject.API.Controllers
         [HttpGet("technician/{id}")]
         public async Task<IActionResult> GetTechnician(Guid id)
         {
+
             var technician = await _repoUser.GetTechnician(id);
 
             var technicianoReturn = _mapper.Map<List<UserForDetailDto>>(technician);

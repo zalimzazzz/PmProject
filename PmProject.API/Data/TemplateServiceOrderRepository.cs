@@ -97,9 +97,9 @@ namespace PmProject.API.Data
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<List<TemplateServiceOrder>> GetTemplateServiceOrder()
+        public async Task<List<TemplateServiceOrder>> GetAll(Guid companyId)
         {
-            return await _context.TemplateServiceOrder.Where(w => !w.IsDelete).ToListAsync();
+            return await _context.TemplateServiceOrder.Where(w => !w.IsDelete && w.CompanyId == companyId).ToListAsync();
         }
 
         public async Task<TemplateServiceOrder> GetTemplateServiceOrder(Guid id)

@@ -1,3 +1,4 @@
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using PmProject.API.Models;
 
@@ -35,6 +36,10 @@ namespace PmProject.API.Data
             //    .WithMany(u => u.Likees)
             //    .HasForeignKey(u => u.LikerId)
             //    .OnDelete(DeleteBehavior.Restrict);
+            // foreach (var relationship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            // {
+            //     relationship.DeleteBehavior = DeleteBehavior.Restrict;
+            // }
 
         }
         public DbSet<Company> Company { get; set; }
