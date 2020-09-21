@@ -15,16 +15,48 @@ export class QuestionAddComponent implements OnInit {
 
   }
 
+  submited = false;
   ngOnInit() {
-    //console.log('question', this.question);
+    // console.log('question', this.question);
   }
 
   addChoice() {
     let templateServiceOrderAnswer = new TemplateServiceOrderAnswer();
+    templateServiceOrderAnswer.answer = '';
     this.question.templateServiceOrderAnswer.push(templateServiceOrderAnswer)
   }
+
   onNoClick(): void {
     this.dialogRef.close();
   }
+
+  onOk() {
+    this.submited = true;
+    if (!this.validate())
+      return;
+
+    this.dialogRef.close(this.question);
+
+  }
+
+  validate() {
+
+    if (this.question.name === '' && this.question.name === '')
+      return false;
+
+    if (this.question.answerTypeId === '1')
+      return true;
+
+    let items = this.question.templateServiceOrderAnswer;
+
+    for (let index = 0; index < items.length; index++) {
+      const element = items[index];
+      if ((element.answer === '' || element.answer === null))
+        return false;
+    }
+
+    return true;
+  }
+
 
 }

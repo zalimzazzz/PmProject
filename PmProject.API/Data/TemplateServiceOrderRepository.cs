@@ -24,7 +24,7 @@ namespace PmProject.API.Data
             var remark = new TemplateServiceOrderQuestion();
             remark.Id = Guid.NewGuid();
             remark.TemplateServiceOrderId = templateServiceOrder.Id;
-            remark.Name = "**remark";
+            remark.Name = "**รายละเอีดยเพิ่มเติม";
             remark.AnswerTypeId = 1;
             templateServiceOrder.TemplateServiceOrderQuestion.Add(remark);
             foreach (var templateServiceOrderQuestion in templateServiceOrder.TemplateServiceOrderQuestion)
@@ -52,7 +52,7 @@ namespace PmProject.API.Data
             var template = await _context.TemplateServiceOrder.FirstOrDefaultAsync(f => f.Id == templateServiceOrder.Id && !f.IsDelete);
             template.Name = templateServiceOrder.Name;
 
-            var remarkRemove = templateServiceOrder.TemplateServiceOrderQuestion.FirstOrDefault(f => f.Name == "**remark");
+            var remarkRemove = templateServiceOrder.TemplateServiceOrderQuestion.FirstOrDefault(f => f.Name == "**รายละเอีดยเพิ่มเติม");
             templateServiceOrder.TemplateServiceOrderQuestion.Remove(remarkRemove); // remove remark
             // remove all
             var templateServiceOrderQuestionRemoveItem = await _context.TemplateServiceOrderQuestion.Where(f => f.TemplateServiceOrderId == templateServiceOrder.Id).ToListAsync();
@@ -67,7 +67,7 @@ namespace PmProject.API.Data
             var remark = new TemplateServiceOrderQuestion();
             remark.Id = Guid.NewGuid();
             remark.TemplateServiceOrderId = template.Id;
-            remark.Name = "**remark";
+            remark.Name = "**รายละเอีดยเพิ่มเติม";
             remark.AnswerTypeId = 1;
             templateServiceOrder.TemplateServiceOrderQuestion.Add(remark);
             foreach (var templateServiceOrderQuestion in templateServiceOrder.TemplateServiceOrderQuestion)

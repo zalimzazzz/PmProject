@@ -57,10 +57,11 @@ export class TemplateServiceOrderAddEditComponent implements OnInit {
   }
   openDialog() {
     let templateServiceOrderAnswer = new TemplateServiceOrderAnswer();
+    templateServiceOrderAnswer.answer = '';
     const dialogRef = this.dialog.open(QuestionAddComponent, {
       data: {
         name: '',
-        answerTypeId: '',
+        answerTypeId: '1',
         templateServiceOrderAnswer: [templateServiceOrderAnswer]
       }
     });
