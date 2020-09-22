@@ -9,7 +9,8 @@ namespace PmProject.API.Models
         [Required]
         public Guid Id { get; set; }
         [Required]
-
+        public int No { get; set; }
+        [Required]
         public string Name { get; set; }
         [Required]
         public int AnswerTypeId { get; set; }

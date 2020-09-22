@@ -28,7 +28,7 @@ export class AuthService {
     return this.http.post(this.baseUrl + 'login', user)
       .pipe(
         map((response: any) => {
-          //console.log(response);
+
           const user = response;
           if (user) {
             localStorage.setItem('token', user.token);
@@ -38,7 +38,7 @@ export class AuthService {
             this.currentUser = user.user;
             this.changeMemberPhoto(this.currentUser.photoUrl);
             // tslint:disable-next-line: comment-format
-            ////console.log(this.decodedToken);
+
           }
         })
       );

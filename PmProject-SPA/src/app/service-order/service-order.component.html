@@ -73,7 +73,8 @@
                   <td class="text-right" mat-cell *matCellDef="let element ">
                     <button type="button " (click)="edit(element.id, element.projectId)"
                       class="btn btn-sm btn-success mr-2">แก้ไข</button>
-                    <button type="button" (click)="delete(element.id)" class="btn btn-sm btn-danger">ลบ</button>
+                    <button type="button" *ngIf="element.status === 0" (click)="delete(element.id)"
+                      class="btn btn-sm btn-danger">ลบ</button>
                   </td>
                 </ng-container>
 

@@ -43,7 +43,7 @@ export class TechnicianEditComponent implements OnInit {
         companyId: [''],
       },
     );
-    //console.log(this.registerForm);
+
 
     this.setValue();
   }
@@ -64,7 +64,7 @@ export class TechnicianEditComponent implements OnInit {
 
     this.userService.getById(this.data.id).then((res: User) => {
 
-      //console.log(res);
+
       this.id = res.id;
       this.registerForm.get('username').setValue(res.username);
       this.registerForm.get('fullName').setValue(res.fullName);
@@ -78,7 +78,7 @@ export class TechnicianEditComponent implements OnInit {
 
   save() {
     this.spinner.show();
-    //console.log('getUser', this.authService.getUser());
+
     // return;
     if (this.registerForm.valid) {
       this.user = Object.assign({}, this.registerForm.value);

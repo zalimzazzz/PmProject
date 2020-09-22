@@ -4,6 +4,7 @@ import { TemplateServiceOrderAnswer } from './template-service-order-answer';
 export class TemplateServiceOrderQuestion {
     id: string;
     name: string;
+    no: number
     _answerTypeId: number;
     // templateServiceOrderAnswerId: number;
     templateServiceOrder: TemplateServiceOrder;

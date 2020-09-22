@@ -17,7 +17,7 @@ export class QuestionAddComponent implements OnInit {
 
   submited = false;
   ngOnInit() {
-    // console.log('question', this.question);
+
   }
 
   addChoice() {

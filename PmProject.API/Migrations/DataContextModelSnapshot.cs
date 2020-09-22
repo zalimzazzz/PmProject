@@ -370,6 +370,9 @@ namespace PmProject.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("No")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("TemplateServiceOrderId")
                         .HasColumnType("uniqueidentifier");
 

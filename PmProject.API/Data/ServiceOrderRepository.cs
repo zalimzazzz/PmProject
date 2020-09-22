@@ -39,7 +39,7 @@ namespace PmProject.API.Data
                                             .ThenInclude(t => t.TemplateServiceOrderQuestion)
                                                 .ThenInclude(t => t.TemplateServiceOrderAnswer)
                                                 .FirstAsync(f => f.Id == projectId && !f.IsDelete);
-            return project.TemplateServiceOrder.TemplateServiceOrderQuestion;
+            return project.TemplateServiceOrder.TemplateServiceOrderQuestion.OrderBy(b => b.No).ToList();
         }
         public async Task<bool> Add(ServiceOrder serviceOrder)
         {

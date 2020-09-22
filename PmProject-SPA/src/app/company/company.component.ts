@@ -40,13 +40,13 @@ export class CompanyComponent implements OnInit {
   setTable() {
     this.spinner.show();
     this.companyService.get().then((res: Array<Company>) => {
-      //console.log(res);
+
       this.company = res;
       this.dataSource = new MatTableDataSource<Company>(this.company);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     }).catch(ex => {
-      //console.log(ex);
+
       this.alertify.error('Internal Server Error');
     }).finally(() => {
       this.spinner.hide();
@@ -100,7 +100,7 @@ export class CompanyComponent implements OnInit {
     });
   }
   edit(id: string) {
-    //console.log('id', id);
+
 
     const dialogRef = this.dialog.open(CompanyAddEditComponent, {
       data: { id: id },
@@ -120,7 +120,7 @@ export class CompanyComponent implements OnInit {
     this.spinner.show();
     for (let index = 0; index < selected.length; index++) {
       const id = selected[index].id;
-      //console.log(id);
+
       let res = await this.companyService.delete(id).catch(ex => {
         this.alertify.error('Delete Failed');
       })

@@ -34,14 +34,14 @@ export class CompanyAddEditComponent implements OnInit {
       if (res !== null) {
         this.mode = 'Edit'
         this.company = res;
-        //console.log('this.project ', this.company);
+
       }
     }).catch(ex => {
       this.alertify.error(ex);
     }).finally(() => {
       this.spinner.hide();
     });
-    //console.log(this.data);
+
   }
 
 
@@ -52,7 +52,7 @@ export class CompanyAddEditComponent implements OnInit {
     this.spinner.show();
     if (this.mode === 'New') {
       this.projectService.add(this.company).then(res => {
-        //console.log('save', res);
+
         this.router.navigate(['/company']);
       }).catch(ex => {
         this.alertify.error('Save Failed');
@@ -63,7 +63,7 @@ export class CompanyAddEditComponent implements OnInit {
     }
     else {
       this.projectService.update(this.company).then(res => {
-        //console.log('save', res);
+
         this.router.navigate(['/company']);
       }).catch(ex => {
         this.alertify.error('Update Failed');

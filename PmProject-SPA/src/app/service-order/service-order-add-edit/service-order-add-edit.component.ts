@@ -50,16 +50,16 @@ export class ServiceOrderAddEditComponent implements OnInit {
       this.projecid = params['projecid'];
       this.spinner.show();
       this.serviceOrderService.getQuestion(this.projecid).then((res: Array<TemplateServiceOrderQuestion>) => {
-        // console.log(res);
+
         this.questionList = res;
-        //console.log(this.serviceOrder.serviceOrderQAndA);
+
         return this.serviceOrderService.getById(this.id)
       }).then((res: ServiceOrder) => {
-        //console.log('ServiceOrder', res);
+
         if (res !== null && !this.isNew) {
           this.mode = 'Edit';
           this.serviceOrder = res;
-          //console.log(this.signaturePad);
+
           // this.signaturePad.fromDataURL(this.serviceOrder.customerSignature);
         }
         else {
@@ -67,10 +67,10 @@ export class ServiceOrderAddEditComponent implements OnInit {
         }
         return this.userService.getTechnician(this.userId);
       }).then((res: Array<User>) => {
-        //console.log('getTechnician', res);
+
         this.technician = res;
       }).catch(ex => {
-        //console.log(ex);
+
         this.alertify.error('Internal Server Error');
       }).finally(() => {
         this.spinner.hide();
@@ -106,10 +106,10 @@ export class ServiceOrderAddEditComponent implements OnInit {
   setAnswerText(id: string, value: string) {
     let answer = this.serviceOrder.serviceOrderQAndA?.filter(f => f.questionId === id)[0];
     answer.answer = value;
-    //console.log(answer);
+
   }
   setAnswerMany(id: string, value: string, checked: boolean) {
-    //console.log(checked);
+
 
     let answer = this.serviceOrder.serviceOrderQAndA?.filter(f => f.questionId === id)[0];
     let answerMany = JSON.parse(answer.answer);
@@ -125,14 +125,14 @@ export class ServiceOrderAddEditComponent implements OnInit {
     }
     answer.answer = JSON.stringify(answerMany);
     // answer.answer = value;
-    //console.log(answer);
+
   }
 
 
   setAnswerOne(id: string, event: any) {
     let answer = this.serviceOrder.serviceOrderQAndA.filter(f => f.questionId === id)[0];
     answer.answer = event.value;
-    //console.log(answer);
+
   }
 
 
@@ -152,7 +152,7 @@ export class ServiceOrderAddEditComponent implements OnInit {
   }
 
   handleFileInput(fileList: FileList) {
-    //console.log(fileList);
+
     if (fileList.length < 0)
       return;
 
@@ -173,7 +173,7 @@ export class ServiceOrderAddEditComponent implements OnInit {
 
       if (this.serviceOrder.serviceOrderImage.length !== 0) {
         let index = this.serviceOrder.serviceOrderImage.length;
-        //console.log(this.serviceOrder.serviceOrderImage[index - 1].imagePath);
+
         let path = this.serviceOrder.serviceOrderImage[index - 1].imagePath;
         let name = this.serviceOrder.serviceOrderNo + '_' + this.getLast(path) + type;
 
@@ -223,9 +223,9 @@ export class ServiceOrderAddEditComponent implements OnInit {
     for (let index = 0; index < this.images.length; index++) {
       const image = this.images[index];
       let res = await this.serviceOrderService.uploadFile(image);
-      //console.log(index);
+
     }
-    //console.log('End UploadFile');
+
     return Promise.resolve('Uploaded');
   }
   // ngAfterViewInit(): void {
