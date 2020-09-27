@@ -1,4 +1,7 @@
+using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PmProject.API.Models;
 
@@ -22,28 +25,29 @@ namespace PmProject.API.Data
         public DbSet<Role> Role { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            // builder.Entity<Like>()
-            //     .HasKey(k => new { k.LikerId, k.LikeeId });
 
-            // builder.Entity<Like>()
-            //    .HasOne(u => u.Likee)
-            //    .WithMany(u => u.Likers)
-            //    .HasForeignKey(u => u.LikeeId)
-            //    .OnDelete(DeleteBehavior.Restrict);
-
-            // builder.Entity<Like>()
-            //    .HasOne(u => u.Liker)
-            //    .WithMany(u => u.Likees)
-            //    .HasForeignKey(u => u.LikerId)
-            //    .OnDelete(DeleteBehavior.Restrict);
-            // foreach (var relationship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
-            // {
-            //     relationship.DeleteBehavior = DeleteBehavior.Restrict;
-            // }
 
         }
         public DbSet<Company> Company { get; set; }
         public DbSet<SurveyHeaders> SurveyHeaders { get; set; }
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken)) //for auto ModifiedDate
+        {
+            var entries = ChangeTracker
+        .Entries()
+        .Where(e => e.Entity is BaesClass && (
+                e.State == EntityState.Added
+                || e.State == EntityState.Modified));
 
+            foreach (var entityEntry in entries)
+            {
+                ((BaesClass)entityEntry.Entity).ModifiedDate = DateTime.Now;
+
+                // if (entityEntry.State == EntityState.Added)
+                // {
+                //     ((BaesClass)entityEntry.Entity).CreateDate = DateTime.Now;
+                // }
+            }
+            return (await base.SaveChangesAsync(true, cancellationToken));
+        }
     }
 }

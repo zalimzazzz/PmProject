@@ -7,10 +7,12 @@ namespace PmProject.API.Models
     {
         public BaesClass()
         {
-            this.ModifiedDate = DateTime.Now;
 
-            // if (this.ModifiedDate == new DateTime())
+            this.CreateDate = DateTime.Now;
             this.ModifiedDate = DateTime.Now;
+            // if (this.CreateDate == new DateTime())
+            //     this.ModifiedDate = DateTime.Now;
+
 
         }
         public Guid CreateBy { get; set; }
