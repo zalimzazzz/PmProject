@@ -9,35 +9,28 @@
           <div class="col">
             <div class="form-group row">
               <label class="col-sm-12 col-md-2 col-form-label">ชื่อโครงการ</label>
-              <div class="col-md-10 col-sm-12">
-                <input type="text" disabled [(ngModel)]="serviceOrder.project.name" class="form-control"
-                  placeholder="ชื่อโครงการ">
-              </div>
+              <label class="col-md-10 col-sm-12 col-form-label">{{project.name}}</label>
+
             </div>
             <div class="form-group row">
-              <label class="col-sm-12 col-md-2 col-form-label">แบบฟอร์มที่ใช้งาน</label>
+              <label class="col-sm-12 col-md-2 col-form-label">ใบสั่งงาน</label>
               <div class="col-md-10 col-sm-12">
-                <select [(ngModel)]="imageLength" class="form-control">
+                <!-- <select [(ngModel)]="imageLength" class="form-control">
                   <option *ngFor="let item of [].constructor(numberDisplay); let i = index" [value]="i + 1">{{i + 1}}
                   </option>
-                </select>
-              </div>
-            </div>
-            <h4>ดูตัวอย่าง</h4>
-            <div class="row" id="contentToConvert">
-              <div class="col">
-                <div class="jumbotron jumbotron-fluid">
-                  <div class="container">
-                    <div class="row mb-3" *ngIf="isDataAvailable">
-                      <ng-container *ngFor="let item of serviceOrder.serviceOrderImage;let  i=index">
-                        <div class="col-sm-12 col-md-6 text-center  mb-3" *ngIf="numberDisplay >= (i + 1)">
-                          <img id="{{item.id}}" src="{{baseUrl + item.imagePath}}" style="width:400px;  height:300px;"
-                            class="img-fluid" alt="Responsive image">
-                        </div>
-                      </ng-container>
-                    </div>
-                  </div>
-                </div>
+                </select> -->
+                <!-- <select (change)="getImg($event.target.value)" class="form-control">
+                  <option value="All">ทั้งหมด</option>
+                  <option *ngFor="let item of serviceOrders; let i = index" [value]="item.id">{{item.serviceOrderNo}}
+                  </option>
+                </select> -->
+
+                <section class="example-section" style="padding-top: 8px;">
+                  <ng-container *ngFor="let item of serviceOrderCheckboxItem">
+                    <mat-checkbox [(ngModel)]="item.checked" (ngModelChange)="getImg(item.serviceId)"
+                      class="example-margin mr-3">{{item.name}}</mat-checkbox>
+                  </ng-container>
+                </section>
               </div>
             </div>
             <div class="row">
@@ -47,6 +40,25 @@
                 <button type="button" class="btn btn-danger" [routerLink]="['/project']">Cancel</button>
               </div>
             </div>
+            <h4>ดูตัวอย่าง</h4>
+            <div class="row" id="contentToConvert">
+              <div class="col">
+                <div class="jumbotron jumbotron-fluid">
+                  <div class="container">
+                    <div class="row mb-3" *ngIf="isDataAvailable">
+                      <ng-container *ngFor="let item of serviceOrderImage;let  i=index">
+                        <div class="col-sm-12 col-md-6 text-center  mb-3">
+                          <p>{{item.imagePath}}</p>
+                          <img id="{{item.id}}" src="{{baseUrl + item.imagePath}}" style="width:300px;  height:226px;"
+                            class="img-fluid" alt="Responsive image">
+                        </div>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>

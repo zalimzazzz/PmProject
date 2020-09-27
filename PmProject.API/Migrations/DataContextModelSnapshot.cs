@@ -462,7 +462,7 @@ namespace PmProject.API.Migrations
                         .HasForeignKey("CompanyId");
 
                     b.HasOne("PmProject.API.Models.TemplateServiceOrder", "TemplateServiceOrder")
-                        .WithMany()
+                        .WithMany("Project")
                         .HasForeignKey("TemplateServiceOrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -475,7 +475,7 @@ namespace PmProject.API.Migrations
                         .HasForeignKey("CompanyId");
 
                     b.HasOne("PmProject.API.Models.Project", "Project")
-                        .WithMany()
+                        .WithMany("ServiceOrder")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

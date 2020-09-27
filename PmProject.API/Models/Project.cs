@@ -16,5 +16,7 @@ namespace PmProject.API.Models
 
         public Guid TemplateServiceOrderId { get; set; }
         public TemplateServiceOrder TemplateServiceOrder { get; set; }
+        public List<ServiceOrder> ServiceOrder { get; set; }
+
     }
 }

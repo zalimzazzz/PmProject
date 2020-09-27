@@ -24,11 +24,11 @@ namespace PmProject.API.Data
 
         public async Task<List<Project>> GetAll(Guid companyId)
         {
-            return await _context.Project.Include(i => i.TemplateServiceOrder).Where(w => !w.IsDelete && w.CompanyId == companyId).ToListAsync();
+            return await _context.Project.Include(i => i.TemplateServiceOrder).Include(s => s.ServiceOrder).Where(w => !w.IsDelete && w.CompanyId == companyId).ToListAsync();
         }
         public async Task<Project> Get(Guid id)
         {
-            return await _context.Project.FirstAsync(w => w.Id == id && !w.IsDelete);
+            return await _context.Project.Include(i => i.ServiceOrder).ThenInclude(t => t.ServiceOrderImage).FirstAsync(w => w.Id == id && !w.IsDelete);
         }
         public async Task<bool> Update(Project project)
         {

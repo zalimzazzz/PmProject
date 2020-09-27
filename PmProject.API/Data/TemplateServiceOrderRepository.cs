@@ -103,7 +103,7 @@ namespace PmProject.API.Data
 
         public async Task<List<TemplateServiceOrder>> GetAll(Guid companyId)
         {
-            return await _context.TemplateServiceOrder.Where(w => !w.IsDelete && w.CompanyId == companyId).ToListAsync();
+            return await _context.TemplateServiceOrder.Include(i => i.Project).Where(w => !w.IsDelete && w.CompanyId == companyId).ToListAsync();
         }
 
         public async Task<TemplateServiceOrder> GetTemplateServiceOrder(Guid id)

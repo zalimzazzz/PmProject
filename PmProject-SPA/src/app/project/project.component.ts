@@ -44,6 +44,8 @@ export class ProjectComponent implements OnInit {
     this.projectService.get().then((res: Array<Project>) => {
 
       this.procjects = res;
+      console.log(res);
+
       this.dataSource = new MatTableDataSource<Project>(this.procjects);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
