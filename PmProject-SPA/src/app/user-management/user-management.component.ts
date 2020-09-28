@@ -40,13 +40,13 @@ export class UserManagementComponent implements OnInit {
   setTable() {
     this.spinner.show();
     this.userService.getAdmin().then((res: Array<User>) => {
-      //console.log(res);
+
       this.user = res;
       this.dataSource = new MatTableDataSource<User>(this.user);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     }).catch(ex => {
-      //console.log(ex);
+
       this.alertify.error('Internal Server Error');
     }).finally(() => {
       this.spinner.hide();
@@ -100,7 +100,7 @@ export class UserManagementComponent implements OnInit {
     });
   }
   edit(id: string) {
-    //console.log('id', id);
+
 
     const dialogRef = this.dialog.open(UserManagementAddEditComponent, {
       data: { id: id },
@@ -120,7 +120,7 @@ export class UserManagementComponent implements OnInit {
     this.spinner.show();
     for (let index = 0; index < selected.length; index++) {
       const id = selected[index].id;
-      //console.log(id);
+
     }
     this.selection.clear();
     this.setTable();

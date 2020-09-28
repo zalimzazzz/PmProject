@@ -42,13 +42,15 @@ export class ProjectComponent implements OnInit {
   setTable() {
     this.spinner.show();
     this.projectService.get().then((res: Array<Project>) => {
-      // console.log(res);
+
       this.procjects = res;
+      console.log(res);
+
       this.dataSource = new MatTableDataSource<Project>(this.procjects);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     }).catch(ex => {
-      //console.log(ex);
+
       this.alertify.error('Internal Server Error');
     }).finally(() => {
       this.spinner.hide();
@@ -102,7 +104,7 @@ export class ProjectComponent implements OnInit {
     });
   }
   edit(id: string) {
-    //console.log('id', id);
+
 
     const dialogRef = this.dialog.open(ProjectAddEditComponent, {
       data: { id: id },
@@ -122,7 +124,7 @@ export class ProjectComponent implements OnInit {
     this.spinner.show();
     for (let index = 0; index < selected.length; index++) {
       const id = selected[index].id;
-      //console.log(id);
+
       let res = await this.projectService.delete(id).catch(ex => {
         this.alertify.error('Delete Failed');
       })

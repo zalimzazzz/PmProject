@@ -11,7 +11,7 @@ namespace PmProject.API.Interfaces
         Task<bool> Add(TemplateServiceOrder templateServiceOrder);
         Task<bool> UpdateTemplateServiceOrder(TemplateServiceOrder templateServiceOrder);
         Task<bool> Delete(Guid id);
-        Task<List<TemplateServiceOrder>> GetTemplateServiceOrder();
+        Task<List<TemplateServiceOrder>> GetAll(Guid companyId);
         Task<TemplateServiceOrder> GetTemplateServiceOrder(Guid id);
     }
 }

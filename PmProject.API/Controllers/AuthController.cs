@@ -65,7 +65,8 @@ namespace PmProject.API.Controllers
             var claims = new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, userFromRepo.Id.ToString()),
-                new Claim(ClaimTypes.Name, userFromRepo.Username)
+                new Claim(ClaimTypes.Name, userFromRepo.Username),
+                new Claim("CompanyId", userFromRepo.CompanyId.ToString())
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8

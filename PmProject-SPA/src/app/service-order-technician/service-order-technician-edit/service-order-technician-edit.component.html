@@ -2,7 +2,7 @@
   <div class="container mt-5">
     <div class="card">
       <div class="card-header">
-        {{mode}} ใบสั่งงาน
+        ใบสั่งงาน
       </div>
       <div class="card-body">
         <div class="form-group row">
@@ -18,7 +18,7 @@
             <div class="form-control">{{serviceOrder.description}}</div>
           </div>
         </div>
-        <div class="form-group row">
+        <!-- <div class="form-group row">
           <label for="inputEmail3" class="col-sm-2 col-form-label">สถานะ</label>
           <div class="col-sm-10">
             <select [(ngModel)]="serviceOrder.status" class="form-control" id="status">
@@ -29,7 +29,7 @@
               <option value="3">Close</option>
             </select>
           </div>
-        </div>
+        </div> -->
         <div class="row mb-3">
           <div class="col-2">
           </div>
@@ -42,15 +42,25 @@
 
                 <ng-container *ngFor="let question of questionList">
                   <ng-container *ngIf="question.answerTypeId === 1">
-                    <div class="form-row">
+                    <!-- <div class="form-row">
                       <div class="form-group col-md-12">
                         <label for="inputEmail4">{{question.name}}</label>
                         <div class="form-control">{{answerText(question.id)}}</div>
                       </div>
+                    </div> -->
+                    <div class="row">
+                      <div class="col">
+                        <h5><span><i class="fas fa-bookmark" style="font-size: 12px;"></i> </span> {{question.name}}
+                        </h5>
+                        <label class="ml-3"><span><i class="fas fa-calendar-check"
+                              style="font-size: 18px; color: rgb(121, 241, 22);"></i> </span>
+                          {{answerText(question.id)}}</label>
+                      </div>
                     </div>
+                    <hr>
                   </ng-container>
                   <ng-container *ngIf="question.answerTypeId === 2">
-                    <div class="form-row">
+                    <!-- <div class="form-row">
                       <div class="form-group col-md-12">
                         <label>{{question.name}}</label>
                       </div>
@@ -64,10 +74,26 @@
                           </mat-radio-group>
                         </div>
                       </div>
+                    </div> -->
+                    <div class="row">
+                      <div class="col">
+                        <h5><span><i class="fas fa-bookmark" style="font-size: 12px;"></i> </span> {{question.name}}
+                        </h5>
+                        <div *ngFor="let answer of question.templateServiceOrderAnswer">
+                          <label *ngIf="answerOne(question.id) !== answer.id" class="ml-3"><span><i
+                                class="fas fa-dot-circle" style="font-size: 10px;"></i> </span>
+                            {{answer.answer}}</label>
+                          <label *ngIf="answerOne(question.id) === answer.id" class="ml-3"><span><i
+                                class="fas fa-check-circle" style="font-size: 18px; color: rgb(121, 241, 22);"></i>
+                            </span>
+                            {{answer.answer}}</label>
+                        </div>
+                      </div>
                     </div>
+                    <hr>
                   </ng-container>
                   <ng-container *ngIf="question.answerTypeId === 3">
-                    <div class="form-row">
+                    <!-- <div class="form-row">
                       <div class="form-group col-md-12">
                         <label>{{question.name}}</label>
                       </div>
@@ -79,6 +105,21 @@
                             class="example-margin mr-2">
                             {{answer.answer}}
                           </mat-checkbox>
+                        </div>
+                      </div>
+                    </div> -->
+                    <div class="row">
+                      <div class="col">
+                        <h5><span><i class="fas fa-bookmark" style="font-size: 12px;"></i> </span> {{question.name}}
+                        </h5>
+                        <div *ngFor="let answer of question.templateServiceOrderAnswer">
+                          <label *ngIf="!answerMany(question.id, answer.id)" class="ml-3"><span><i
+                                class="fas fa-dot-circle" style="font-size: 10px;"></i> </span>
+                            {{answer.answer}}</label>
+                          <label *ngIf="answerMany(question.id, answer.id)" class="ml-3"><span><i
+                                class="fas fa-check-circle" style="font-size: 18px; color: rgb(121, 241, 22);"></i>
+                            </span>
+                            {{answer.answer}}</label>
                         </div>
                       </div>
                     </div>
@@ -136,7 +177,10 @@
         </div>
         <div class="form-group row">
           <div class="col-sm-12 text-center">
-            <button type="button " (click)="seve()" class="btn  btn-success mr-2">บันทึก</button>
+            <button type="button " *ngIf=" this.serviceOrder.status !== 3" (click)="seve()"
+              class="btn  btn-success mr-2">บันทึก</button>
+            <button type="button" *ngIf=" this.serviceOrder.status !== 3" (click)="closeWork()"
+              class="btn  btn-info mr-2">ปิดงาน</button>
             <button type="button" class="btn  btn-danger" [routerLink]="['/service-order/technician']">ยกเลิก</button>
           </div>
         </div>

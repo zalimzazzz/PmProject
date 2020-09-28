@@ -6,7 +6,7 @@ export class ServiceOrder {
     id: string;
     serviceOrderNo: string;
     description: string;
-    status: string;
+    status: number;
     customerSignature: string;
     projectId: string;
     project: Project;

@@ -11,7 +11,12 @@ namespace PmProject.API.Models
         public int Status { get; set; }
         public bool IsDelete { get; set; }
 
+        public Guid? CompanyId { get; set; }
+        public Company Company { get; set; }
+
         public Guid TemplateServiceOrderId { get; set; }
         public TemplateServiceOrder TemplateServiceOrder { get; set; }
+        public List<ServiceOrder> ServiceOrder { get; set; }
+
     }
 }

@@ -16,9 +16,10 @@ namespace PmProject.API.Data
         {
             _context = context;
         }
-        public async Task<List<ServiceOrder>> Get()
+        public async Task<List<ServiceOrder>> GetAll(Guid companyId)
         {
-            return await _context.ServiceOrder.Where(w => !w.IsDelete).ToListAsync();
+            var result = await _context.ServiceOrder.Include(i => i.Project).Where(w => !w.IsDelete && w.CompanyId == companyId)?.ToListAsync();
+            return result;
         }
 
         public async Task<ServiceOrder> Get(Guid id)
@@ -38,7 +39,7 @@ namespace PmProject.API.Data
                                             .ThenInclude(t => t.TemplateServiceOrderQuestion)
                                                 .ThenInclude(t => t.TemplateServiceOrderAnswer)
                                                 .FirstAsync(f => f.Id == projectId && !f.IsDelete);
-            return project.TemplateServiceOrder.TemplateServiceOrderQuestion;
+            return project.TemplateServiceOrder.TemplateServiceOrderQuestion.OrderBy(b => b.No).ToList();
         }
         public async Task<bool> Add(ServiceOrder serviceOrder)
         {

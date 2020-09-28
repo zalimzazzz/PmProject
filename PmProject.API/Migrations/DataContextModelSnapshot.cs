@@ -85,6 +85,9 @@ namespace PmProject.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("CreateBy")
                         .HasColumnType("uniqueidentifier");
 
@@ -111,6 +114,8 @@ namespace PmProject.API.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CompanyId");
+
                     b.HasIndex("TemplateServiceOrderId");
 
                     b.ToTable("Project");
@@ -136,6 +141,9 @@ namespace PmProject.API.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CompanyId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CreateBy")
@@ -173,6 +181,8 @@ namespace PmProject.API.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
 
                     b.HasIndex("ProjectId");
 
@@ -219,7 +229,6 @@ namespace PmProject.API.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Answer")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("AnswerTypeId")
@@ -361,6 +370,9 @@ namespace PmProject.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("No")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("TemplateServiceOrderId")
                         .HasColumnType("uniqueidentifier");
 
@@ -445,8 +457,12 @@ namespace PmProject.API.Migrations
 
             modelBuilder.Entity("PmProject.API.Models.Project", b =>
                 {
-                    b.HasOne("PmProject.API.Models.TemplateServiceOrder", "TemplateServiceOrder")
+                    b.HasOne("PmProject.API.Models.Company", "Company")
                         .WithMany()
+                        .HasForeignKey("CompanyId");
+
+                    b.HasOne("PmProject.API.Models.TemplateServiceOrder", "TemplateServiceOrder")
+                        .WithMany("Project")
                         .HasForeignKey("TemplateServiceOrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -454,8 +470,12 @@ namespace PmProject.API.Migrations
 
             modelBuilder.Entity("PmProject.API.Models.ServiceOrder", b =>
                 {
-                    b.HasOne("PmProject.API.Models.Project", "Project")
+                    b.HasOne("PmProject.API.Models.Company", "Company")
                         .WithMany()
+                        .HasForeignKey("CompanyId");
+
+                    b.HasOne("PmProject.API.Models.Project", "Project")
+                        .WithMany("ServiceOrder")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

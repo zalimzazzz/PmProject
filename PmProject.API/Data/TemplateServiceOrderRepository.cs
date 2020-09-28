@@ -19,13 +19,15 @@ namespace PmProject.API.Data
         public async Task<bool> Add(TemplateServiceOrder templateServiceOrder)
         {
             templateServiceOrder.Id = Guid.NewGuid();
-            // templateServiceOrder.CompanyId = Guid.Parse("1b7b50b8-6886-4463-9391-64c68a215ea9");
             _context.Add(templateServiceOrder);
+
             var remark = new TemplateServiceOrderQuestion();
             remark.Id = Guid.NewGuid();
             remark.TemplateServiceOrderId = templateServiceOrder.Id;
-            remark.Name = "**remark";
+            remark.Name = "**รายละเอีดยเพิ่มเติม";
             remark.AnswerTypeId = 1;
+            remark.No = templateServiceOrder.TemplateServiceOrderQuestion.Count() + 1;
+
             templateServiceOrder.TemplateServiceOrderQuestion.Add(remark);
             foreach (var templateServiceOrderQuestion in templateServiceOrder.TemplateServiceOrderQuestion)
             {
@@ -52,7 +54,7 @@ namespace PmProject.API.Data
             var template = await _context.TemplateServiceOrder.FirstOrDefaultAsync(f => f.Id == templateServiceOrder.Id && !f.IsDelete);
             template.Name = templateServiceOrder.Name;
 
-            var remarkRemove = templateServiceOrder.TemplateServiceOrderQuestion.FirstOrDefault(f => f.Name == "**remark");
+            var remarkRemove = templateServiceOrder.TemplateServiceOrderQuestion.FirstOrDefault(f => f.Name == "**รายละเอีดยเพิ่มเติม");
             templateServiceOrder.TemplateServiceOrderQuestion.Remove(remarkRemove); // remove remark
             // remove all
             var templateServiceOrderQuestionRemoveItem = await _context.TemplateServiceOrderQuestion.Where(f => f.TemplateServiceOrderId == templateServiceOrder.Id).ToListAsync();
@@ -67,8 +69,10 @@ namespace PmProject.API.Data
             var remark = new TemplateServiceOrderQuestion();
             remark.Id = Guid.NewGuid();
             remark.TemplateServiceOrderId = template.Id;
-            remark.Name = "**remark";
+            remark.Name = "**รายละเอีดยเพิ่มเติม";
             remark.AnswerTypeId = 1;
+            remark.No = templateServiceOrder.TemplateServiceOrderQuestion.Count() + 1;
+
             templateServiceOrder.TemplateServiceOrderQuestion.Add(remark);
             foreach (var templateServiceOrderQuestion in templateServiceOrder.TemplateServiceOrderQuestion)
             {
@@ -97,16 +101,18 @@ namespace PmProject.API.Data
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<List<TemplateServiceOrder>> GetTemplateServiceOrder()
+        public async Task<List<TemplateServiceOrder>> GetAll(Guid companyId)
         {
-            return await _context.TemplateServiceOrder.Where(w => !w.IsDelete).ToListAsync();
+            return await _context.TemplateServiceOrder.Include(i => i.Project).Where(w => !w.IsDelete && w.CompanyId == companyId).ToListAsync();
         }
 
         public async Task<TemplateServiceOrder> GetTemplateServiceOrder(Guid id)
         {
-            return await _context.TemplateServiceOrder.Include(i => i.TemplateServiceOrderQuestion)
+            var result = await _context.TemplateServiceOrder.Include(i => i.TemplateServiceOrderQuestion)
                                                             .ThenInclude(t => t.TemplateServiceOrderAnswer)
                                                             .FirstOrDefaultAsync(f => f.Id == id && !f.IsDelete);
+            result.TemplateServiceOrderQuestion = result.TemplateServiceOrderQuestion.OrderBy(o => o.No).ToList();
+            return result;
         }
 
 

@@ -39,4 +39,7 @@ export class ServiceOrderService {
   async getByTechnicianId(id: string) {
     return await this.http.get(this.baseUrl + 'ServiceOrder/order/' + id).toPromise();
   }
+  async getExportImg(projectId: string) {
+    return await this.http.get(this.baseUrl + 'ServiceOrder/export-img/' + projectId).toPromise();
+  }
 }

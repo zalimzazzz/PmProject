@@ -52,6 +52,8 @@ export class ServiceOrderTechnicianEditComponent implements OnInit {
         this.questionList = res;
         return this.serviceOrderService.getById(this.id)
       }).then((res: ServiceOrder) => {
+        console.log(res);
+
         if (res !== null && !this.isNew) {
           this.mode = 'Edit';
           this.serviceOrder = res;
@@ -213,7 +215,7 @@ export class ServiceOrderTechnicianEditComponent implements OnInit {
   // compressFile() {
 
   //   this.imageCompress.uploadFile().then(({ image, orientation }) => {
-  //     //console.log('orientation', orientation);
+  //    
 
   //     this.reCompressFileRe(image, orientation, 50);
   //   });
@@ -278,6 +280,9 @@ export class ServiceOrderTechnicianEditComponent implements OnInit {
       });
     }
     else {
+      if (+this.serviceOrder.status === 0)
+        this.serviceOrder.status = 1;
+
       await this.uploadFile().then(async res => {
         return this.serviceOrderService.update(this.serviceOrder);
       }).then(async res => {
@@ -289,13 +294,23 @@ export class ServiceOrderTechnicianEditComponent implements OnInit {
       });
     }
   }
-
+  closeWork() {
+    this.spinner.show();
+    this.serviceOrder.status = 3;
+    return this.serviceOrderService.update(this.serviceOrder).then(async res => {
+      this.router.navigate(['/service-order/technician']);
+    }).catch(ex => {
+      this.alertify.error('Save Failed');
+    }).finally(() => {
+      this.spinner.hide();
+    });
+  }
   async uploadFile() {
     for (let index = 0; index < this.images.length; index++) {
       const image = this.images[index];
       let res = await this.serviceOrderService.uploadFile(image);
     }
-    //console.log('End UploadFile');
+
     return Promise.resolve('Uploaded');
   }
 

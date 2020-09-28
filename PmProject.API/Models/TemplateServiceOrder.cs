@@ -15,5 +15,6 @@ namespace PmProject.API.Models
         public Company Company { get; set; }
         public bool IsDelete { get; set; }
         public List<TemplateServiceOrderQuestion> TemplateServiceOrderQuestion { get; set; }
+        public List<Project> Project { get; set; }
     }
 }

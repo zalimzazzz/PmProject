@@ -35,7 +35,7 @@ export class ProjectAddEditComponent implements OnInit {
     //   this.mode = 'Edit';
     //   this.spinner.show();
     //   this.templateServiceOrderServiceService.getById(this.data.id).then((res: Project) => {
-    //     //console.log(res);
+    //    
     //     this.project = res;
     //   }).catch(ex => {
     //     this.alertify.error(ex);
@@ -43,7 +43,7 @@ export class ProjectAddEditComponent implements OnInit {
     // }
 
     this.templateServiceOrderServiceService.get().then((res: Array<TemplateServiceOrder>) => {
-      //console.log(res);
+
       this.template = res;
 
       if (this.data.id !== null) {
@@ -54,23 +54,24 @@ export class ProjectAddEditComponent implements OnInit {
     }).then((res: Project) => {
       if (res !== null) {
         this.project = res;
-        //console.log('this.project ', this.project);
+
       }
     }).catch(ex => {
       this.alertify.error(ex);
     }).finally(() => {
       this.spinner.hide();
     });
-    //console.log(this.data);
+
   }
   change() {
     this.btnSave = false;
   }
   save() {
     this.spinner.show();
+    this.project.status = 0;
     if (this.mode === 'New') {
       this.projectService.add(this.project).then(res => {
-        //console.log('save', res);
+
         this.router.navigate(['/project']);
       }).catch(ex => {
         this.alertify.error('Save Failed');
@@ -81,7 +82,7 @@ export class ProjectAddEditComponent implements OnInit {
     }
     else {
       this.projectService.update(this.project).then(res => {
-        //console.log('save', res);
+
         this.router.navigate(['/project']);
       }).catch(ex => {
         this.alertify.error('Update Failed');

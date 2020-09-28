@@ -24,6 +24,10 @@ namespace PmProject.API.Models
         public Guid? UserId { get; set; }
         public User User { get; set; }
 
+        public Guid? CompanyId { get; set; }
+        public Company Company { get; set; }
+
+
         public List<ServiceOrderQAndA> ServiceOrderQAndA { get; set; }
         public List<ServiceOrderImage> ServiceOrderImage { get; set; }
 

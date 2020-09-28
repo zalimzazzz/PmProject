@@ -17,7 +17,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class TemplateServiceOrderComponent implements OnInit {
 
-  displayedColumns: string[] = ['select', 'name', 'action'];
+  displayedColumns: string[] = ['select', 'name', 'createDate', 'action'];
   templateServiceOrder = new Array<TemplateServiceOrder>();
   // dataSource = new MatTableDataSource<TemplateServiceOrder>(templateServiceOrderItem);
   dataSource: any;
@@ -37,10 +37,14 @@ export class TemplateServiceOrderComponent implements OnInit {
   setTable() {
     this.spinner.show();
     this.templateServiceOrderServiceService.get().then((res: Array<TemplateServiceOrder>) => {
+      console.log(res);
+
       this.templateServiceOrder = res;
       this.dataSource = new MatTableDataSource<TemplateServiceOrder>(this.templateServiceOrder);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+
+
     }).catch(ex => {
       this.alertify.error(ex);
     }).finally(() => {
@@ -76,7 +80,7 @@ export class TemplateServiceOrderComponent implements OnInit {
   }
 
   edit(id: string) {
-    //console.log(id);
+    //
     this.router.navigate(['/template/edit/' + id]);
   }
 
@@ -88,7 +92,7 @@ export class TemplateServiceOrderComponent implements OnInit {
     this.spinner.show();
     for (let index = 0; index < selected.length; index++) {
       const id = selected[index].id;
-      //console.log(id);
+      //
       let res = await this.templateServiceOrderServiceService.delete(id).catch(ex => {
         this.alertify.error('Delete Failed');
       });

@@ -1,3 +1,4 @@
+import { ServiceOrder } from './service-order';
 import { TemplateServiceOrder } from './template-service-order';
 
 export class Project {
@@ -6,4 +7,5 @@ export class Project {
     status: number;
     templateServiceOrderId: string;
     templateServiceOrde: TemplateServiceOrder;
+    serviceOrder: Array<ServiceOrder>;
 }

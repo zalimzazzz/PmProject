@@ -30,7 +30,8 @@ namespace PmProject.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetTemplateServiceOrder()
         {
-            var resulte = await _repo.GetTemplateServiceOrder();
+            var companyId = Guid.Parse(User.FindFirst("CompanyId").Value);
+            var resulte = await _repo.GetAll(companyId);
             return Ok(resulte);
         }
 
@@ -49,7 +50,10 @@ namespace PmProject.API.Controllers
 
             var _templateServiceOrder = _mapper.Map<TemplateServiceOrder>(templateServiceOrder);
 
+            var companyId = Guid.Parse(User.FindFirst("CompanyId").Value);
             var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            _templateServiceOrder.CompanyId = companyId;
             _templateServiceOrder.CreateBy = userId;
             _templateServiceOrder.ModifiedBy = userId;
 
